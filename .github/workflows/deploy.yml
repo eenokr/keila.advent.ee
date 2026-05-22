@@ -15,7 +15,12 @@ jobs:
     steps:
       - name: Checkout your repository
         uses: actions/checkout@v4
-      
+
+      - name: Specify Node.js version
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
       - name: Install, build, and upload your site
         uses: withastro/action@v3
 
