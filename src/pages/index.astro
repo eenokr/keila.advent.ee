@@ -1,7 +1,9 @@
 ---
-import { IsPreviewing, getContent } from '@builder.io/sdk';
+// Import it as a default package to bypass the CommonJS error
+import pkg from '@builder.io/sdk';
+const { getContent } = pkg;
 
-// Küsime sisu Builder.io-st lehe "page" mudelist ja teelt "/"
+// Küsime sisu Builder.io-st
 const content = await getContent({
   model: 'page',
   apiKey: 'd30ca60586cd42f4827fe377a484d056',
@@ -13,17 +15,18 @@ const content = await getContent({
 
 <html lang="et">
   <head>
+    <meta charset="utf-8" />
     <title>Keila SDA Kogudus</title>
   </head>
   <body>
     {content ? (
       <div data-builder-component="page" data-builder-content-id={content.id}>
         {content.data?.blocks?.map((block: any) => (
-          // See rida renderdab Builder.io visuaalsed blokid
           <div set:html={block.html} />
         ))}
       </div>
     ) : (
       <p>Lehte ei leitud või sisu puudub. Loo sisu Builder.io-s!</p>
     )}
-  </html>
+  </body>
+</html>
