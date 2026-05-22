@@ -1,32 +1,33 @@
 ---
-// Import it as a default package to bypass the CommonJS error
-import pkg from '@builder.io/sdk';
-const { getContent } = pkg;
+// Küsime andmed otse Builder.io ametlikust APIst puhta veebipäringuga
+const apiKey = 'd30ca60586cd42f4827fe377a484d056'; // <-- Pane siia oma Builder.io Public API võti
+const encodedUrl = encodeURIComponent('/');
 
-// Küsime sisu Builder.io-st
-const content = await getContent({
-  model: 'page',
-  apiKey: 'd30ca60586cd42f4827fe377a484d056',
-  userAttributes: {
-    urlPath: '/'
-  }
-});
+const response = await fetch(
+  `https://cdn.builder.io/api/v3/content/page?apiKey=${apiKey}&userAttributes.urlPath=${encodedUrl}&limit=1`
+);
+const json = await response.json();
+const content = json.results?.[0] || null;
 ---
 
 <html lang="et">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Keila SDA Kogudus</title>
   </head>
   <body>
     {content ? (
       <div data-builder-component="page" data-builder-content-id={content.id}>
         {content.data?.blocks?.map((block: any) => (
-          <div set:html={block.html} />
+          <div set:html={block.html || ''} />
         ))}
       </div>
     ) : (
-      <p>Lehte ei leitud või sisu puudub. Loo sisu Builder.io-s!</p>
+      <div style="padding: 50px; text-align: center; font-family: sans-serif;">
+        <h1>Leht on valmis!</h1>
+        <p>Loo esilehe sisu Builder.io keskkonnas, et see siin ilmuma hakkaks.</p>
+      </div>
     )}
   </body>
 </html>
