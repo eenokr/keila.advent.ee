@@ -37,8 +37,8 @@ import { SITE_TITLE } from '../consts';
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		height: 70px;
-		font-family: 'Open Sans', sans-serif;
+		height: 90px;
+		font-family: 'Cabin', sans-serif;
 	}
 
 	.logo-container {
@@ -58,7 +58,6 @@ import { SITE_TITLE } from '../consts';
 		height: 55px;
 		width: auto;
 		display: block;
-		font-family: __Inter_d65c78, sans-serif;
 	}
 
 	.nav-menu {
@@ -74,16 +73,17 @@ import { SITE_TITLE } from '../consts';
 	.nav-link {
 		text-decoration: none;
 		color: #333;
-		font-size: 0.95rem;
+		font-size: 1rem;
 		font-weight: 500;
+		text-transform: uppercase;
 		transition: color 0.3s ease;
 		padding: 8px 0;
 		border-bottom: 2px solid transparent;
 	}
 
 	.nav-link:hover {
-		color: #666;
-		border-bottom-color: #333;
+		color: #2F557F;
+		border-bottom-color: #2F557F;
 	}
 
 	.header-actions {
@@ -92,20 +92,21 @@ import { SITE_TITLE } from '../consts';
 
 	.header-cta {
 		display: inline-block;
-		background: linear-gradient(80deg, rgb(247, 247, 247) 26%, rgb(243, 243, 243) 43%, rgb(211, 208, 205) 99%);
-		border: 1px solid #d0ccc9;
-		border-radius: 6px;
-		padding: 10px 25px;
-		color: #333;
+		background: #2F557F;
+		border: 2px solid #2F557F;
+		border-radius: 5px;
+		padding: 12px 30px;
+		color: #FFFFFF;
 		text-decoration: none;
-		font-weight: 600;
-		font-size: 0.9rem;
+		font-family: 'Inter', sans-serif;
+		font-weight: 300;
+		font-size: 0.95rem;
 		transition: all 0.3s ease;
 	}
 
 	.header-cta:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		background: #1e3a54;
+		border-color: #1e3a54;
 	}
 
 	@media (max-width: 768px) {
@@ -115,7 +116,10 @@ import { SITE_TITLE } from '../consts';
 		}
 
 		.logo-link {
-			font-size: 1.1rem;
+			height: 45px;
+		}
+
+		.logo-image {
 			height: 45px;
 		}
 
@@ -124,7 +128,7 @@ import { SITE_TITLE } from '../consts';
 		}
 
 		.header-cta {
-			padding: 8px 20px;
+			padding: 10px 20px;
 			font-size: 0.85rem;
 		}
 	}
