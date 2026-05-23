@@ -1,0 +1,131 @@
+---
+import { SITE_TITLE } from '../consts';
+---
+
+<header class="header-main">
+	<nav class="header-nav">
+		<div class="logo-container">
+			<a href="/" class="logo-link">
+				<img src="/keila.advent.ee/advent-logo.svg" alt="Advent" class="logo-image" />
+			</a>
+		</div>
+		<ul class="nav-menu">
+			<li><a href="/" class="nav-link">Avaleht</a></li>
+			<li><a href="#about" class="nav-link">Meist</a></li>
+			<li><a href="#services" class="nav-link">Teenused</a></li>
+			<li><a href="#contact" class="nav-link">Kontakt</a></li>
+		</ul>
+		<div class="header-actions">
+			<a href="#contact" class="header-cta">Võta ühendust</a>
+		</div>
+	</nav>
+</header>
+
+<style>
+	.header-main {
+		background-color: #f1f1f0;
+		border-bottom: 1px solid #e0e0e0;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+	}
+
+	.header-nav {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 20px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 70px;
+		font-family: 'Open Sans', sans-serif;
+	}
+
+	.logo-container {
+		flex-shrink: 0;
+	}
+
+	.logo-link {
+		text-decoration: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 55px;
+		line-height: 1;
+	}
+
+	.logo-image {
+		height: 55px;
+		width: auto;
+		display: block;
+		font-family: __Inter_d65c78, sans-serif;
+	}
+
+	.nav-menu {
+		display: flex;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		gap: 40px;
+		flex: 1;
+		justify-content: center;
+	}
+
+	.nav-link {
+		text-decoration: none;
+		color: #333;
+		font-size: 0.95rem;
+		font-weight: 500;
+		transition: color 0.3s ease;
+		padding: 8px 0;
+		border-bottom: 2px solid transparent;
+	}
+
+	.nav-link:hover {
+		color: #666;
+		border-bottom-color: #333;
+	}
+
+	.header-actions {
+		flex-shrink: 0;
+	}
+
+	.header-cta {
+		display: inline-block;
+		background: linear-gradient(80deg, rgb(247, 247, 247) 26%, rgb(243, 243, 243) 43%, rgb(211, 208, 205) 99%);
+		border: 1px solid #d0ccc9;
+		border-radius: 6px;
+		padding: 10px 25px;
+		color: #333;
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 0.9rem;
+		transition: all 0.3s ease;
+	}
+
+	.header-cta:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	@media (max-width: 768px) {
+		.header-nav {
+			padding: 0 15px;
+			height: 60px;
+		}
+
+		.logo-link {
+			font-size: 1.1rem;
+			height: 45px;
+		}
+
+		.nav-menu {
+			display: none;
+		}
+
+		.header-cta {
+			padding: 8px 20px;
+			font-size: 0.85rem;
+		}
+	}
+</style>
