@@ -14,11 +14,11 @@ import Footer from '../components/Footer.astro';
       <!-- Hero section -->
       <section class="hero-section">
         <div class="hero-container">
-          <h1 class="hero-title">Jaga hooli mine</h1>
+          <h2 class="hero-banner">Jaga Hooli Mine</h2>
           <div class="hero-taglines">
-            <h2 class="tagline">Tunneta Jumala ligiolu.</h2>
-            <h2 class="tagline">Saa osa perekonnast.</h2>
-            <h2 class="tagline highlight">Ühine meiega laupäeviti kell 11:00</h2>
+            <h1 class="hero-main">Tunneta Jumala ligiolu.</h1>
+            <h1 class="hero-main">Saa osa perekonnast.</h1>
+            <h2 class="hero-subtitle">Ühine meiega laupäeviti kell 11:00</h2>
           </div>
         </div>
       </section>
@@ -51,16 +51,16 @@ import Footer from '../components/Footer.astro';
       <section class="content-section">
         <div class="content-wrapper">
           <div class="content-text">
-            <h2 class="section-title">Keila koguduses</h2>
-            <h3 class="section-subtitle">Käime üheskoos</h3>
-            <p class="section-description">
+            <h2 class="content-title">Keila koguduses</h2>
+            <h3 class="content-subtitle">Käime üheskoos</h3>
+            <p class="content-description">
               Oleme avatud perekond, kes jagab ühist usupõhimõtteid ja kogukonna vaimu.
               Meie ühiskogunemistel jagame Jumala sõna ja anname üksteisele toetust.
             </p>
-            <a href="#visits" class="section-button">Külasta meid</a>
+            <a href="#visits" class="content-button">Külasta meid</a>
           </div>
           <div class="content-image">
-            <div class="image-placeholder">
+            <div class="image-wrapper">
               <img src="/keila.advent.ee/community.svg" alt="Kogudus" />
             </div>
           </div>
@@ -70,6 +70,11 @@ import Footer from '../components/Footer.astro';
       <!-- Featured person section -->
       <section class="featured-section">
         <div class="featured-wrapper">
+          <div class="featured-image">
+            <div class="image-wrapper featured-image-wrapper">
+              <img src="/keila.advent.ee/worker.svg" alt="Töölane" />
+            </div>
+          </div>
           <div class="featured-text">
             <h2 class="featured-title">Tutvu meie</h2>
             <h3 class="featured-subtitle">Töölisega</h3>
@@ -78,11 +83,6 @@ import Footer from '../components/Footer.astro';
               Oleme tänulikud juhendajate ja tööliste eest, kes jagavad Jumala armastust.
             </p>
             <a href="#workers" class="featured-button">Tutvu lähemalt</a>
-          </div>
-          <div class="featured-image">
-            <div class="image-placeholder">
-              <img src="/keila.advent.ee/worker.svg" alt="Töölane" />
-            </div>
           </div>
         </div>
       </section>
@@ -104,7 +104,7 @@ import Footer from '../components/Footer.astro';
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
-    background: white;
+    background: #f1f1f0;
     color: #333;
   }
 
@@ -114,83 +114,88 @@ import Footer from '../components/Footer.astro';
 
   /* Hero Section */
   .hero-section {
-    background: linear-gradient(135deg, #f1f1f0 0%, #ffffff 100%);
-    padding: 80px 20px;
-    text-align: center;
+    background: #f1f1f0;
+    padding: 120px 20px 80px;
+    text-align: left;
   }
 
   .hero-container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
   }
 
-  .hero-title {
-    font-size: 3.5rem;
+  .hero-banner {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 2.5rem;
     font-weight: 600;
-    margin: 0 0 40px;
-    color: #333;
+    margin: 0 0 60px;
+    color: #898989;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
   }
 
   .hero-taglines {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    animation: slideInUp 0.8s ease-out;
+    gap: 15px;
   }
 
-  .tagline {
-    font-size: 1.5rem;
-    font-weight: 400;
+  .hero-main {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 5rem;
+    font-weight: 500;
     margin: 0;
-    color: #333;
-    line-height: 1.6;
+    color: #000000;
+    line-height: 1.1;
+    text-transform: uppercase;
   }
 
-  .tagline.highlight {
+  .hero-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
     font-weight: 600;
-    text-transform: uppercase;
-    font-size: 1.3rem;
+    margin: 20px 0 0;
+    color: #898989;
+    line-height: 1.4;
   }
 
   /* CTA Section */
   .cta-section {
-    background: #f9f9f9;
-    padding: 40px 20px;
-    border-bottom: 1px solid #e0e0e0;
+    background: #f1f1f0;
+    padding: 60px 20px;
   }
 
   .cta-container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 40px;
+    gap: 60px;
   }
 
   .cta-button {
-    background: linear-gradient(80deg, rgb(247, 247, 247) 26%, rgb(243, 243, 243) 43%, rgb(211, 208, 205) 99%);
-    border: 1px solid #d0ccc9;
-    border-radius: 10px;
-    padding: 15px 40px;
-    color: #333;
+    background: #2F557F;
+    border: 2px solid #2F557F;
+    border-radius: 5px;
+    padding: 18px 50px;
+    color: #FFFFFF;
     text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 1.1rem;
     transition: all 0.3s ease;
     white-space: nowrap;
   }
 
   .cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: #1e3a54;
+    border-color: #1e3a54;
   }
 
   .social-icons {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     justify-content: flex-end;
   }
 
@@ -198,21 +203,25 @@ import Footer from '../components/Footer.astro';
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    color: #666;
-    transition: color 0.3s ease;
+    width: 45px;
+    height: 45px;
+    background: #505050;
+    color: #FFFFFF;
+    transition: background 0.3s ease;
     text-decoration: none;
+    border-radius: 4px;
   }
 
   .social-icons a:hover {
-    color: #333;
+    background: #333;
   }
 
   /* Content Section */
   .content-section {
-    padding: 80px 20px;
-    background: white;
+    padding: 100px 20px;
+    background: #000000;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%23000000" width="100" height="100"/><circle cx="10" cy="10" r="1" fill="%23333333" opacity="0.3"/></svg>');
+    background-size: 100px 100px;
   }
 
   .content-wrapper {
@@ -220,7 +229,7 @@ import Footer from '../components/Footer.astro';
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 80px;
     align-items: center;
   }
 
@@ -232,56 +241,61 @@ import Footer from '../components/Footer.astro';
     order: 2;
   }
 
-  .section-title {
-    font-size: 2.5rem;
-    font-weight: 600;
+  .content-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 500;
     margin: 0 0 20px;
-    color: #333;
+    color: #FFFFFF;
+    text-transform: uppercase;
   }
 
-  .section-subtitle {
-    font-size: 1.8rem;
-    font-weight: 400;
+  .content-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 2rem;
+    font-weight: 500;
     margin: 0 0 30px;
-    color: #666;
+    color: #FFFFFF;
   }
 
-  .section-description {
-    font-size: 1.05rem;
+  .content-description {
+    font-size: 1rem;
     line-height: 1.8;
-    margin: 0 0 30px;
-    color: #555;
+    margin: 0 0 40px;
+    color: #CCCCCC;
   }
 
-  .section-button {
+  .content-button {
     display: inline-block;
-    background: linear-gradient(80deg, rgb(247, 247, 247) 26%, rgb(243, 243, 243) 43%, rgb(211, 208, 205) 99%);
-    border: 1px solid #d0ccc9;
-    border-radius: 10px;
-    padding: 15px 35px;
-    color: #333;
+    background: #2F557F;
+    border: 2px solid #2F557F;
+    border-radius: 5px;
+    padding: 18px 50px;
+    color: #FFFFFF;
     text-decoration: none;
-    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
     transition: all 0.3s ease;
   }
 
-  .section-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  .content-button:hover {
+    background: #1e3a54;
+    border-color: #1e3a54;
   }
 
-  .image-placeholder {
+  .image-wrapper {
     width: 100%;
     height: 500px;
     background: #f1f1f0;
-    border-radius: 8px;
+    border-radius: 20px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .image-placeholder img {
+  .image-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -289,8 +303,8 @@ import Footer from '../components/Footer.astro';
 
   /* Featured Section */
   .featured-section {
-    background: #fafafa;
-    padding: 80px 20px;
+    background: #f1f1f0;
+    padding: 100px 20px;
   }
 
   .featured-wrapper {
@@ -298,7 +312,7 @@ import Footer from '../components/Footer.astro';
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 80px;
     align-items: center;
   }
 
@@ -310,54 +324,61 @@ import Footer from '../components/Footer.astro';
     order: 1;
   }
 
+  .featured-image-wrapper {
+    height: 500px;
+  }
+
   .featured-title {
-    font-size: 2.5rem;
-    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 500;
     margin: 0 0 20px;
-    color: #333;
+    color: #000000;
     text-transform: uppercase;
   }
 
   .featured-subtitle {
-    font-size: 1.8rem;
-    font-weight: 400;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 2rem;
+    font-weight: 500;
     margin: 0 0 30px;
-    color: #666;
+    color: #333;
   }
 
   .featured-description {
-    font-size: 1.05rem;
+    font-size: 1rem;
     line-height: 1.8;
-    margin: 0 0 30px;
+    margin: 0 0 40px;
     color: #555;
   }
 
   .featured-button {
     display: inline-block;
-    background: linear-gradient(80deg, rgb(247, 247, 247) 26%, rgb(243, 243, 243) 43%, rgb(211, 208, 205) 99%);
-    border: 1px solid #d0ccc9;
-    border-radius: 10px;
-    padding: 15px 35px;
-    color: #333;
+    background: #2F557F;
+    border: 2px solid #2F557F;
+    border-radius: 5px;
+    padding: 18px 50px;
+    color: #FFFFFF;
     text-decoration: none;
-    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
     transition: all 0.3s ease;
   }
 
   .featured-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: #1e3a54;
+    border-color: #1e3a54;
   }
 
   /* Footer CTA Section */
   .footer-cta-section {
-    background: linear-gradient(135deg, #f1f1f0 0%, #ffffff 100%);
-    padding: 60px 20px;
-    border-top: 1px solid #e0e0e0;
+    background: #f1f1f0;
+    padding: 80px 20px;
   }
 
   .footer-cta-wrapper {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -366,25 +387,33 @@ import Footer from '../components/Footer.astro';
   }
 
   .footer-cta-button {
-    background: linear-gradient(80deg, rgb(247, 247, 247) 26%, rgb(243, 243, 243) 43%, rgb(211, 208, 205) 99%);
-    border: 1px solid #d0ccc9;
-    border-radius: 10px;
-    padding: 15px 40px;
-    color: #333;
+    background: #2F557F;
+    border: 2px solid #2F557F;
+    border-radius: 5px;
+    padding: 18px 50px;
+    color: #FFFFFF;
     text-decoration: none;
-    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
     font-size: 1rem;
     transition: all 0.3s ease;
     display: inline-block;
   }
 
   .footer-cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: #1e3a54;
+    border-color: #1e3a54;
   }
 
   .footer-cta-button.secondary {
-    background: linear-gradient(80deg, rgb(240, 240, 240) 26%, rgb(235, 235, 235) 43%, rgb(200, 197, 194) 99%);
+    background: transparent;
+    border-color: #333;
+    color: #333;
+  }
+
+  .footer-cta-button.secondary:hover {
+    background: #333;
+    color: #FFFFFF;
   }
 
   /* Animations */
@@ -401,12 +430,17 @@ import Footer from '../components/Footer.astro';
 
   /* Responsive */
   @media (max-width: 768px) {
-    .hero-title {
-      font-size: 2.2rem;
+    .hero-banner {
+      font-size: 1.8rem;
+      margin-bottom: 40px;
     }
 
-    .tagline {
-      font-size: 1.2rem;
+    .hero-main {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
     }
 
     .content-wrapper,
@@ -440,18 +474,22 @@ import Footer from '../components/Footer.astro';
       justify-content: center;
     }
 
-    .section-title,
+    .content-title,
     .featured-title {
       font-size: 2rem;
     }
 
-    .section-subtitle,
+    .content-subtitle,
     .featured-subtitle {
       font-size: 1.4rem;
     }
 
-    .image-placeholder {
+    .image-wrapper {
       height: 300px;
+    }
+
+    .hero-section {
+      padding: 60px 20px 40px;
     }
   }
 </style>
