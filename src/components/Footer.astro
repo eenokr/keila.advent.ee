@@ -6,10 +6,6 @@ const today = new Date();
 
 <footer class="footer-main">
 	<div class="footer-content">
-		<div class="footer-logo-section">
-			<h3 class="footer-title">{SITE_TITLE}</h3>
-		</div>
-
 		<div class="footer-info">
 			<p class="footer-text">
 				Seitsmenda Päeva Adventistide Keila kogudus
@@ -55,25 +51,14 @@ const today = new Date();
 		max-width: 1200px;
 		margin: 0 auto;
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: 1fr 1fr;
 		gap: 60px;
 		margin-bottom: 40px;
 		align-items: start;
 	}
 
-	.footer-logo-section {
-		text-align: left;
-	}
-
-	.footer-title {
-		font-size: 1.3rem;
-		font-weight: 600;
-		margin: 0 0 15px;
-		color: #333;
-	}
-
 	.footer-info {
-		text-align: center;
+		text-align: left;
 	}
 
 	.footer-text,
@@ -135,7 +120,6 @@ const today = new Date();
 			margin-bottom: 30px;
 		}
 
-		.footer-logo-section,
 		.footer-info {
 			text-align: center;
 		}
