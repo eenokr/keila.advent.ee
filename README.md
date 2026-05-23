@@ -1,1 +1,2 @@
 ##Seitsmeda Päeva adventistide Keila Koguduse kodulehe disain Astroga
+terere
