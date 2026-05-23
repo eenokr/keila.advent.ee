@@ -1,15 +1,18 @@
 ---
+import { Picture } from 'astro:assets';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import heroImage from '../assets/images/kiriku-pilt.jpg';
+import worshipImage from '../assets/images/ulistus.jpg';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const base = Astro.site?.pathname || '/';
+const base = import.meta.env.BASE_URL;
 ---
 
 <html lang="et">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} image={heroImage} />
 	</head>
 	<body>
 		<Header />
@@ -29,10 +32,14 @@ const base = Astro.site?.pathname || '/';
 						</div>
 					</div>
 					<div class="hero-image-card">
-						<img
-							src={`${base}images/kiriku-pilt.jpg`}
+						<Picture
+							src={heroImage}
+							formats={['avif', 'webp']}
+							widths={[480, 720, 960, 1200]}
+							sizes="(max-width: 860px) calc(100vw - 36px), min(42vw, 500px)"
 							alt="Keila adventkoguduse hoone väljast"
 							loading="eager"
+							fetchpriority="high"
 						/>
 					</div>
 				</div>
@@ -72,7 +79,14 @@ const base = Astro.site?.pathname || '/';
 			<section class="about-section" id="about">
 				<div class="about-grid">
 					<div class="about-image">
-						<img src={`${base}images/ulistus.jpg`} alt="Koguduse ülistus ja laulmine teenistusel" />
+						<Picture
+							src={worshipImage}
+							formats={['avif', 'webp']}
+							widths={[480, 720, 960, 1200]}
+							sizes="(max-width: 860px) calc(100vw - 36px), min(43vw, 530px)"
+							alt="Koguduse ülistus ja laulmine teenistusel"
+							loading="lazy"
+						/>
 					</div>
 					<div class="about-copy">
 						<p class="eyebrow">Meist</p>
@@ -143,7 +157,7 @@ const base = Astro.site?.pathname || '/';
 
 	.eyebrow {
 		color: #6d7f62;
-		font-family: 'Cabin', sans-serif;
+		font-family: var(--font-heading);
 		font-size: 0.9rem;
 		font-weight: 600;
 		letter-spacing: 0.08em;
@@ -156,7 +170,7 @@ const base = Astro.site?.pathname || '/';
 	.about-copy h2,
 	.visit-inner h2 {
 		color: #252525;
-		font-family: 'DM Sans', sans-serif;
+		font-family: var(--font-heading);
 		font-weight: 600;
 		letter-spacing: 0;
 	}
@@ -188,7 +202,7 @@ const base = Astro.site?.pathname || '/';
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		font-family: 'Inter', sans-serif;
+		font-family: var(--font-body);
 		font-size: 0.98rem;
 		font-weight: 500;
 		min-height: 48px;
@@ -221,6 +235,13 @@ const base = Astro.site?.pathname || '/';
 
 	.hero-image-card {
 		aspect-ratio: 4 / 5;
+	}
+
+	.hero-image-card picture,
+	.about-image picture {
+		display: block;
+		height: 100%;
+		width: 100%;
 	}
 
 	.hero-image-card img,
@@ -268,7 +289,7 @@ const base = Astro.site?.pathname || '/';
 
 	.info-card h3 {
 		color: #263f35;
-		font-family: 'DM Sans', sans-serif;
+		font-family: var(--font-heading);
 		font-size: 1.35rem;
 		margin: 0 0 14px;
 	}
