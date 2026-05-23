@@ -6,8 +6,8 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://eenokr.github.io',
-	base: '/keila.advent.ee',
+	site: 'https://keila-advent.vercel.app', // ← muuda oma Verceli URL-iks
+	// base: '/keila.advent.ee', ← EEMALDATUD
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{
