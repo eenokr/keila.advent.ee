@@ -1,495 +1,372 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
 <html lang="et">
-  <head>
-    <BaseHead title="Keila Adventkogudus" description="Keila Adventkoguduse ametlik lehekülg" />
-  </head>
-  <body>
-    <Header />
-    <main class="page-wrapper">
-      <!-- Hero section -->
-      <section class="hero-section">
-        <div class="hero-container">
-          <h2 class="hero-banner">Jaga Hooli Mine</h2>
-          <div class="hero-taglines">
-            <h1 class="hero-main">Tunne Jumala ligiolu.</h1>
-            <h1 class="hero-main">Saa osa perekonnast.</h1>
-            <h2 class="hero-subtitle">Ühine meiega laupäeviti kell 11:00</h2>
-          </div>
-        </div>
-      </section>
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main class="page-wrapper">
+			<section class="hero-section" id="home">
+				<div class="hero-content">
+					<div class="hero-copy">
+						<p class="eyebrow">Keila Adventkogudus</p>
+						<h1>Oled oodatud meiega Jumalat teenima.</h1>
+						<p class="hero-intro">
+							Tule laupäeval kogudusse, et kuulata Jumala sõna, palvetada ja olla koos
+							inimestega, kes soovivad kasvada usus ja armastuses.
+						</p>
+						<div class="hero-actions">
+							<a class="button primary" href="#services">Jumalateenistused</a>
+							<a class="button secondary" href="#contact">Võta ühendust</a>
+						</div>
+					</div>
+					<div class="hero-image-card">
+						<img
+							src="/images/kiriku-pilt.jpg"
+							alt="Keila adventkoguduse hoone väljast"
+							loading="eager"
+						/>
+					</div>
+				</div>
+			</section>
 
-      <!-- CTA Section -->
-      <section class="cta-section">
-        <div class="cta-container">
-          <a href="#contact" class="cta-button">VÕTA ÜHENDUST</a>
-          <div class="social-icons">
-            <a href="https://facebook.com" target="_blank" aria-label="Facebook">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-              </svg>
-            </a>
-            <a href="https://instagram.com" target="_blank" aria-label="Instagram">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4a4 4 0 110 8 4 4 0 010-8zm6 2a1 1 0 110-2 1 1 0 010 2z"/>
-              </svg>
-            </a>
-            <a href="https://youtube.com" target="_blank" aria-label="YouTube">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </section>
+			<section class="info-section" id="services">
+				<div class="section-inner">
+					<div class="section-heading">
+						<p class="eyebrow">Kohtume laupäeviti</p>
+						<h2>Jumalateenistus ja piiblitund</h2>
+					</div>
+					<div class="info-grid">
+						<article class="info-card">
+							<h3>Jumalateenistus</h3>
+							<p>
+								Ootame sind laupäeviti kell 11.00 ühisele teenistusele, kus on laul,
+								palve ja sõnum Piiblist.
+							</p>
+						</article>
+						<article class="info-card">
+							<h3>Piibli uurimine</h3>
+							<p>
+								Enne teenistust võtame aega, et koos Piiblit avada ja üksteise mõtteid
+								kuulata.
+							</p>
+						</article>
+						<article class="info-card">
+							<h3>Kogukond</h3>
+							<p>
+								Meie koguduses on ruumi küsimustele, palvele ja sõbralikule osadusele.
+							</p>
+						</article>
+					</div>
+				</div>
+			</section>
 
-      <!-- Main content section -->
-      <section class="content-section">
-        <div class="content-wrapper">
-          <div class="content-text">
-            <h2 class="content-title">Keila koguduses</h2>
-            <h3 class="content-subtitle">Käime üheskoos</h3>
-            <p class="content-description">
-              Oleme avatud perekond, kes jagab ühist usupõhimõtteid ja kogukonna vaimu.
-              Meie ühiskogunemistel jagame Jumala sõna ja anname üksteisele toetust.
-            </p>
-            <a href="#visits" class="content-button">Külasta meid</a>
-          </div>
-          <div class="content-image">
-            <div class="image-wrapper">
-              <img src="/community.svg" alt="Kogudus" />
-            </div>
-          </div>
-        </div>
-      </section>
+			<section class="about-section" id="about">
+				<div class="about-grid">
+					<div class="about-image">
+						<img src="/images/ulistus.jpg" alt="Koguduse ülistus ja laulmine teenistusel" />
+					</div>
+					<div class="about-copy">
+						<p class="eyebrow">Meist</p>
+						<h2>Väike kogudus, avatud süda.</h2>
+						<p>
+							Keila Adventkogudus on kristlik kogukond, kus soovime koos õppida tundma
+							Jeesust, toetada üksteist ja teenida oma linna heaga.
+						</p>
+						<p>
+							Sa ei pea kõike teadma ega oskama. Tule nii, nagu oled. Meil on hea meel sind
+							näha.
+						</p>
+					</div>
+				</div>
+			</section>
 
-      <!-- Featured person section -->
-      <section class="featured-section">
-        <div class="featured-wrapper">
-          <div class="featured-image">
-            <div class="image-wrapper featured-image-wrapper">
-              <img src="/worker.svg" alt="Töölane" />
-            </div>
-          </div>
-          <div class="featured-text">
-            <h2 class="featured-title">Tutvu meie</h2>
-            <h3 class="featured-subtitle">Töölisega</h3>
-            <p class="featured-description">
-              Meie kogudus on vedanud arenenud elu ning töö koguduse liikmetega.
-              Oleme tänulikud juhendajate ja tööliste eest, kes jagavad Jumala armastust.
-            </p>
-            <a href="#workers" class="featured-button">Tutvu lähemalt</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Footer CTA -->
-      <section class="footer-cta-section">
-        <div class="footer-cta-wrapper">
-          <a href="#contact" class="footer-cta-button primary">VÕTA ÜHENDUST</a>
-          <a href="#map" class="footer-cta-button secondary">LEIA MEID KAARDILT</a>
-        </div>
-      </section>
-    </main>
-    <Footer />
-  </body>
+			<section class="visit-section" id="contact">
+				<div class="visit-inner">
+					<div>
+						<p class="eyebrow">Külasta meid</p>
+						<h2>Oled alati teretulnud.</h2>
+					</div>
+					<div class="visit-details">
+						<p><strong>Aeg:</strong> laupäeviti kell 11.00</p>
+						<p><strong>Koht:</strong> Keila, Harjumaa</p>
+						<p><strong>Kontakt:</strong> info@keila.ee</p>
+					</div>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
 </html>
 
 <style>
-  :global(body) {
-    margin: 0;
-    padding: 0;
-    font-family: 'Open Sans', sans-serif;
-    background: #f1f1f0;
-    color: #333;
-  }
+	:global(body) {
+		background: #f7f4ef;
+		color: #2f2f2f;
+	}
 
-  .page-wrapper {
-    width: 100%;
-  }
+	.page-wrapper {
+		width: 100%;
+	}
 
-  /* Hero Section */
-  .hero-section {
-    background: #f1f1f0;
-    padding: 120px 20px 80px;
-    text-align: left;
-  }
+	.hero-section {
+		background: linear-gradient(180deg, #f7f4ef 0%, #ffffff 100%);
+		padding: 82px 20px 72px;
+	}
 
-  .hero-container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+	.hero-content,
+	.section-inner,
+	.about-grid,
+	.visit-inner {
+		max-width: 1180px;
+		margin: 0 auto;
+	}
 
-  .hero-banner {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin: 0 0 60px;
-    color: #898989;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
+	.hero-content {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(340px, 0.9fr);
+		gap: 56px;
+		align-items: center;
+	}
 
-  .hero-taglines {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
+	.hero-copy {
+		max-width: 680px;
+	}
 
-  .hero-main {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 5rem;
-    font-weight: 500;
-    margin: 0;
-    color: #000000;
-    line-height: 1.1;
-    text-transform: uppercase;
-  }
+	.eyebrow {
+		color: #6d7f62;
+		font-family: 'Cabin', sans-serif;
+		font-size: 0.9rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		margin: 0 0 16px;
+		text-transform: uppercase;
+	}
 
-  .hero-subtitle {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin: 20px 0 0;
-    color: #898989;
-    line-height: 1.4;
-  }
+	.hero-copy h1,
+	.section-heading h2,
+	.about-copy h2,
+	.visit-inner h2 {
+		color: #252525;
+		font-family: 'DM Sans', sans-serif;
+		font-weight: 600;
+		letter-spacing: 0;
+	}
 
-  /* CTA Section */
-  .cta-section {
-    background: #f1f1f0;
-    padding: 60px 20px;
-  }
+	.hero-copy h1 {
+		font-size: clamp(2.7rem, 6vw, 5rem);
+		line-height: 1.04;
+		margin: 0;
+	}
 
-  .cta-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 60px;
-  }
+	.hero-intro {
+		color: #55514b;
+		font-size: 1.15rem;
+		line-height: 1.75;
+		margin: 28px 0 0;
+		max-width: 610px;
+	}
 
-  .cta-button {
-    background: #2F557F;
-    border: 2px solid #2F557F;
-    border-radius: 5px;
-    padding: 18px 50px;
-    color: #FFFFFF;
-    text-decoration: none;
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-  }
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px;
+		margin-top: 34px;
+	}
 
-  .cta-button:hover {
-    background: #1e3a54;
-    border-color: #1e3a54;
-  }
+	.button {
+		border: 1px solid #2f557f;
+		border-radius: 6px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-family: 'Inter', sans-serif;
+		font-size: 0.98rem;
+		font-weight: 500;
+		min-height: 48px;
+		padding: 0 24px;
+		text-decoration: none;
+	}
 
-  .social-icons {
-    display: flex;
-    gap: 15px;
-    justify-content: flex-end;
-  }
+	.button.primary {
+		background: #2f557f;
+		color: #ffffff;
+	}
 
-  .social-icons a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 45px;
-    background: #505050;
-    color: #FFFFFF;
-    transition: background 0.3s ease;
-    text-decoration: none;
-    border-radius: 4px;
-  }
+	.button.secondary {
+		background: transparent;
+		color: #2f557f;
+	}
 
-  .social-icons a:hover {
-    background: #333;
-  }
+	.button:hover {
+		border-color: #213d5f;
+		color: #ffffff;
+		background: #213d5f;
+	}
 
-  /* Content Section */
-  .content-section {
-    padding: 100px 20px;
-    background: #000000;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%23000000" width="100" height="100"/><circle cx="10" cy="10" r="1" fill="%23333333" opacity="0.3"/></svg>');
-    background-size: 100px 100px;
-  }
+	.hero-image-card,
+	.about-image {
+		border-radius: 8px;
+		overflow: hidden;
+		box-shadow: 0 24px 70px rgba(55, 48, 39, 0.14);
+	}
 
-  .content-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
+	.hero-image-card {
+		aspect-ratio: 4 / 5;
+	}
 
-  .content-text {
-    order: 1;
-  }
+	.hero-image-card img,
+	.about-image img {
+		height: 100%;
+		object-fit: cover;
+		width: 100%;
+	}
 
-  .content-image {
-    order: 2;
-  }
+	.info-section,
+	.about-section,
+	.visit-section {
+		padding: 78px 20px;
+	}
 
-  .content-title {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 3.5rem;
-    font-weight: 500;
-    margin: 0 0 20px;
-    color: #FFFFFF;
-    text-transform: uppercase;
-  }
+	.info-section {
+		background: #ffffff;
+	}
 
-  .content-subtitle {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 2rem;
-    font-weight: 500;
-    margin: 0 0 30px;
-    color: #FFFFFF;
-  }
+	.section-heading {
+		max-width: 720px;
+	}
 
-  .content-description {
-    font-size: 1rem;
-    line-height: 1.8;
-    margin: 0 0 40px;
-    color: #CCCCCC;
-  }
+	.section-heading h2,
+	.about-copy h2,
+	.visit-inner h2 {
+		font-size: clamp(2rem, 4vw, 3.25rem);
+		line-height: 1.12;
+		margin: 0;
+	}
 
-  .content-button {
-    display: inline-block;
-    background: #2F557F;
-    border: 2px solid #2F557F;
-    border-radius: 5px;
-    padding: 18px 50px;
-    color: #FFFFFF;
-    text-decoration: none;
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-  }
+	.info-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 18px;
+		margin-top: 38px;
+	}
 
-  .content-button:hover {
-    background: #1e3a54;
-    border-color: #1e3a54;
-  }
+	.info-card {
+		background: #f7f4ef;
+		border: 1px solid #e7dfd4;
+		border-radius: 8px;
+		padding: 28px;
+	}
 
-  .image-wrapper {
-    width: 100%;
-    height: 500px;
-    background: #f1f1f0;
-    border-radius: 20px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+	.info-card h3 {
+		color: #263f35;
+		font-family: 'DM Sans', sans-serif;
+		font-size: 1.35rem;
+		margin: 0 0 14px;
+	}
 
-  .image-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+	.info-card p,
+	.about-copy p,
+	.visit-details p {
+		color: #55514b;
+		font-size: 1rem;
+		line-height: 1.75;
+		margin: 0;
+	}
 
-  /* Featured Section */
-  .featured-section {
-    background: #f1f1f0;
-    padding: 100px 20px;
-  }
+	.about-section {
+		background: #f7f4ef;
+	}
 
-  .featured-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
+	.about-grid {
+		display: grid;
+		grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1fr);
+		gap: 58px;
+		align-items: center;
+	}
 
-  .featured-text {
-    order: 2;
-  }
+	.about-image {
+		aspect-ratio: 5 / 4;
+	}
 
-  .featured-image {
-    order: 1;
-  }
+	.about-copy p {
+		margin-top: 22px;
+	}
 
-  .featured-image-wrapper {
-    height: 500px;
-  }
+	.visit-section {
+		background: #263f35;
+		color: #ffffff;
+	}
 
-  .featured-title {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 3.5rem;
-    font-weight: 500;
-    margin: 0 0 20px;
-    color: #000000;
-    text-transform: uppercase;
-  }
+	.visit-inner {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(280px, 0.65fr);
+		gap: 48px;
+		align-items: start;
+	}
 
-  .featured-subtitle {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 2rem;
-    font-weight: 500;
-    margin: 0 0 30px;
-    color: #333;
-  }
+	.visit-section .eyebrow,
+	.visit-inner h2,
+	.visit-details p {
+		color: #ffffff;
+	}
 
-  .featured-description {
-    font-size: 1rem;
-    line-height: 1.8;
-    margin: 0 0 40px;
-    color: #555;
-  }
+	.visit-details {
+		background: rgba(255, 255, 255, 0.09);
+		border: 1px solid rgba(255, 255, 255, 0.16);
+		border-radius: 8px;
+		padding: 28px;
+	}
 
-  .featured-button {
-    display: inline-block;
-    background: #2F557F;
-    border: 2px solid #2F557F;
-    border-radius: 5px;
-    padding: 18px 50px;
-    color: #FFFFFF;
-    text-decoration: none;
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-  }
+	.visit-details p + p {
+		margin-top: 12px;
+	}
 
-  .featured-button:hover {
-    background: #1e3a54;
-    border-color: #1e3a54;
-  }
+	@media (max-width: 860px) {
+		.hero-section {
+			padding: 52px 18px 54px;
+		}
 
-  /* Footer CTA Section */
-  .footer-cta-section {
-    background: #f1f1f0;
-    padding: 80px 20px;
-  }
+		.hero-content,
+		.about-grid,
+		.visit-inner {
+			grid-template-columns: 1fr;
+			gap: 34px;
+		}
 
-  .footer-cta-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-  }
+		.hero-image-card {
+			aspect-ratio: 16 / 11;
+		}
 
-  .footer-cta-button {
-    background: #2F557F;
-    border: 2px solid #2F557F;
-    border-radius: 5px;
-    padding: 18px 50px;
-    color: #FFFFFF;
-    text-decoration: none;
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    display: inline-block;
-  }
+		.info-section,
+		.about-section,
+		.visit-section {
+			padding: 56px 18px;
+		}
 
-  .footer-cta-button:hover {
-    background: #1e3a54;
-    border-color: #1e3a54;
-  }
+		.info-grid {
+			grid-template-columns: 1fr;
+		}
 
-  .footer-cta-button.secondary {
-    background: transparent;
-    border-color: #333;
-    color: #333;
-  }
+		.info-card {
+			padding: 24px;
+		}
+	}
 
-  .footer-cta-button.secondary:hover {
-    background: #333;
-    color: #FFFFFF;
-  }
+	@media (max-width: 520px) {
+		.hero-copy h1 {
+			font-size: 2.35rem;
+		}
 
-  /* Animations */
-  @keyframes slideInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .hero-banner {
-      font-size: 1.8rem;
-      margin-bottom: 40px;
-    }
-
-    .hero-main {
-      font-size: 2.5rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.1rem;
-    }
-
-    .content-wrapper,
-    .featured-wrapper {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-
-    .content-text {
-      order: 1;
-    }
-
-    .content-image {
-      order: 2;
-    }
-
-    .featured-text {
-      order: 1;
-    }
-
-    .featured-image {
-      order: 2;
-    }
-
-    .cta-container {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .social-icons {
-      justify-content: center;
-    }
-
-    .content-title,
-    .featured-title {
-      font-size: 2rem;
-    }
-
-    .content-subtitle,
-    .featured-subtitle {
-      font-size: 1.4rem;
-    }
-
-    .image-wrapper {
-      height: 300px;
-    }
-
-    .hero-section {
-      padding: 60px 20px 40px;
-    }
-  }
+		.hero-actions,
+		.button {
+			width: 100%;
+		}
+	}
 </style>
