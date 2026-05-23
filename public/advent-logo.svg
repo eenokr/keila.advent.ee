@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#D4B5A0" stroke="#333" stroke-width="2"/>
+  
+  <!-- Four candles -->
+  <!-- First candle (top-left) -->
+  <rect x="30" y="40" width="20" height="40" fill="#8B4513" stroke="#333" stroke-width="1"/>
+  <ellipse cx="40" cy="40" rx="10" ry="5" fill="#D4B5A0" stroke="#333" stroke-width="1"/>
+  <circle cx="40" cy="38" r="6" fill="#FFD700"/>
+  <path d="M 40 38 Q 38 25 42 20" stroke="#FFA500" stroke-width="2" fill="none"/>
+  
+  <!-- Second candle (top-right) -->
+  <rect x="150" y="40" width="20" height="40" fill="#8B4513" stroke="#333" stroke-width="1"/>
+  <ellipse cx="160" cy="40" rx="10" ry="5" fill="#D4B5A0" stroke="#333" stroke-width="1"/>
+  <circle cx="160" cy="38" r="6" fill="#FFD700"/>
+  <path d="M 160 38 Q 158 25 162 20" stroke="#FFA500" stroke-width="2" fill="none"/>
+  
+  <!-- Third candle (bottom-left) -->
+  <rect x="30" y="120" width="20" height="40" fill="#8B4513" stroke="#333" stroke-width="1"/>
+  <ellipse cx="40" cy="120" rx="10" ry="5" fill="#D4B5A0" stroke="#333" stroke-width="1"/>
+  <circle cx="40" cy="118" r="6" fill="#FFD700"/>
+  <path d="M 40 118 Q 38 105 42 100" stroke="#FFA500" stroke-width="2" fill="none"/>
+  
+  <!-- Fourth candle (bottom-right) -->
+  <rect x="150" y="120" width="20" height="40" fill="#8B4513" stroke="#333" stroke-width="1"/>
+  <ellipse cx="160" cy="120" rx="10" ry="5" fill="#D4B5A0" stroke="#333" stroke-width="1"/>
+  <circle cx="160" cy="118" r="6" fill="#FFD700"/>
+  <path d="M 160 118 Q 158 105 162 100" stroke="#FFA500" stroke-width="2" fill="none"/>
+  
+  <!-- Center candle -->
+  <rect x="90" y="50" width="20" height="80" fill="#8B4513" stroke="#333" stroke-width="1"/>
+  <ellipse cx="100" cy="50" rx="10" ry="5" fill="#D4B5A0" stroke="#333" stroke-width="1"/>
+  <circle cx="100" cy="48" r="7" fill="#FFD700"/>
+  <path d="M 100 48 Q 98 30 102 15" stroke="#FFA500" stroke-width="2.5" fill="none"/>
+  
+  <!-- "Advent" text -->
+  <text x="100" y="170" font-size="24" font-weight="bold" text-anchor="middle" fill="#333" font-family="Arial, sans-serif">ADVENT</text>
+</svg>

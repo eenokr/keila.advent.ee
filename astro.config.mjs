@@ -6,7 +6,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://eenokr.github.io',
+	site: 'https://eenokr.github.io/keila.advent.ee',
 	base: '/keila.advent.ee',
 	integrations: [mdx(), sitemap()],
 	fonts: [
