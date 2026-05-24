@@ -6,8 +6,6 @@ import Header from '../components/Header.astro';
 import heroImage from '../assets/images/kiriku-pilt.jpg';
 import worshipImage from '../assets/images/ulistus.jpg';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-
-const base = import.meta.env.BASE_URL;
 ---
 
 <html lang="et">
@@ -27,19 +25,19 @@ const base = import.meta.env.BASE_URL;
 							inimestega, kes soovivad kasvada usus ja armastuses.
 						</p>
 						<div class="hero-actions">
-							<a class="button primary" href={`${base}#services`}>Jumalateenistused</a>
-							<a class="button secondary" href={`${base}#contact`}>Võta ühendust</a>
+							<a class="button primary" href="#services">Jumalateenistused</a>
+							<a class="button secondary" href="#contact">Võta ühendust</a>
 						</div>
 					</div>
 					<div class="hero-image-card">
 						<Picture
 							src={heroImage}
 							formats={['avif', 'webp']}
-							widths={[480, 720, 960, 1200]}
+							widths={[480, 720, 960, 1200, 1600]}
 							sizes="(max-width: 860px) calc(100vw - 36px), min(42vw, 500px)"
 							alt="Keila adventkoguduse hoone väljast"
 							loading="eager"
-							fetchpriority="high"
+							quality={85}
 						/>
 					</div>
 				</div>
@@ -82,10 +80,11 @@ const base = import.meta.env.BASE_URL;
 						<Picture
 							src={worshipImage}
 							formats={['avif', 'webp']}
-							widths={[480, 720, 960, 1200]}
+							widths={[480, 720, 960, 1200, 1600]}
 							sizes="(max-width: 860px) calc(100vw - 36px), min(43vw, 530px)"
 							alt="Koguduse ülistus ja laulmine teenistusel"
 							loading="lazy"
+							quality={85}
 						/>
 					</div>
 					<div class="about-copy">
