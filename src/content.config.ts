@@ -20,7 +20,19 @@ const homepage = defineCollection({
 		buttons: z.array(buttonSchema).optional(),
 		cards: z.array(z.object({ title: z.string(), description: z.string() })).optional(),
 		categories: z.array(z.string()).optional(),
+		categoriesLabel: z.string().optional(),
+		groups: z
+			.array(
+				z.object({
+					key: z.enum(['articles', 'sermons', 'health']),
+					eyebrow: z.string(),
+					title: z.string(),
+				}),
+			)
+			.optional(),
+		formatsLabel: z.string().optional(),
 		themes: z.array(z.string()).optional(),
+		themesLabel: z.string().optional(),
 		order: z.number().default(0),
 	}),
 });
@@ -64,6 +76,15 @@ const contact = defineCollection({
 		title: z.string(),
 		eyebrow: z.string().optional(),
 		description: z.string().optional(),
+		cardTitle: z.string(),
+		fields: z.object({
+			serviceTime: z.string(),
+			bibleStudyTime: z.string(),
+			address: z.string(),
+			pastor: z.string(),
+			phone: z.string(),
+			email: z.string(),
+		}),
 		serviceTime: z.string(),
 		bibleStudyTime: z.string(),
 		address: z.string(),
@@ -89,10 +110,14 @@ const site = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
+		logoImage: z.string(),
+		logoAlt: z.string(),
+		headerCta: z.object({ text: z.string(), href: z.string() }),
 		footerText: z.string(),
 		footerContact: z.string(),
+		footerCopyright: z.string(),
 		nav: z.array(z.object({ label: z.string(), href: z.string() })),
-		socials: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
+		socials: z.array(z.object({ label: z.string(), href: z.string(), type: z.enum(['facebook', 'instagram', 'youtube']) })).default([]),
 	}),
 });
 

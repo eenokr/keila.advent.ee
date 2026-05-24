@@ -1,8 +1,14 @@
 ---
 title: "Keila Adventkogudus"
 description: "Keila Adventkoguduse koduleht ja jumalateenistuste info."
+logoImage: "logo.png"
+logoAlt: "Keila Adventkogudus"
+headerCta:
+  text: "Võta ühendust"
+  href: "#contact"
 footerText: "Seitsmenda Päeva Adventistide Keila kogudus"
 footerContact: "Keila, Harjumaa"
+footerCopyright: "Kõik õigused reserveeritud."
 nav:
   - label: "Avaleht"
     href: "/"
@@ -15,4 +21,11 @@ nav:
 socials:
   - label: "Keila Adventkogudus Facebookis"
     href: "https://www.facebook.com/KeilaSPA/"
+    type: "facebook"
+  - label: "Instagram"
+    href: "https://instagram.com"
+    type: "instagram"
+  - label: "YouTube"
+    href: "https://youtube.com"
+    type: "youtube"
 ---

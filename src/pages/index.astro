@@ -1,12 +1,19 @@
 ---
 import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import ContentCard from '../components/ContentCard.astro';
+import CtaButton from '../components/CtaButton.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import heroImage from '../assets/images/kiriku-pilt.jpg';
-import worshipImage from '../assets/images/ulistus.jpg';
+import InfoCard from '../components/InfoCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+
+const imageModules = import.meta.glob<ImageMetadata>('../assets/images/*', {
+	eager: true,
+	import: 'default',
+});
 
 const homepageEntries = await getCollection('homepage');
 const homepage = Object.fromEntries(homepageEntries.map((entry) => [entry.id, entry.data]));
@@ -31,18 +38,28 @@ const app = homepage.app;
 const contactInfo = contact.data;
 const articleCards = articles.filter((entry) => entry.data.category !== 'Tervis');
 const healthCards = articles.filter((entry) => entry.data.category === 'Tervis');
-const imageAssets = {
-	'kiriku-pilt.jpg': heroImage,
-	'ulistus.jpg': worshipImage,
-};
 
-const heroAsset = hero.image ? imageAssets[hero.image] : heroImage;
-const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
+function getImage(filename?: string) {
+	if (!filename) return undefined;
+
+	return imageModules[`../assets/images/${filename}`];
+}
+
+function getResourceEntries(key: string) {
+	if (key === 'articles') return articleCards;
+	if (key === 'sermons') return sermons;
+	if (key === 'health') return healthCards;
+
+	return [];
+}
+
+const heroAsset = getImage(hero.image);
+const aboutAsset = getImage(about.image);
 ---
 
 <html lang="et">
 	<head>
-		<BaseHead title={site.title} description={site.description} siteTitle={site.title} image={heroImage} />
+		<BaseHead title={site.title} description={site.description} siteTitle={site.title} image={heroAsset} />
 	</head>
 	<body>
 		<Header />
@@ -55,38 +72,32 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 						<p class="hero-intro">{hero.description}</p>
 						<div class="hero-actions">
 							{hero.buttons?.map((button) => (
-								<a class={`button ${button.variant}`} href={button.link}>{button.text}</a>
+								<CtaButton {...button} />
 							))}
 						</div>
 					</div>
-					<div class="hero-image-card">
-						<Picture
-							src={heroAsset}
-							formats={['webp']}
-							widths={[640, 960, 1200]}
-							sizes="(max-width: 860px) calc(100vw - 36px), min(42vw, 500px)"
-							alt={hero.imageAlt ?? ''}
-							width="6000"
-							height="4000"
-							loading="eager"
-							quality={85}
-						/>
-					</div>
+					{heroAsset && (
+						<div class="hero-image-card">
+							<Picture
+								src={heroAsset}
+								formats={['webp']}
+								widths={[640, 960, 1200]}
+								sizes="(max-width: 860px) calc(100vw - 36px), min(42vw, 500px)"
+								alt={hero.imageAlt ?? ''}
+								loading="eager"
+								quality={85}
+							/>
+						</div>
+					)}
 				</div>
 			</section>
 
 			<section class="info-section" id="services">
 				<div class="section-inner">
-					<div class="section-heading">
-						<p class="eyebrow">{services.eyebrow}</p>
-						<h2>{services.title}</h2>
-					</div>
+					<SectionHeading eyebrow={services.eyebrow} title={services.title} />
 					<div class="info-grid">
 						{services.cards?.map((card) => (
-							<article class="info-card">
-								<h3>{card.title}</h3>
-								<p>{card.description}</p>
-							</article>
+							<InfoCard {...card} />
 						))}
 					</div>
 				</div>
@@ -94,17 +105,19 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 
 			<section class="about-section" id="about">
 				<div class="about-grid">
-					<div class="about-image">
-						<Picture
-							src={aboutAsset}
-							formats={['webp']}
-							widths={[640, 960, 1200]}
-							sizes="(max-width: 860px) calc(100vw - 36px), min(43vw, 530px)"
-							alt={about.imageAlt ?? ''}
-							loading="lazy"
-							quality={85}
-						/>
-					</div>
+					{aboutAsset && (
+						<div class="about-image">
+							<Picture
+								src={aboutAsset}
+								formats={['webp']}
+								widths={[640, 960, 1200]}
+								sizes="(max-width: 860px) calc(100vw - 36px), min(43vw, 530px)"
+								alt={about.imageAlt ?? ''}
+								loading="lazy"
+								quality={85}
+							/>
+						</div>
+					)}
 					<div class="about-copy">
 						<p class="eyebrow">{about.eyebrow}</p>
 						<h2>{about.title}</h2>
@@ -115,92 +128,43 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 
 			<section class="facebook-section" id="facebook">
 				<div class="section-inner social-panel">
-					<div class="section-heading">
-						<p class="eyebrow">{facebook.eyebrow}</p>
-						<h2>{facebook.title}</h2>
-						<p class="section-description">{facebook.description}</p>
-					</div>
+					<SectionHeading eyebrow={facebook.eyebrow} title={facebook.title} description={facebook.description} />
 					{facebook.buttons?.map((button) => (
-						<a
-							class={`button ${button.variant}`}
-							href={button.link}
-							target={button.external ? '_blank' : undefined}
-							rel={button.external ? 'noopener noreferrer' : undefined}
-							aria-label={button.ariaLabel}
-						>
-							{button.text}
-						</a>
+						<CtaButton {...button} />
 					))}
 				</div>
 			</section>
 
 			<section class="resources-section" id="materjalid">
 				<div class="section-inner">
-					<div class="section-heading">
-						<p class="eyebrow">{resources.eyebrow}</p>
-						<h2>{resources.title}</h2>
-						<p class="section-description">{resources.description}</p>
-					</div>
+					<SectionHeading eyebrow={resources.eyebrow} title={resources.title} description={resources.description} />
 
-					<ul class="category-list" aria-label="Materjalide kategooriad">
+					<ul class="category-list" aria-label={resources.categoriesLabel}>
 						{resources.categories?.map((category) => <li>{category}</li>)}
 					</ul>
 
 					<div class="resource-groups">
-						<article class="resource-group">
-							<div class="resource-group-heading">
-								<p class="eyebrow">Artiklid</p>
-								<h3>Lugemiseks ja mõtisklemiseks</h3>
-							</div>
-							<div class="resource-card-grid">
-								{articleCards.map((entry) => (
-									<ContentCard
-										title={entry.data.title}
-										label={entry.data.category}
-										href={`articles/${entry.id}/`}
-									/>
-								))}
-							</div>
-						</article>
+						{resources.groups?.map((group) => (
+							<article class="resource-group">
+								<div class="resource-group-heading">
+									<p class="eyebrow">{group.eyebrow}</p>
+									<h3>{group.title}</h3>
+								</div>
+								<div class="resource-card-grid compact">
+									{getResourceEntries(group.key).map((entry) => (
+										<ContentCard
+											title={entry.data.title}
+											label={entry.data.category}
+											href={`${group.key === 'sermons' ? 'sermons' : 'articles'}/${entry.id}/`}
+										/>
+									))}
+								</div>
+							</article>
+						))}
 
-						<article class="resource-group">
-							<div class="resource-group-heading">
-								<p class="eyebrow">Audio</p>
-								<h3>Jutlused ja kuulamiseks mõeldud mõtted</h3>
-							</div>
-							<div class="resource-card-grid compact">
-								{sermons.map((entry) => (
-									<ContentCard
-										title={entry.data.title}
-										label={entry.data.category}
-										href={`sermons/${entry.id}/`}
-									/>
-								))}
-							</div>
-						</article>
-
-						<article class="resource-group">
-							<div class="resource-group-heading">
-								<p class="eyebrow">Tervis</p>
-								<h3>Terviseartiklid</h3>
-							</div>
-							<div class="resource-card-grid compact">
-								{healthCards.map((entry) => (
-									<ContentCard
-										title={entry.data.title}
-										label={entry.data.category}
-										href={`articles/${entry.id}/`}
-									/>
-								))}
-							</div>
-						</article>
-
-						<div class="format-grid" aria-label="Lisamaterjalide tüübid">
+						<div class="format-grid" aria-label={resources.formatsLabel}>
 							{ministryItems.map((entry) => (
-								<article class="info-card">
-									<h3>{entry.data.title}</h3>
-									<p>{entry.data.description}</p>
-								</article>
+								<InfoCard title={entry.data.title} description={entry.data.description} />
 							))}
 						</div>
 					</div>
@@ -213,18 +177,13 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 						<p class="eyebrow">{course.eyebrow}</p>
 						<h2>{course.title}</h2>
 						<p class="section-description">{course.description}</p>
-						{course.buttons?.map((button) => (
-							<a
-								class={`button ${button.variant}`}
-								href={button.link}
-								target={button.external ? '_blank' : undefined}
-								rel={button.external ? 'noopener noreferrer' : undefined}
-							>
-								{button.text}
-							</a>
-						))}
+						<div class="course-actions">
+							{course.buttons?.map((button) => (
+								<CtaButton {...button} />
+							))}
+						</div>
 					</div>
-					<ul class="theme-list" aria-label="Usk ja elu kursuse teemad">
+					<ul class="theme-list" aria-label={course.themesLabel}>
 						{course.themes?.map((theme) => <li>{theme}</li>)}
 					</ul>
 				</div>
@@ -238,14 +197,7 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 						<p class="section-description">{app.description}</p>
 					</div>
 					{app.buttons?.map((button) => (
-						<a
-							class={`button ${button.variant}`}
-							href={button.link}
-							target={button.external ? '_blank' : undefined}
-							rel={button.external ? 'noopener noreferrer' : undefined}
-						>
-							{button.text}
-						</a>
+						<CtaButton {...button} />
 					))}
 				</div>
 			</section>
@@ -258,14 +210,14 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 					</div>
 					<div class="contact-card">
 						<div class="visit-details">
-							<h3>Kontakt</h3>
-							<p><strong>Jumalateenistus:</strong> {contactInfo.serviceTime}</p>
-							<p><strong>Piiblitund:</strong> {contactInfo.bibleStudyTime}</p>
-							<p><strong>Aadress:</strong> {contactInfo.address}</p>
-							<p><strong>Pastor:</strong> {contactInfo.pastor}</p>
-							<p><strong>Telefon:</strong> <a href={`tel:${contactInfo.phoneHref}`}>{contactInfo.phone}</a></p>
+							<h3>{contactInfo.cardTitle}</h3>
+							<p><strong>{contactInfo.fields.serviceTime}:</strong> {contactInfo.serviceTime}</p>
+							<p><strong>{contactInfo.fields.bibleStudyTime}:</strong> {contactInfo.bibleStudyTime}</p>
+							<p><strong>{contactInfo.fields.address}:</strong> {contactInfo.address}</p>
+							<p><strong>{contactInfo.fields.pastor}:</strong> {contactInfo.pastor}</p>
+							<p><strong>{contactInfo.fields.phone}:</strong> <a href={`tel:${contactInfo.phoneHref}`}>{contactInfo.phone}</a></p>
 							<p>
-								<strong>E-post:</strong>
+								<strong>{contactInfo.fields.email}:</strong>
 								<a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
 							</p>
 						</div>
@@ -322,7 +274,6 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 	}
 
 	.hero-copy h1,
-	.section-heading h2,
 	.about-copy h2,
 	.visit-inner h2 {
 		color: #252525;
@@ -350,36 +301,6 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 		flex-wrap: wrap;
 		gap: 14px;
 		margin-top: 34px;
-	}
-
-	.button {
-		border: 1px solid #2f557f;
-		border-radius: 6px;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		font-family: var(--font-body);
-		font-size: 0.98rem;
-		font-weight: 500;
-		min-height: 48px;
-		padding: 0 24px;
-		text-decoration: none;
-	}
-
-	.button.primary {
-		background: #2f557f;
-		color: #ffffff;
-	}
-
-	.button.secondary {
-		background: transparent;
-		color: #2f557f;
-	}
-
-	.button:hover {
-		border-color: #213d5f;
-		color: #ffffff;
-		background: #213d5f;
 	}
 
 	.hero-image-card,
@@ -423,11 +344,6 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 		background: #ffffff;
 	}
 
-	.section-heading {
-		max-width: 720px;
-	}
-
-	.section-heading h2,
 	.about-copy h2,
 	.course-grid h2,
 	.app-card h2,
@@ -452,22 +368,6 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 		margin-top: 38px;
 	}
 
-	.info-card {
-		background: #f7f4ef;
-		border: 1px solid #e7dfd4;
-		border-radius: 8px;
-		padding: 28px;
-	}
-
-	.info-card h3 {
-		color: #263f35;
-		font-family: var(--font-heading);
-		font-size: 1.35rem;
-		margin: 0 0 14px;
-	}
-
-	.info-card p,
-	.resource-card h4,
 	.about-copy p,
 	.visit-details p {
 		color: #55514b;
@@ -559,31 +459,6 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 		gap: 18px;
 	}
 
-	.resource-card {
-		background: #f7f4ef;
-		border: 1px solid #e7dfd4;
-		border-radius: 8px;
-		min-height: 132px;
-		padding: 24px;
-	}
-
-	.resource-card span {
-		color: #6d7f62;
-		display: block;
-		font-size: 0.82rem;
-		font-weight: 700;
-		letter-spacing: 0.06em;
-		margin-bottom: 12px;
-		text-transform: uppercase;
-	}
-
-	.resource-card h4 {
-		color: #263f35;
-		font-family: var(--font-heading);
-		font-size: 1.14rem;
-		font-weight: 600;
-	}
-
 	.course-section {
 		background: #f7f4ef;
 	}
@@ -597,7 +472,7 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 		align-items: center;
 	}
 
-	.course-grid .button {
+	.course-actions {
 		margin-top: 32px;
 	}
 
@@ -708,10 +583,6 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 			grid-template-columns: 1fr;
 		}
 
-		.info-card {
-			padding: 24px;
-		}
-
 		.social-panel,
 		.app-card {
 			align-items: stretch;
@@ -733,8 +604,7 @@ const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 			font-size: 2.35rem;
 		}
 
-		.hero-actions,
-		.button {
+		.hero-actions {
 			width: 100%;
 		}
 	}

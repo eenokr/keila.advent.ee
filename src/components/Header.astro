@@ -1,11 +1,18 @@
 ---
 import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
 import logo from '../assets/images/logo.png';
 
 const base = import.meta.env.BASE_URL;
 const [siteEntry] = await getCollection('site');
-const navItems = siteEntry.data.nav;
+const site = siteEntry.data;
+const navItems = site.nav;
+const imageModules = import.meta.glob<ImageMetadata>('../assets/images/*', {
+	eager: true,
+	import: 'default',
+});
+const logoAsset = imageModules[`../assets/images/${site.logoImage}`] ?? logo;
 
 function withBase(href: string) {
 	if (href.startsWith('http')) return href;
@@ -21,9 +28,9 @@ function withBase(href: string) {
 		<div class="logo-container">
 			<a href={base} class="logo-link">
 				<Picture
-					src={logo}
+					src={logoAsset}
 					formats={['webp']}
-					alt="Keila Adventkogudus"
+					alt={site.logoAlt}
 					widths={[260, 520]}
 					sizes="260px"
 					class="logo-image"
@@ -39,7 +46,7 @@ function withBase(href: string) {
 			))}
 		</ul>
 		<div class="header-actions">
-			<a href={`${base}#contact`} class="header-cta">Võta ühendust</a>
+			<a href={withBase(site.headerCta.href)} class="header-cta">{site.headerCta.text}</a>
 		</div>
 	</nav>
 </header>
