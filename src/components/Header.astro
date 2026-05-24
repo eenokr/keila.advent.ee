@@ -73,16 +73,17 @@ function withBase(href: string) {
 		max-width: 1200px;
 		margin: 0 auto;
 		padding: 0 20px;
-		display: flex;
+		display: grid;
+		grid-template-columns: minmax(220px, 1fr) auto minmax(160px, 1fr);
 		align-items: center;
-		justify-content: space-between;
 		min-height: 88px;
 		font-family: var(--font-body);
-		gap: 12px;
+		column-gap: 16px;
 	}
 
 	.logo-container {
-		flex-shrink: 0;
+		justify-self: start;
+		min-width: 0;
 	}
 
 	.brand {
@@ -124,16 +125,16 @@ function withBase(href: string) {
 		list-style: none;
 		margin: 0;
 		padding: 0;
-		gap: 16px;
-		flex: 1;
-		justify-content: flex-end;
+		gap: 18px;
+		justify-content: center;
+		justify-self: center;
 		min-width: 0;
 	}
 
 	.nav-link {
 		text-decoration: none;
 		color: var(--color-text);
-		font-size: 0.82rem;
+		font-size: 0.95rem;
 		font-weight: 400;
 		text-transform: uppercase;
 		transition: color 0.3s ease;
@@ -148,7 +149,7 @@ function withBase(href: string) {
 	}
 
 	.header-actions {
-		flex-shrink: 0;
+		justify-self: end;
 	}
 
 	.header-cta {
@@ -174,8 +175,9 @@ function withBase(href: string) {
 	@media (max-width: 900px) {
 		.header-nav {
 			padding: 0 14px;
+			grid-template-columns: minmax(172px, 1fr) auto minmax(118px, 1fr);
 			min-height: 82px;
-			gap: 8px;
+			column-gap: 10px;
 		}
 
 		.brand {
@@ -196,11 +198,11 @@ function withBase(href: string) {
 		}
 
 		.nav-menu {
-			gap: 10px;
+			gap: 12px;
 		}
 
 		.nav-link {
-			font-size: 0.72rem;
+			font-size: 0.82rem;
 		}
 
 		.header-cta {
@@ -211,6 +213,8 @@ function withBase(href: string) {
 
 	@media (max-width: 620px) {
 		.header-nav {
+			grid-template-columns: auto auto;
+			justify-content: space-between;
 			min-height: 78px;
 		}
 
