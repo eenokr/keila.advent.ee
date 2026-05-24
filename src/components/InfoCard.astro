@@ -7,6 +7,12 @@ interface Props {
 }
 
 const { title, description, icon, iconAlt } = Astro.props;
+
+const iconSrc = icon
+	? icon.startsWith("/")
+		? `${import.meta.env.BASE_URL}${icon.slice(1)}`
+		: icon
+	: undefined;
 ---
 
 <article class="info-card">
