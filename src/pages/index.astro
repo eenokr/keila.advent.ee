@@ -103,13 +103,19 @@ const base = Astro.site?.pathname || '/';
 			<section class="visit-section" id="contact">
 				<div class="visit-inner">
 					<div>
-						<p class="eyebrow">Külasta meid</p>
-						<h2>Oled alati teretulnud.</h2>
+						<p class="eyebrow">Ootame sind laupäeviti</p>
+						<h2>Tule jumalateenistusele ja piiblitundi.</h2>
 					</div>
 					<div class="visit-details">
-						<p><strong>Aeg:</strong> laupäeviti kell 11.00</p>
-						<p><strong>Koht:</strong> Keila, Harjumaa</p>
-						<p><strong>Kontakt:</strong> info@keila.ee</p>
+						<p><strong>Jumalateenistus:</strong> kell 11.00</p>
+						<p><strong>Piiblitund:</strong> kell 12.00</p>
+						<p><strong>Aadress:</strong> Põllu 5, Keila</p>
+						<p><strong>Pastor:</strong> Marge Randlepp</p>
+						<p><strong>Telefon:</strong> <a href="tel:+37256562131">56 56 21 31</a></p>
+						<p>
+							<strong>E-post:</strong>
+							<a href="mailto:marge.randlepp@advent.ee">marge.randlepp@advent.ee</a>
+						</p>
 					</div>
 				</div>
 			</section>
@@ -313,7 +319,7 @@ const base = Astro.site?.pathname || '/';
 	}
 
 	.visit-section {
-		background: #263f35;
+		background: #2f557f;
 		color: #ffffff;
 	}
 
@@ -335,6 +341,16 @@ const base = Astro.site?.pathname || '/';
 		border: 1px solid rgba(255, 255, 255, 0.16);
 		border-radius: 8px;
 		padding: 28px;
+	}
+
+	.visit-details a {
+		color: #ffffff;
+		text-decoration-color: rgba(255, 255, 255, 0.58);
+		text-underline-offset: 3px;
+	}
+
+	.visit-details a:hover {
+		text-decoration-color: #ffffff;
 	}
 
 	.visit-details p + p {
