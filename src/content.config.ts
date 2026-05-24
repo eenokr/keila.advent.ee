@@ -26,7 +26,7 @@ const homepage = defineCollection({
 });
 
 const articles = defineCollection({
-	loader: glob({ base: './src/content/articles', pattern: '**/*.md' }),
+	loader: glob({ base: './src/content/articles', pattern: '**/*.{md,mdx}' }),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
@@ -38,7 +38,7 @@ const articles = defineCollection({
 });
 
 const sermons = defineCollection({
-	loader: glob({ base: './src/content/sermons', pattern: '**/*.md' }),
+	loader: glob({ base: './src/content/sermons', pattern: '**/*.{md,mdx}' }),
 	schema: z.object({
 		title: z.string(),
 		description: z.string().optional(),

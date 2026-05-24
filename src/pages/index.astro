@@ -32,8 +32,8 @@ const contactInfo = contact.data;
 const articleCards = articles.filter((entry) => entry.data.category !== 'Tervis');
 const healthCards = articles.filter((entry) => entry.data.category === 'Tervis');
 const imageAssets = {
-	'/images/kiriku-pilt.jpg': heroImage,
-	'/images/ulistus.jpg': worshipImage,
+	'kiriku-pilt.jpg': heroImage,
+	'ulistus.jpg': worshipImage,
 };
 
 const heroAsset = hero.image ? imageAssets[hero.image] : heroImage;
