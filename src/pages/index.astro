@@ -30,9 +30,11 @@ const base = Astro.site?.pathname || '/';
 					</div>
 					<div class="hero-image-card">
 						<img
-							src={`${base}images/kiriku-pilt.jpg`}
+							src={`${base}images/kiriku-pilt-hq.jpg`}
 							alt="Keila adventkoguduse hoone väljast"
 							loading="eager"
+							fetchpriority="high"
+							decoding="async"
 						/>
 					</div>
 				</div>
@@ -72,7 +74,12 @@ const base = Astro.site?.pathname || '/';
 			<section class="about-section" id="about">
 				<div class="about-grid">
 					<div class="about-image">
-						<img src={`${base}images/ulistus.jpg`} alt="Koguduse ülistus ja laulmine teenistusel" />
+						<img
+							src={`${base}images/ulistus-hq.jpg`}
+							alt="Koguduse ülistus ja laulmine teenistusel"
+							loading="lazy"
+							decoding="async"
+						/>
 					</div>
 					<div class="about-copy">
 						<p class="eyebrow">Meist</p>
