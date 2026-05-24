@@ -102,20 +102,22 @@ const base = Astro.site?.pathname || '/';
 
 			<section class="visit-section" id="contact">
 				<div class="visit-inner">
-					<div>
+					<div class="visit-copy">
 						<p class="eyebrow">Ootame sind laupäeviti</p>
 						<h2>Tule jumalateenistusele ja piiblitundi.</h2>
 					</div>
-					<div class="visit-details">
-						<p><strong>Jumalateenistus:</strong> kell 11.00</p>
-						<p><strong>Piiblitund:</strong> kell 12.00</p>
-						<p><strong>Aadress:</strong> Põllu 5, Keila</p>
-						<p><strong>Pastor:</strong> Marge Randlepp</p>
-						<p><strong>Telefon:</strong> <a href="tel:+37256562131">56 56 21 31</a></p>
-						<p>
-							<strong>E-post:</strong>
-							<a href="mailto:marge.randlepp@advent.ee">marge.randlepp@advent.ee</a>
-						</p>
+					<div class="contact-card">
+						<div class="visit-details">
+							<p><strong>Jumalateenistus:</strong> kell 11.00</p>
+							<p><strong>Piiblitund:</strong> kell 12.00</p>
+							<p><strong>Aadress:</strong> Põllu 5, Keila</p>
+							<p><strong>Pastor:</strong> Marge Randlepp</p>
+							<p><strong>Telefon:</strong> <a href="tel:+37256562131">56 56 21 31</a></p>
+							<p>
+								<strong>E-post:</strong>
+								<a href="mailto:marge.randlepp@advent.ee">marge.randlepp@advent.ee</a>
+							</p>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -330,6 +332,14 @@ const base = Astro.site?.pathname || '/';
 		align-items: start;
 	}
 
+	.visit-copy {
+		max-width: 560px;
+	}
+
+	.contact-card {
+		align-self: stretch;
+	}
+
 	.visit-section .eyebrow,
 	.visit-inner h2,
 	.visit-details p {
@@ -337,10 +347,11 @@ const base = Astro.site?.pathname || '/';
 	}
 
 	.visit-details {
-		background: rgba(255, 255, 255, 0.09);
-		border: 1px solid rgba(255, 255, 255, 0.16);
-		border-radius: 8px;
-		padding: 28px;
+		background: rgba(255, 255, 255, 0.12);
+		border: 1px solid rgba(255, 255, 255, 0.22);
+		border-radius: 16px;
+		box-shadow: 0 24px 48px rgba(0, 0, 0, 0.14);
+		padding: 34px;
 	}
 
 	.visit-details a {
