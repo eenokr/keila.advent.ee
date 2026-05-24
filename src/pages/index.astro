@@ -1,15 +1,54 @@
 ---
+import { Picture } from 'astro:assets';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import heroImage from '../assets/images/kiriku-pilt.jpg';
+import worshipImage from '../assets/images/ulistus.jpg';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const base = Astro.site?.pathname || '/';
+const contentCategories = [
+	'Jutlused',
+	'Tervis',
+	'Perekond',
+	'Piibel',
+	'Usu kasv',
+	'Koguduse elu',
+	'Galeriid',
+];
+
+const articleCards = [
+	'Miks peaksin minema kirikusse?',
+	'Kõiges su kõrval?',
+	'Hingehool',
+	'Terve ja ebaterve vaimulikkus',
+	'Kodu on jagamiseks',
+	'Mis tegelikult abielu koos hoiab?',
+	'Hingamispäev on inimese jaoks',
+];
+
+const audioCards = [
+	'Jumala rahu',
+	'Keset tormi',
+	'Hea Karjane',
+	'Palved ja palvevastused',
+	'Usu sotsiaalne mõõde',
+	'Ühtsus',
+];
+
+const healthCards = [
+	'Toit kui parim ravim',
+	'Vitamiin D',
+	'Kas mõõdukus on tervislik?',
+	'Millal on parim aeg magamiseks?',
+];
+
+const courseThemes = ['Palve', 'Piibel', 'Jeesus', 'Pääste', 'Hingamispäev', 'Tervis', 'Kogudus'];
 ---
 
 <html lang="et">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} image={heroImage} />
 	</head>
 	<body>
 		<Header />
@@ -24,19 +63,21 @@ const base = Astro.site?.pathname || '/';
 							inimestega, kes soovivad kasvada usus ja armastuses.
 						</p>
 						<div class="hero-actions">
-							<a class="button primary" href={`${base}#services`}>Jumalateenistused</a>
-							<a class="button secondary" href={`${base}#contact`}>Võta ühendust</a>
+							<a class="button primary" href="#services">Jumalateenistused</a>
+							<a class="button secondary" href="#contact">Võta ühendust</a>
 						</div>
 					</div>
 					<div class="hero-image-card">
-						<img
-							src={`${base}images/kiriku-pilt.jpg`}
+						<Picture
+							src={heroImage}
+							formats={['webp']}
+							widths={[640, 960, 1200]}
+							sizes="(max-width: 860px) calc(100vw - 36px), min(42vw, 500px)"
 							alt="Keila adventkoguduse hoone väljast"
 							width="6000"
 							height="4000"
 							loading="eager"
-							fetchpriority="high"
-							decoding="async"
+							quality={85}
 						/>
 					</div>
 				</div>
@@ -76,13 +117,14 @@ const base = Astro.site?.pathname || '/';
 			<section class="about-section" id="about">
 				<div class="about-grid">
 					<div class="about-image">
-						<img
-							src={`${base}images/ulistus.jpg`}
+						<Picture
+							src={worshipImage}
+							formats={['webp']}
+							widths={[640, 960, 1200]}
+							sizes="(max-width: 860px) calc(100vw - 36px), min(43vw, 530px)"
 							alt="Koguduse ülistus ja laulmine teenistusel"
-							width="6000"
-							height="3376"
 							loading="lazy"
-							decoding="async"
+							quality={85}
 						/>
 					</div>
 					<div class="about-copy">
@@ -100,6 +142,152 @@ const base = Astro.site?.pathname || '/';
 				</div>
 			</section>
 
+			<section class="facebook-section" id="facebook">
+				<div class="section-inner social-panel">
+					<div class="section-heading">
+						<p class="eyebrow">Facebook</p>
+						<h2>Jälgi koguduse tegemisi.</h2>
+						<p class="section-description">
+							Keila koguduse Facebooki lehel jagame värskeid teateid, sündmusi ja kogukonna
+							uudiseid.
+						</p>
+					</div>
+					<a
+						class="button primary"
+						href="https://www.facebook.com/KeilaSPA/"
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label="Ava Keila Adventkoguduse Facebooki leht uues aknas"
+					>
+						Ava Facebook
+					</a>
+				</div>
+			</section>
+
+			<section class="resources-section" id="materjalid">
+				<div class="section-inner">
+					<div class="section-heading">
+						<p class="eyebrow">Materjalid</p>
+						<h2>Artiklid, jutlused ja koguduse lood.</h2>
+						<p class="section-description">
+							Siit leiad teemad, mille alla koondame artiklid, audiojutlused, raadiosaated,
+							galeriid ja blogilaadse koguduse sisu.
+						</p>
+					</div>
+
+					<ul class="category-list" aria-label="Materjalide kategooriad">
+						{contentCategories.map((category) => <li>{category}</li>)}
+					</ul>
+
+					<div class="resource-groups">
+						<article class="resource-group">
+							<div class="resource-group-heading">
+								<p class="eyebrow">Artiklid</p>
+								<h3>Lugemiseks ja mõtisklemiseks</h3>
+							</div>
+							<div class="resource-card-grid">
+								{articleCards.map((title) => (
+									<div class="resource-card">
+										<span>Artikkel</span>
+										<h4>{title}</h4>
+									</div>
+								))}
+							</div>
+						</article>
+
+						<article class="resource-group">
+							<div class="resource-group-heading">
+								<p class="eyebrow">Audio</p>
+								<h3>Jutlused ja kuulamiseks mõeldud mõtted</h3>
+							</div>
+							<div class="resource-card-grid compact">
+								{audioCards.map((title) => (
+									<div class="resource-card">
+										<span>Audiojutlus</span>
+										<h4>{title}</h4>
+									</div>
+								))}
+							</div>
+						</article>
+
+						<article class="resource-group">
+							<div class="resource-group-heading">
+								<p class="eyebrow">Tervis</p>
+								<h3>Terviseartiklid</h3>
+							</div>
+							<div class="resource-card-grid compact">
+								{healthCards.map((title) => (
+									<div class="resource-card">
+										<span>Tervis</span>
+										<h4>{title}</h4>
+									</div>
+								))}
+							</div>
+						</article>
+
+						<div class="format-grid" aria-label="Lisamaterjalide tüübid">
+							<article class="info-card">
+								<h3>Raadiosaated</h3>
+								<p>Vestlused, mõtisklused ja praktilised teemad kuulamiseks.</p>
+							</article>
+							<article class="info-card">
+								<h3>Galeriid</h3>
+								<p>Fotod koguduse sündmustest, koosviibimistest ja teenimistest.</p>
+							</article>
+							<article class="info-card">
+								<h3>Blogi</h3>
+								<p>Lühemad koguduse lood, teated ja mõtted igapäevaseks usuteeks.</p>
+							</article>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="course-section" id="kursus">
+				<div class="course-grid">
+					<div>
+						<p class="eyebrow">Veebikoolitus</p>
+						<h2>“Usk ja elu” veebikoolitus</h2>
+						<p class="section-description">
+							Sõbralik piiblikursus kõigile, kes tahavad rahulikus tempos uurida kristliku
+							usu põhitõdesid ja küsida ausaid küsimusi elu, Jumala ja usu kohta.
+						</p>
+						<a
+							class="button primary"
+							href="https://piiblikursus.advent.ee/kursus/246017/usk-ja-elu/"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Ava veebikoolitus
+						</a>
+					</div>
+					<ul class="theme-list" aria-label="Usk ja elu kursuse teemad">
+						{courseThemes.map((theme) => <li>{theme}</li>)}
+					</ul>
+				</div>
+			</section>
+
+			<section class="app-section" id="oppetykk">
+				<div class="section-inner app-card">
+					<div>
+						<p class="eyebrow">Äpp</p>
+						<h2>Hingamispäevakooli õppetüki äpp</h2>
+						<p class="section-description">
+							Soovitame kasutada õppetüki äppi, et lugeda nädala materjali mugavalt telefonis
+							või arvutis.
+						</p>
+					</div>
+					<a
+						class="button primary"
+						href="https://sabbath-school.adventech.io/et"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Ava õppetükk
+					</a>
+				</div>
+			</section>
+
 			<section class="visit-section" id="contact">
 				<div class="visit-inner">
 					<div class="visit-copy">
@@ -108,6 +296,7 @@ const base = Astro.site?.pathname || '/';
 					</div>
 					<div class="contact-card">
 						<div class="visit-details">
+							<h3>Kontakt</h3>
 							<p><strong>Jumalateenistus:</strong> kell 11.00</p>
 							<p><strong>Piiblitund:</strong> kell 12.00</p>
 							<p><strong>Aadress:</strong> Põllu 5, Keila</p>
@@ -162,7 +351,7 @@ const base = Astro.site?.pathname || '/';
 
 	.eyebrow {
 		color: #6d7f62;
-		font-family: 'Cabin', sans-serif;
+		font-family: var(--font-heading);
 		font-size: 0.9rem;
 		font-weight: 600;
 		letter-spacing: 0.08em;
@@ -175,7 +364,7 @@ const base = Astro.site?.pathname || '/';
 	.about-copy h2,
 	.visit-inner h2 {
 		color: #252525;
-		font-family: 'DM Sans', sans-serif;
+		font-family: var(--font-heading);
 		font-weight: 600;
 		letter-spacing: 0;
 	}
@@ -207,7 +396,7 @@ const base = Astro.site?.pathname || '/';
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		font-family: 'Inter', sans-serif;
+		font-family: var(--font-body);
 		font-size: 0.98rem;
 		font-weight: 500;
 		min-height: 48px;
@@ -242,6 +431,13 @@ const base = Astro.site?.pathname || '/';
 		aspect-ratio: 4 / 5;
 	}
 
+	.hero-image-card picture,
+	.about-image picture {
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
+
 	.hero-image-card img,
 	.about-image img {
 		height: 100%;
@@ -251,11 +447,17 @@ const base = Astro.site?.pathname || '/';
 
 	.info-section,
 	.about-section,
+	.facebook-section,
+	.resources-section,
+	.course-section,
+	.app-section,
 	.visit-section {
 		padding: 78px 20px;
 	}
 
-	.info-section {
+	.info-section,
+	.resources-section,
+	.app-section {
 		background: #ffffff;
 	}
 
@@ -265,10 +467,20 @@ const base = Astro.site?.pathname || '/';
 
 	.section-heading h2,
 	.about-copy h2,
+	.course-grid h2,
+	.app-card h2,
 	.visit-inner h2 {
 		font-size: clamp(2rem, 4vw, 3.25rem);
 		line-height: 1.12;
 		margin: 0;
+	}
+
+	.section-description {
+		color: #55514b;
+		font-size: 1.05rem;
+		line-height: 1.75;
+		margin: 22px 0 0;
+		max-width: 680px;
 	}
 
 	.info-grid {
@@ -287,12 +499,13 @@ const base = Astro.site?.pathname || '/';
 
 	.info-card h3 {
 		color: #263f35;
-		font-family: 'DM Sans', sans-serif;
+		font-family: var(--font-heading);
 		font-size: 1.35rem;
 		margin: 0 0 14px;
 	}
 
 	.info-card p,
+	.resource-card h4,
 	.about-copy p,
 	.visit-details p {
 		color: #55514b;
@@ -320,6 +533,128 @@ const base = Astro.site?.pathname || '/';
 		margin-top: 22px;
 	}
 
+	.facebook-section {
+		background: #f7f4ef;
+	}
+
+	.social-panel,
+	.app-card {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 40px;
+	}
+
+	.category-list,
+	.theme-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		list-style: none;
+		margin: 34px 0 0;
+		padding: 0;
+	}
+
+	.category-list li,
+	.theme-list li {
+		background: #f7f4ef;
+		border: 1px solid #e7dfd4;
+		border-radius: 999px;
+		color: #263f35;
+		font-size: 0.95rem;
+		font-weight: 600;
+		line-height: 1;
+		padding: 12px 16px;
+	}
+
+	.resource-groups {
+		display: grid;
+		gap: 38px;
+		margin-top: 44px;
+	}
+
+	.resource-group {
+		border-top: 1px solid #e7dfd4;
+		padding-top: 34px;
+	}
+
+	.resource-group-heading {
+		margin-bottom: 22px;
+		max-width: 720px;
+	}
+
+	.resource-group-heading h3 {
+		color: #252525;
+		font-family: var(--font-heading);
+		font-size: clamp(1.5rem, 3vw, 2rem);
+		margin: 0;
+	}
+
+	.resource-card-grid,
+	.format-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 18px;
+	}
+
+	.resource-card {
+		background: #f7f4ef;
+		border: 1px solid #e7dfd4;
+		border-radius: 8px;
+		min-height: 132px;
+		padding: 24px;
+	}
+
+	.resource-card span {
+		color: #6d7f62;
+		display: block;
+		font-size: 0.82rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		margin-bottom: 12px;
+		text-transform: uppercase;
+	}
+
+	.resource-card h4 {
+		color: #263f35;
+		font-family: var(--font-heading);
+		font-size: 1.14rem;
+		font-weight: 600;
+	}
+
+	.course-section {
+		background: #f7f4ef;
+	}
+
+	.course-grid {
+		max-width: 1180px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
+		gap: 58px;
+		align-items: center;
+	}
+
+	.course-grid .button {
+		margin-top: 32px;
+	}
+
+	.theme-list {
+		align-content: start;
+		background: #ffffff;
+		border: 1px solid #e7dfd4;
+		border-radius: 8px;
+		margin: 0;
+		padding: 28px;
+	}
+
+	.app-card {
+		background: #f7f4ef;
+		border: 1px solid #e7dfd4;
+		border-radius: 8px;
+		padding: 34px;
+	}
+
 	.visit-section {
 		background: #2f557f;
 		color: #ffffff;
@@ -338,20 +673,31 @@ const base = Astro.site?.pathname || '/';
 
 	.contact-card {
 		align-self: stretch;
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid rgba(255, 255, 255, 0.18);
+		border-radius: 24px;
+		padding: 18px;
 	}
 
 	.visit-section .eyebrow,
 	.visit-inner h2,
+	.visit-details h3,
 	.visit-details p {
 		color: #ffffff;
 	}
 
 	.visit-details {
-		background: rgba(255, 255, 255, 0.12);
+		background: rgba(255, 255, 255, 0.16);
 		border: 1px solid rgba(255, 255, 255, 0.22);
 		border-radius: 16px;
 		box-shadow: 0 24px 48px rgba(0, 0, 0, 0.14);
 		padding: 34px;
+	}
+
+	.visit-details h3 {
+		font-family: var(--font-heading);
+		font-size: 1.5rem;
+		margin: 0 0 18px;
 	}
 
 	.visit-details a {
@@ -386,16 +732,37 @@ const base = Astro.site?.pathname || '/';
 
 		.info-section,
 		.about-section,
+		.facebook-section,
+		.resources-section,
+		.course-section,
+		.app-section,
 		.visit-section {
 			padding: 56px 18px;
 		}
 
-		.info-grid {
+		.info-grid,
+		.resource-card-grid,
+		.format-grid {
 			grid-template-columns: 1fr;
 		}
 
 		.info-card {
 			padding: 24px;
+		}
+
+		.social-panel,
+		.app-card {
+			align-items: stretch;
+			flex-direction: column;
+		}
+
+		.course-grid {
+			grid-template-columns: 1fr;
+			gap: 32px;
+		}
+
+		.app-card {
+			padding: 28px;
 		}
 	}
 

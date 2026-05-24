@@ -1,6 +1,5 @@
 // @ts-check
 
-import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 import { base } from './vite.config.js';
@@ -10,5 +9,6 @@ const owner = process.env.GITHUB_REPOSITORY_OWNER;
 export default defineConfig({
 	site: owner ? `https://${owner}.github.io` : 'https://keila.advent.ee',
 	base,
-	integrations: [mdx(), sitemap()],
+	output: 'static',
+	integrations: [sitemap()],
 });

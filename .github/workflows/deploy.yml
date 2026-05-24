@@ -30,11 +30,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Configure Node.js 22 and enable npm cache for faster repeat builds.
+      # Configure the Node.js version required by this Astro release and enable npm cache.
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 22.12.0
           cache: npm
 
       # Configure GitHub Pages metadata for the deployment environment.
