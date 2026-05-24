@@ -22,19 +22,23 @@ const sermons = (await getCollection('sermons', ({ data }) => !data.draft)).sort
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
 );
 const ministryItems = (await getCollection('ministry')).sort((a, b) => a.data.order - b.data.order);
+const homepageEntries = await getCollection('homepage');
 const [siteEntry] = await getCollection('site');
+const [contact] = await getCollection('contact');
 const site = siteEntry.data;
+const homepage = Object.fromEntries(homepageEntries.map((entry) => [entry.id, entry.data]));
 
-const hero = site.hero;
-const services = site.services;
-const about = site.about;
-const facebook = site.facebook;
-const resources = site.resources;
-const course = site.course;
-const app = site.app;
-const contactInfo = site.contact;
-const articleCards = articles.filter((entry) => entry.data.category !== 'Tervis');
-const healthCards = articles.filter((entry) => entry.data.category === 'Tervis');
+const hero = homepage.hero;
+const services = homepage.services;
+const about = homepage.about;
+const facebook = homepage.facebook;
+const resources = homepage.resources;
+const course = homepage.course;
+const app = homepage.app;
+const contactInfo = contact.data;
+const healthCategory = resources.healthCategory ?? 'Tervis';
+const articleCards = articles.filter((entry) => entry.data.category !== healthCategory);
+const healthCards = articles.filter((entry) => entry.data.category === healthCategory);
 
 function getImage(filename?: string) {
 	if (!filename) return undefined;

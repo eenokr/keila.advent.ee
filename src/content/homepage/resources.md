@@ -11,6 +11,7 @@ categories:
   - "Koguduse elu"
   - "Galeriid"
 categoriesLabel: "Materjalide kategooriad"
+healthCategory: "Tervis"
 groups:
   - key: "articles"
     eyebrow: "Artiklid"
