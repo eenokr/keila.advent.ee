@@ -28,6 +28,9 @@ const [siteEntry] = await getCollection('site');
 const [contact] = await getCollection('contact');
 const site = siteEntry.data;
 const homepage = Object.fromEntries(homepageEntries.map((entry) => [entry.id, entry.data]));
+const orderedHomepageEntries = homepageEntries
+	.filter((entry) => entry.id !== 'hero')
+	.sort((a, b) => a.data.order - b.data.order);
 
 const hero = homepage.hero;
 const services = homepage.services;
@@ -95,120 +98,136 @@ const facebookPageUrl = facebook.buttons?.find((button) => button.link.includes(
 				</div>
 			</section>
 
-			<section class="facebook-section" id="facebook">
-				<div class="section-inner social-panel">
-					<div class="social-copy">
-						<SectionHeading eyebrow={facebook.eyebrow} title={facebook.title} description={facebook.description} />
-						<div class="social-actions">
-							{facebook.buttons?.map((button) => (
-								<CtaButton {...button} />
-							))}
-						</div>
-					</div>
-					<FacebookFeed pageUrl={facebookPageUrl} />
-				</div>
-			</section>
-
-			<section class="info-section" id="services">
-				<div class="section-inner">
-					<SectionHeading eyebrow={services.eyebrow} title={services.title} />
-					<div class="info-grid">
-						{services.cards?.map((card) => (
-							<InfoCard {...card} />
-						))}
-					</div>
-				</div>
-			</section>
-
-			<section class="about-section" id="about">
-				<div class="about-grid">
-					{aboutAsset && (
-						<div class="about-image">
-							<Picture
-								src={aboutAsset}
-								formats={['webp']}
-								widths={[640, 960, 1200]}
-								sizes="(max-width: 860px) calc(100vw - 36px), min(43vw, 530px)"
-								alt={about.imageAlt ?? ''}
-								loading="lazy"
-								quality={85}
-							/>
-						</div>
-					)}
-					<div class="about-copy">
-						<p class="eyebrow">{about.eyebrow}</p>
-						<h2>{about.title}</h2>
-						{about.description?.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
-					</div>
-				</div>
-			</section>
-
-			<section class="resources-section" id="materjalid">
-				<div class="section-inner">
-					<SectionHeading eyebrow={resources.eyebrow} title={resources.title} description={resources.description} />
-
-					<ul class="category-list" aria-label={resources.categoriesLabel}>
-						{resources.categories?.map((category) => <li>{category}</li>)}
-					</ul>
-
-					<div class="resource-groups">
-						{resources.groups?.map((group) => (
-							<article class="resource-group">
-								<div class="resource-group-heading">
-									<p class="eyebrow">{group.eyebrow}</p>
-									<h3>{group.title}</h3>
-								</div>
-								<div class="resource-card-grid compact">
-									{getResourceEntries(group.key).map((entry) => (
-										<ContentCard
-											title={entry.data.title}
-											label={entry.data.category}
-											href={`${group.key === 'sermons' ? 'sermons' : 'articles'}/${entry.id}/`}
-										/>
+			{orderedHomepageEntries.map((entry) => (
+				<>
+					{entry.id === 'services' && (
+						<section class="info-section" id="services">
+							<div class="section-inner">
+								<SectionHeading eyebrow={services.eyebrow} title={services.title} />
+								<div class="info-grid">
+									{services.cards?.map((card) => (
+										<InfoCard {...card} />
 									))}
 								</div>
-							</article>
-						))}
+							</div>
+						</section>
+					)}
 
-						<div class="format-grid" aria-label={resources.formatsLabel}>
-							{ministryItems.map((entry) => (
-								<InfoCard title={entry.data.title} description={entry.data.description} />
-							))}
-						</div>
-					</div>
-				</div>
-			</section>
+					{entry.id === 'about' && (
+						<section class="about-section" id="about">
+							<div class="about-grid">
+								{aboutAsset && (
+									<div class="about-image">
+										<Picture
+											src={aboutAsset}
+											formats={['webp']}
+											widths={[640, 960, 1200]}
+											sizes="(max-width: 860px) calc(100vw - 36px), min(43vw, 530px)"
+											alt={about.imageAlt ?? ''}
+											loading="lazy"
+											quality={85}
+										/>
+									</div>
+								)}
+								<div class="about-copy">
+									<p class="eyebrow">{about.eyebrow}</p>
+									<h2>{about.title}</h2>
+									{about.description?.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
+								</div>
+							</div>
+						</section>
+					)}
 
-			<section class="course-section" id="kursus">
-				<div class="course-grid">
-					<div>
-						<p class="eyebrow">{course.eyebrow}</p>
-						<h2>{course.title}</h2>
-						<p class="section-description">{course.description}</p>
-						<div class="course-actions">
-							{course.buttons?.map((button) => (
-								<CtaButton {...button} />
-							))}
-						</div>
-					</div>
-					<ul class="theme-list" aria-label={course.themesLabel}>
-						{course.themes?.map((theme) => <li>{theme}</li>)}
-					</ul>
-				</div>
-			</section>
+					{entry.id === 'facebook' && (
+						<section class="facebook-section" id="facebook">
+							<div class="section-inner social-panel">
+								<div class="social-copy">
+									<SectionHeading eyebrow={facebook.eyebrow} title={facebook.title} description={facebook.description} />
+									<div class="social-actions">
+										{facebook.buttons?.map((button) => (
+											<CtaButton {...button} />
+										))}
+									</div>
+								</div>
+								<FacebookFeed pageUrl={facebookPageUrl} />
+							</div>
+						</section>
+					)}
 
-			<section class="app-section" id="oppetykk">
-				<div class="section-inner app-card">
-					<div>
-						<p class="eyebrow">{app.eyebrow}</p>
-						<h2>{app.title}</h2>
-						<p class="section-description">{app.description}</p>
-					</div>
-					{app.buttons?.map((button) => (
-						<CtaButton {...button} />
-					))}
-				</div>
-			</section>
+					{entry.id === 'resources' && (
+						<section class="resources-section" id="materjalid">
+							<div class="section-inner">
+								<SectionHeading eyebrow={resources.eyebrow} title={resources.title} description={resources.description} />
+
+								<ul class="category-list" aria-label={resources.categoriesLabel}>
+									{resources.categories?.map((category) => <li>{category}</li>)}
+								</ul>
+
+								<div class="resource-groups">
+									{resources.groups?.map((group) => (
+										<article class="resource-group">
+											<div class="resource-group-heading">
+												<p class="eyebrow">{group.eyebrow}</p>
+												<h3>{group.title}</h3>
+											</div>
+											<div class="resource-card-grid compact">
+												{getResourceEntries(group.key).map((entry) => (
+													<ContentCard
+														title={entry.data.title}
+														label={entry.data.category}
+														href={`${group.key === 'sermons' ? 'sermons' : 'articles'}/${entry.id}/`}
+													/>
+												))}
+											</div>
+										</article>
+									))}
+
+									<div class="format-grid" aria-label={resources.formatsLabel}>
+										{ministryItems.map((entry) => (
+											<InfoCard title={entry.data.title} description={entry.data.description} />
+										))}
+									</div>
+								</div>
+							</div>
+						</section>
+					)}
+
+					{entry.id === 'course' && (
+						<section class="course-section" id="kursus">
+							<div class="course-grid">
+								<div>
+									<p class="eyebrow">{course.eyebrow}</p>
+									<h2>{course.title}</h2>
+									<p class="section-description">{course.description}</p>
+									<div class="course-actions">
+										{course.buttons?.map((button) => (
+											<CtaButton {...button} />
+										))}
+									</div>
+								</div>
+								<ul class="theme-list" aria-label={course.themesLabel}>
+									{course.themes?.map((theme) => <li>{theme}</li>)}
+								</ul>
+							</div>
+						</section>
+					)}
+
+					{entry.id === 'app' && (
+						<section class="app-section" id="oppetykk">
+							<div class="section-inner app-card">
+								<div>
+									<p class="eyebrow">{app.eyebrow}</p>
+									<h2>{app.title}</h2>
+									<p class="section-description">{app.description}</p>
+								</div>
+								{app.buttons?.map((button) => (
+									<CtaButton {...button} />
+								))}
+							</div>
+						</section>
+					)}
+				</>
+			))}
 
 			<section class="visit-section" id="contact">
 				<div class="visit-inner">
