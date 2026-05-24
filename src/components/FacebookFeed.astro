@@ -5,28 +5,47 @@ interface Props {
 }
 
 const { pageUrl, title = 'Keila Adventkoguduse Facebooki postitused' } = Astro.props;
-const pluginUrl = pageUrl
-	? `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(pageUrl)}&tabs=timeline&width=500&height=430&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`
+
+const desktopPluginUrl = pageUrl
+	? `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(pageUrl)}&tabs=timeline&width=500&height=700&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`
+	: undefined;
+
+const mobilePluginUrl = pageUrl
+	? `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(pageUrl)}&tabs=timeline&width=320&height=700&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`
 	: undefined;
 ---
 
-{pluginUrl && (
+{pageUrl && (
 	<div class="facebook-feed">
-		<div class="facebook-feed-inner">
-			<iframe
-				src={pluginUrl}
-				title={title}
-				width="500"
-				height="430"
-				style="border:none;overflow:hidden"
-				scrolling="no"
-				frameborder="0"
-				allowfullscreen={true}
-				allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-				loading="lazy"
-			>
-			</iframe>
-		</div>
+		<iframe
+			class="facebook-feed-frame facebook-feed-frame-desktop"
+			src={desktopPluginUrl}
+			title={title}
+			width="500"
+			height="700"
+			style="border:none;overflow:hidden"
+			scrolling="no"
+			frameborder="0"
+			allowfullscreen={true}
+			allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+			loading="lazy"
+		>
+		</iframe>
+
+		<iframe
+			class="facebook-feed-frame facebook-feed-frame-mobile"
+			src={mobilePluginUrl}
+			title={title}
+			width="320"
+			height="700"
+			style="border:none;overflow:hidden"
+			scrolling="no"
+			frameborder="0"
+			allowfullscreen={true}
+			allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+			loading="lazy"
+		>
+		</iframe>
 	</div>
 )}
 
@@ -40,34 +59,38 @@ const pluginUrl = pageUrl
 		max-width: 500px;
 		overflow: hidden;
 		box-sizing: border-box;
+		margin-left: auto;
+		margin-right: auto;
 	}
 
-	.facebook-feed-inner {
-		width: 100%;
-		max-width: 500px;
-		margin: 0 auto;
-		overflow: hidden;
-	}
-
-	.facebook-feed iframe {
-		display: block;
-		width: 100%;
-		max-width: 500px;
+	.facebook-feed-frame {
 		border: 0;
+		margin: 0 auto;
+	}
+
+	.facebook-feed-frame-desktop {
+		display: block;
+		width: 500px;
+		max-width: 100%;
+	}
+
+	.facebook-feed-frame-mobile {
+		display: none;
+		width: 320px;
+		max-width: 100%;
 	}
 
 	@media (max-width: 560px) {
 		.facebook-feed {
-			max-width: 100%;
+			max-width: 320px;
 		}
 
-		.facebook-feed-inner {
-			max-width: 100%;
+		.facebook-feed-frame-desktop {
+			display: none;
 		}
 
-		.facebook-feed iframe {
-			width: 100%;
-			max-width: 100%;
+		.facebook-feed-frame-mobile {
+			display: block;
 		}
 	}
 </style>
