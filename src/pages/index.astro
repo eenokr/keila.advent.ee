@@ -1,54 +1,48 @@
 ---
 import { Picture } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
+import ContentCard from '../components/ContentCard.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import heroImage from '../assets/images/kiriku-pilt.jpg';
 import worshipImage from '../assets/images/ulistus.jpg';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const contentCategories = [
-	'Jutlused',
-	'Tervis',
-	'Perekond',
-	'Piibel',
-	'Usu kasv',
-	'Koguduse elu',
-	'Galeriid',
-];
+const homepageEntries = await getCollection('homepage');
+const homepage = Object.fromEntries(homepageEntries.map((entry) => [entry.id, entry.data]));
+const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
+	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
+);
+const sermons = (await getCollection('sermons', ({ data }) => !data.draft)).sort(
+	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
+);
+const ministryItems = (await getCollection('ministry')).sort((a, b) => a.data.order - b.data.order);
+const [contact] = await getCollection('contact');
+const [siteEntry] = await getCollection('site');
+const site = siteEntry.data;
 
-const articleCards = [
-	'Miks peaksin minema kirikusse?',
-	'Kõiges su kõrval?',
-	'Hingehool',
-	'Terve ja ebaterve vaimulikkus',
-	'Kodu on jagamiseks',
-	'Mis tegelikult abielu koos hoiab?',
-	'Hingamispäev on inimese jaoks',
-];
+const hero = homepage.hero;
+const services = homepage.services;
+const about = homepage.about;
+const facebook = homepage.facebook;
+const resources = homepage.resources;
+const course = homepage.course;
+const app = homepage.app;
+const contactInfo = contact.data;
+const articleCards = articles.filter((entry) => entry.data.category !== 'Tervis');
+const healthCards = articles.filter((entry) => entry.data.category === 'Tervis');
+const imageAssets = {
+	'/images/kiriku-pilt.jpg': heroImage,
+	'/images/ulistus.jpg': worshipImage,
+};
 
-const audioCards = [
-	'Jumala rahu',
-	'Keset tormi',
-	'Hea Karjane',
-	'Palved ja palvevastused',
-	'Usu sotsiaalne mõõde',
-	'Ühtsus',
-];
-
-const healthCards = [
-	'Toit kui parim ravim',
-	'Vitamiin D',
-	'Kas mõõdukus on tervislik?',
-	'Millal on parim aeg magamiseks?',
-];
-
-const courseThemes = ['Palve', 'Piibel', 'Jeesus', 'Pääste', 'Hingamispäev', 'Tervis', 'Kogudus'];
+const heroAsset = hero.image ? imageAssets[hero.image] : heroImage;
+const aboutAsset = about.image ? imageAssets[about.image] : worshipImage;
 ---
 
 <html lang="et">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} image={heroImage} />
+		<BaseHead title={site.title} description={site.description} siteTitle={site.title} image={heroImage} />
 	</head>
 	<body>
 		<Header />
@@ -57,23 +51,21 @@ const courseThemes = ['Palve', 'Piibel', 'Jeesus', 'Pääste', 'Hingamispäev', 
 				<div class="hero-content">
 					<div class="hero-copy">
 						
-						<h1>Oled oodatud meiega Jumalat teenima.</h1>
-						<p class="hero-intro">
-							Tule laupäeval kogudusse, et kuulata Jumala sõna, palvetada ja olla koos
-							inimestega, kes soovivad kasvada usus ja armastuses.
-						</p>
+						<h1>{hero.title}</h1>
+						<p class="hero-intro">{hero.description}</p>
 						<div class="hero-actions">
-							<a class="button primary" href="#services">Jumalateenistused</a>
-							<a class="button secondary" href="#contact">Võta ühendust</a>
+							{hero.buttons?.map((button) => (
+								<a class={`button ${button.variant}`} href={button.link}>{button.text}</a>
+							))}
 						</div>
 					</div>
 					<div class="hero-image-card">
 						<Picture
-							src={heroImage}
+							src={heroAsset}
 							formats={['webp']}
 							widths={[640, 960, 1200]}
 							sizes="(max-width: 860px) calc(100vw - 36px), min(42vw, 500px)"
-							alt="Keila adventkoguduse hoone väljast"
+							alt={hero.imageAlt ?? ''}
 							width="6000"
 							height="4000"
 							loading="eager"
@@ -86,30 +78,16 @@ const courseThemes = ['Palve', 'Piibel', 'Jeesus', 'Pääste', 'Hingamispäev', 
 			<section class="info-section" id="services">
 				<div class="section-inner">
 					<div class="section-heading">
-						<p class="eyebrow">Kohtume laupäeviti</p>
-						<h2>Jumalateenistus ja piiblitund</h2>
+						<p class="eyebrow">{services.eyebrow}</p>
+						<h2>{services.title}</h2>
 					</div>
 					<div class="info-grid">
-						<article class="info-card">
-							<h3>Jumalateenistus</h3>
-							<p>
-								Ootame sind laupäeviti kell 11.00 ühisele teenistusele, kus on laul,
-								palve ja sõnum Piiblist.
-							</p>
-						</article>
-						<article class="info-card">
-							<h3>Piibli uurimine</h3>
-							<p>
-								Enne teenistust võtame aega, et koos Piiblit avada ja üksteise mõtteid
-								kuulata.
-							</p>
-						</article>
-						<article class="info-card">
-							<h3>Kogukond</h3>
-							<p>
-								Meie koguduses on ruumi küsimustele, palvele ja sõbralikule osadusele.
-							</p>
-						</article>
+						{services.cards?.map((card) => (
+							<article class="info-card">
+								<h3>{card.title}</h3>
+								<p>{card.description}</p>
+							</article>
+						))}
 					</div>
 				</div>
 			</section>
@@ -118,26 +96,19 @@ const courseThemes = ['Palve', 'Piibel', 'Jeesus', 'Pääste', 'Hingamispäev', 
 				<div class="about-grid">
 					<div class="about-image">
 						<Picture
-							src={worshipImage}
+							src={aboutAsset}
 							formats={['webp']}
 							widths={[640, 960, 1200]}
 							sizes="(max-width: 860px) calc(100vw - 36px), min(43vw, 530px)"
-							alt="Koguduse ülistus ja laulmine teenistusel"
+							alt={about.imageAlt ?? ''}
 							loading="lazy"
 							quality={85}
 						/>
 					</div>
 					<div class="about-copy">
-						<p class="eyebrow">Meist</p>
-						<h2>Väike kogudus, avatud süda.</h2>
-						<p>
-							Keila Adventkogudus on kristlik kogukond, kus soovime koos õppida tundma
-							Jeesust, toetada üksteist ja teenida oma linna heaga.
-						</p>
-						<p>
-							Sa ei pea kõike teadma ega oskama. Tule nii, nagu oled. Meil on hea meel sind
-							näha.
-						</p>
+						<p class="eyebrow">{about.eyebrow}</p>
+						<h2>{about.title}</h2>
+						{about.description?.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
 					</div>
 				</div>
 			</section>
@@ -145,38 +116,34 @@ const courseThemes = ['Palve', 'Piibel', 'Jeesus', 'Pääste', 'Hingamispäev', 
 			<section class="facebook-section" id="facebook">
 				<div class="section-inner social-panel">
 					<div class="section-heading">
-						<p class="eyebrow">Facebook</p>
-						<h2>Jälgi koguduse tegemisi.</h2>
-						<p class="section-description">
-							Keila koguduse Facebooki lehel jagame värskeid teateid, sündmusi ja kogukonna
-							uudiseid.
-						</p>
+						<p class="eyebrow">{facebook.eyebrow}</p>
+						<h2>{facebook.title}</h2>
+						<p class="section-description">{facebook.description}</p>
 					</div>
-					<a
-						class="button primary"
-						href="https://www.facebook.com/KeilaSPA/"
-						target="_blank"
-						rel="noopener noreferrer"
-						aria-label="Ava Keila Adventkoguduse Facebooki leht uues aknas"
-					>
-						Ava Facebook
-					</a>
+					{facebook.buttons?.map((button) => (
+						<a
+							class={`button ${button.variant}`}
+							href={button.link}
+							target={button.external ? '_blank' : undefined}
+							rel={button.external ? 'noopener noreferrer' : undefined}
+							aria-label={button.ariaLabel}
+						>
+							{button.text}
+						</a>
+					))}
 				</div>
 			</section>
 
 			<section class="resources-section" id="materjalid">
 				<div class="section-inner">
 					<div class="section-heading">
-						<p class="eyebrow">Materjalid</p>
-						<h2>Artiklid, jutlused ja koguduse lood.</h2>
-						<p class="section-description">
-							Siit leiad teemad, mille alla koondame artiklid, audiojutlused, raadiosaated,
-							galeriid ja blogilaadse koguduse sisu.
-						</p>
+						<p class="eyebrow">{resources.eyebrow}</p>
+						<h2>{resources.title}</h2>
+						<p class="section-description">{resources.description}</p>
 					</div>
 
 					<ul class="category-list" aria-label="Materjalide kategooriad">
-						{contentCategories.map((category) => <li>{category}</li>)}
+						{resources.categories?.map((category) => <li>{category}</li>)}
 					</ul>
 
 					<div class="resource-groups">
@@ -186,11 +153,12 @@ const courseThemes = ['Palve', 'Piibel', 'Jeesus', 'Pääste', 'Hingamispäev', 
 								<h3>Lugemiseks ja mõtisklemiseks</h3>
 							</div>
 							<div class="resource-card-grid">
-								{articleCards.map((title) => (
-									<div class="resource-card">
-										<span>Artikkel</span>
-										<h4>{title}</h4>
-									</div>
+								{articleCards.map((entry) => (
+									<ContentCard
+										title={entry.data.title}
+										label={entry.data.category}
+										href={`articles/${entry.id}/`}
+									/>
 								))}
 							</div>
 						</article>
@@ -201,11 +169,12 @@ const courseThemes = ['Palve', 'Piibel', 'Jeesus', 'Pääste', 'Hingamispäev', 
 								<h3>Jutlused ja kuulamiseks mõeldud mõtted</h3>
 							</div>
 							<div class="resource-card-grid compact">
-								{audioCards.map((title) => (
-									<div class="resource-card">
-										<span>Audiojutlus</span>
-										<h4>{title}</h4>
-									</div>
+								{sermons.map((entry) => (
+									<ContentCard
+										title={entry.data.title}
+										label={entry.data.category}
+										href={`sermons/${entry.id}/`}
+									/>
 								))}
 							</div>
 						</article>
@@ -216,28 +185,23 @@ const courseThemes = ['Palve', 'Piibel', 'Jeesus', 'Pääste', 'Hingamispäev', 
 								<h3>Terviseartiklid</h3>
 							</div>
 							<div class="resource-card-grid compact">
-								{healthCards.map((title) => (
-									<div class="resource-card">
-										<span>Tervis</span>
-										<h4>{title}</h4>
-									</div>
+								{healthCards.map((entry) => (
+									<ContentCard
+										title={entry.data.title}
+										label={entry.data.category}
+										href={`articles/${entry.id}/`}
+									/>
 								))}
 							</div>
 						</article>
 
 						<div class="format-grid" aria-label="Lisamaterjalide tüübid">
-							<article class="info-card">
-								<h3>Raadiosaated</h3>
-								<p>Vestlused, mõtisklused ja praktilised teemad kuulamiseks.</p>
-							</article>
-							<article class="info-card">
-								<h3>Galeriid</h3>
-								<p>Fotod koguduse sündmustest, koosviibimistest ja teenimistest.</p>
-							</article>
-							<article class="info-card">
-								<h3>Blogi</h3>
-								<p>Lühemad koguduse lood, teated ja mõtted igapäevaseks usuteeks.</p>
-							</article>
+							{ministryItems.map((entry) => (
+								<article class="info-card">
+									<h3>{entry.data.title}</h3>
+									<p>{entry.data.description}</p>
+								</article>
+							))}
 						</div>
 					</div>
 				</div>
@@ -246,23 +210,22 @@ const courseThemes = ['Palve', 'Piibel', 'Jeesus', 'Pääste', 'Hingamispäev', 
 			<section class="course-section" id="kursus">
 				<div class="course-grid">
 					<div>
-						<p class="eyebrow">Veebikoolitus</p>
-						<h2>“Usk ja elu” veebikoolitus</h2>
-						<p class="section-description">
-							Sõbralik piiblikursus kõigile, kes tahavad rahulikus tempos uurida kristliku
-							usu põhitõdesid ja küsida ausaid küsimusi elu, Jumala ja usu kohta.
-						</p>
-						<a
-							class="button primary"
-							href="https://piiblikursus.advent.ee/kursus/246017/usk-ja-elu/"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							Ava veebikoolitus
-						</a>
+						<p class="eyebrow">{course.eyebrow}</p>
+						<h2>{course.title}</h2>
+						<p class="section-description">{course.description}</p>
+						{course.buttons?.map((button) => (
+							<a
+								class={`button ${button.variant}`}
+								href={button.link}
+								target={button.external ? '_blank' : undefined}
+								rel={button.external ? 'noopener noreferrer' : undefined}
+							>
+								{button.text}
+							</a>
+						))}
 					</div>
 					<ul class="theme-list" aria-label="Usk ja elu kursuse teemad">
-						{courseThemes.map((theme) => <li>{theme}</li>)}
+						{course.themes?.map((theme) => <li>{theme}</li>)}
 					</ul>
 				</div>
 			</section>
@@ -270,41 +233,40 @@ const courseThemes = ['Palve', 'Piibel', 'Jeesus', 'Pääste', 'Hingamispäev', 
 			<section class="app-section" id="oppetykk">
 				<div class="section-inner app-card">
 					<div>
-						<p class="eyebrow">Äpp</p>
-						<h2>Hingamispäevakooli õppetüki äpp</h2>
-						<p class="section-description">
-							Soovitame kasutada õppetüki äppi, et lugeda nädala materjali mugavalt telefonis
-							või arvutis.
-						</p>
+						<p class="eyebrow">{app.eyebrow}</p>
+						<h2>{app.title}</h2>
+						<p class="section-description">{app.description}</p>
 					</div>
-					<a
-						class="button primary"
-						href="https://sabbath-school.adventech.io/et"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Ava õppetükk
-					</a>
+					{app.buttons?.map((button) => (
+						<a
+							class={`button ${button.variant}`}
+							href={button.link}
+							target={button.external ? '_blank' : undefined}
+							rel={button.external ? 'noopener noreferrer' : undefined}
+						>
+							{button.text}
+						</a>
+					))}
 				</div>
 			</section>
 
 			<section class="visit-section" id="contact">
 				<div class="visit-inner">
 					<div class="visit-copy">
-						<p class="eyebrow">Ootame sind laupäeviti</p>
-						<h2>Tule jumalateenistusele ja piiblitundi.</h2>
+						<p class="eyebrow">{contactInfo.eyebrow}</p>
+						<h2>{contactInfo.title}</h2>
 					</div>
 					<div class="contact-card">
 						<div class="visit-details">
 							<h3>Kontakt</h3>
-							<p><strong>Jumalateenistus:</strong> kell 11.00</p>
-							<p><strong>Piiblitund:</strong> kell 12.00</p>
-							<p><strong>Aadress:</strong> Põllu 5, Keila</p>
-							<p><strong>Pastor:</strong> Marge Randlepp</p>
-							<p><strong>Telefon:</strong> <a href="tel:+37256562131">56 56 21 31</a></p>
+							<p><strong>Jumalateenistus:</strong> {contactInfo.serviceTime}</p>
+							<p><strong>Piiblitund:</strong> {contactInfo.bibleStudyTime}</p>
+							<p><strong>Aadress:</strong> {contactInfo.address}</p>
+							<p><strong>Pastor:</strong> {contactInfo.pastor}</p>
+							<p><strong>Telefon:</strong> <a href={`tel:${contactInfo.phoneHref}`}>{contactInfo.phone}</a></p>
 							<p>
 								<strong>E-post:</strong>
-								<a href="mailto:marge.randlepp@advent.ee">marge.randlepp@advent.ee</a>
+								<a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
 							</p>
 						</div>
 					</div>

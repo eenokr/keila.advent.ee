@@ -1,8 +1,19 @@
 ---
 import { Picture } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import logo from '../assets/images/logo.png';
 
 const base = import.meta.env.BASE_URL;
+const [siteEntry] = await getCollection('site');
+const navItems = siteEntry.data.nav;
+
+function withBase(href: string) {
+	if (href.startsWith('http')) return href;
+	if (href.startsWith('#')) return `${base}${href}`;
+	if (href === '/') return base;
+
+	return `${base}${href.replace(/^\//, '')}`;
+}
 ---
 
 <header class="header-main">
@@ -23,10 +34,9 @@ const base = import.meta.env.BASE_URL;
 			</a>
 		</div>
 		<ul class="nav-menu">
-			<li><a href={base} class="nav-link">Avaleht</a></li>
-			<li><a href={`${base}#about`} class="nav-link">Meist</a></li>
-			<li><a href={`${base}#services`} class="nav-link">Jumalateenistus</a></li>
-			<li><a href={`${base}#contact`} class="nav-link">Kontakt</a></li>
+			{navItems.map((item) => (
+				<li><a href={withBase(item.href)} class="nav-link">{item.label}</a></li>
+			))}
 		</ul>
 		<div class="header-actions">
 			<a href={`${base}#contact`} class="header-cta">Võta ühendust</a>
