@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import ContentCard from '../components/ContentCard.astro';
 import CtaButton from '../components/CtaButton.astro';
+import FacebookFeed from '../components/FacebookFeed.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import InfoCard from '../components/InfoCard.astro';
@@ -56,6 +57,7 @@ function getResourceEntries(key: string) {
 
 const heroAsset = getImage(hero.image);
 const aboutAsset = getImage(about.image);
+const facebookPageUrl = facebook.buttons?.find((button) => button.link.includes('facebook.com'))?.link;
 ---
 
 <html lang="et">
@@ -93,6 +95,20 @@ const aboutAsset = getImage(about.image);
 				</div>
 			</section>
 
+			<section class="facebook-section" id="facebook">
+				<div class="section-inner social-panel">
+					<div class="social-copy">
+						<SectionHeading eyebrow={facebook.eyebrow} title={facebook.title} description={facebook.description} />
+						<div class="social-actions">
+							{facebook.buttons?.map((button) => (
+								<CtaButton {...button} />
+							))}
+						</div>
+					</div>
+					<FacebookFeed pageUrl={facebookPageUrl} />
+				</div>
+			</section>
+
 			<section class="info-section" id="services">
 				<div class="section-inner">
 					<SectionHeading eyebrow={services.eyebrow} title={services.title} />
@@ -124,15 +140,6 @@ const aboutAsset = getImage(about.image);
 						<h2>{about.title}</h2>
 						{about.description?.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
 					</div>
-				</div>
-			</section>
-
-			<section class="facebook-section" id="facebook">
-				<div class="section-inner social-panel">
-					<SectionHeading eyebrow={facebook.eyebrow} title={facebook.title} description={facebook.description} />
-					{facebook.buttons?.map((button) => (
-						<CtaButton {...button} />
-					))}
 				</div>
 			</section>
 
@@ -406,6 +413,17 @@ const aboutAsset = getImage(about.image);
 		align-items: center;
 		justify-content: space-between;
 		gap: 40px;
+	}
+
+	.social-copy {
+		max-width: 620px;
+	}
+
+	.social-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px;
+		margin-top: 30px;
 	}
 
 	.category-list,

@@ -1,0 +1,47 @@
+---
+interface Props {
+	pageUrl?: string;
+	title?: string;
+}
+
+const { pageUrl, title = 'Keila Adventkoguduse Facebooki postitused' } = Astro.props;
+const pluginUrl = pageUrl
+	? `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(pageUrl)}&tabs=timeline&width=500&height=430&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`
+	: undefined;
+---
+
+{pluginUrl && (
+	<div class="facebook-feed">
+		<iframe
+			src={pluginUrl}
+			title={title}
+			width="500"
+			height="430"
+			style="border:none;overflow:hidden"
+			scrolling="no"
+			frameborder="0"
+			allowfullscreen={true}
+			allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+			loading="lazy"
+		>
+		</iframe>
+	</div>
+)}
+
+<style>
+	.facebook-feed {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		box-shadow: var(--shadow-warm);
+		flex: 0 1 500px;
+		overflow: hidden;
+		width: min(100%, 500px);
+	}
+
+	.facebook-feed iframe {
+		display: block;
+		max-width: 100%;
+		width: 100%;
+	}
+</style>
