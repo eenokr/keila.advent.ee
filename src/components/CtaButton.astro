@@ -31,7 +31,7 @@ function withBase(href: string) {
 
 <style>
 	.button {
-		border: 1px solid #2f557f;
+		border: 1px solid var(--color-primary);
 		border-radius: 6px;
 		display: inline-flex;
 		align-items: center;
@@ -46,18 +46,18 @@ function withBase(href: string) {
 	}
 
 	.button.primary {
-		background: #2f557f;
+		background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-soft) 100%);
 		color: #ffffff;
 	}
 
 	.button.secondary {
 		background: transparent;
-		color: #2f557f;
+		color: var(--color-primary);
 	}
 
 	.button:hover {
-		background: #213d5f;
-		border-color: #213d5f;
+		background: var(--color-primary-dark);
+		border-color: var(--color-primary-dark);
 		color: #ffffff;
 	}
 

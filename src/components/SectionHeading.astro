@@ -20,7 +20,7 @@ const { eyebrow, title, description } = Astro.props;
 	}
 
 	.eyebrow {
-		color: #6d7f62;
+		color: var(--color-accent);
 		font-family: var(--font-heading);
 		font-size: 0.9rem;
 		font-weight: 600;
@@ -30,7 +30,7 @@ const { eyebrow, title, description } = Astro.props;
 	}
 
 	h2 {
-		color: #252525;
+		color: var(--color-heading);
 		font-family: var(--font-heading);
 		font-size: clamp(2rem, 4vw, 3.25rem);
 		font-weight: 600;
@@ -40,7 +40,7 @@ const { eyebrow, title, description } = Astro.props;
 	}
 
 	.section-description {
-		color: #55514b;
+		color: var(--color-text-soft);
 		font-size: 1.05rem;
 		line-height: 1.75;
 		margin: 22px 0 0;

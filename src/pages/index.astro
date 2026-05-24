@@ -15,8 +15,6 @@ const imageModules = import.meta.glob<ImageMetadata>('../assets/images/*', {
 	import: 'default',
 });
 
-const homepageEntries = await getCollection('homepage');
-const homepage = Object.fromEntries(homepageEntries.map((entry) => [entry.id, entry.data]));
 const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
 );
@@ -24,18 +22,17 @@ const sermons = (await getCollection('sermons', ({ data }) => !data.draft)).sort
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
 );
 const ministryItems = (await getCollection('ministry')).sort((a, b) => a.data.order - b.data.order);
-const [contact] = await getCollection('contact');
 const [siteEntry] = await getCollection('site');
 const site = siteEntry.data;
 
-const hero = homepage.hero;
-const services = homepage.services;
-const about = homepage.about;
-const facebook = homepage.facebook;
-const resources = homepage.resources;
-const course = homepage.course;
-const app = homepage.app;
-const contactInfo = contact.data;
+const hero = site.hero;
+const services = site.services;
+const about = site.about;
+const facebook = site.facebook;
+const resources = site.resources;
+const course = site.course;
+const app = site.app;
+const contactInfo = site.contact;
 const articleCards = articles.filter((entry) => entry.data.category !== 'Tervis');
 const healthCards = articles.filter((entry) => entry.data.category === 'Tervis');
 
@@ -231,8 +228,8 @@ const aboutAsset = getImage(about.image);
 
 <style>
 	:global(body) {
-		background: #f7f4ef;
-		color: #2f2f2f;
+		background: var(--color-page);
+		color: var(--color-text);
 	}
 
 	.page-wrapper {
@@ -240,7 +237,7 @@ const aboutAsset = getImage(about.image);
 	}
 
 	.hero-section {
-		background: linear-gradient(180deg, #f7f4ef 0%, #ffffff 100%);
+		background: linear-gradient(180deg, var(--color-page) 0%, var(--color-surface) 100%);
 		padding: 82px 20px 72px;
 	}
 
@@ -264,7 +261,7 @@ const aboutAsset = getImage(about.image);
 	}
 
 	.eyebrow {
-		color: #6d7f62;
+		color: var(--color-accent);
 		font-family: var(--font-heading);
 		font-size: 0.9rem;
 		font-weight: 600;
@@ -276,7 +273,7 @@ const aboutAsset = getImage(about.image);
 	.hero-copy h1,
 	.about-copy h2,
 	.visit-inner h2 {
-		color: #252525;
+		color: var(--color-heading);
 		font-family: var(--font-heading);
 		font-weight: 600;
 		letter-spacing: 0;
@@ -289,7 +286,7 @@ const aboutAsset = getImage(about.image);
 	}
 
 	.hero-intro {
-		color: #55514b;
+		color: var(--color-text-soft);
 		font-size: 1.15rem;
 		line-height: 1.75;
 		margin: 28px 0 0;
@@ -307,7 +304,7 @@ const aboutAsset = getImage(about.image);
 	.about-image {
 		border-radius: 8px;
 		overflow: hidden;
-		box-shadow: 0 24px 70px rgba(55, 48, 39, 0.14);
+		box-shadow: var(--shadow-warm);
 	}
 
 	.hero-image-card {
@@ -341,7 +338,7 @@ const aboutAsset = getImage(about.image);
 	.info-section,
 	.resources-section,
 	.app-section {
-		background: #ffffff;
+		background: var(--color-surface);
 	}
 
 	.about-copy h2,
@@ -354,7 +351,7 @@ const aboutAsset = getImage(about.image);
 	}
 
 	.section-description {
-		color: #55514b;
+		color: var(--color-text-soft);
 		font-size: 1.05rem;
 		line-height: 1.75;
 		margin: 22px 0 0;
@@ -370,14 +367,14 @@ const aboutAsset = getImage(about.image);
 
 	.about-copy p,
 	.visit-details p {
-		color: #55514b;
+		color: var(--color-text-soft);
 		font-size: 1rem;
 		line-height: 1.75;
 		margin: 0;
 	}
 
 	.about-section {
-		background: #f7f4ef;
+		background: var(--color-page);
 	}
 
 	.about-grid {
@@ -396,7 +393,7 @@ const aboutAsset = getImage(about.image);
 	}
 
 	.facebook-section {
-		background: #f7f4ef;
+		background: var(--color-page);
 	}
 
 	.social-panel,
@@ -419,10 +416,10 @@ const aboutAsset = getImage(about.image);
 
 	.category-list li,
 	.theme-list li {
-		background: #f7f4ef;
-		border: 1px solid #e7dfd4;
+		background: var(--color-page);
+		border: 1px solid var(--color-border);
 		border-radius: 999px;
-		color: #263f35;
+		color: var(--color-heading);
 		font-size: 0.95rem;
 		font-weight: 600;
 		line-height: 1;
@@ -436,7 +433,7 @@ const aboutAsset = getImage(about.image);
 	}
 
 	.resource-group {
-		border-top: 1px solid #e7dfd4;
+		border-top: 1px solid var(--color-border);
 		padding-top: 34px;
 	}
 
@@ -446,7 +443,7 @@ const aboutAsset = getImage(about.image);
 	}
 
 	.resource-group-heading h3 {
-		color: #252525;
+		color: var(--color-heading);
 		font-family: var(--font-heading);
 		font-size: clamp(1.5rem, 3vw, 2rem);
 		margin: 0;
@@ -460,7 +457,7 @@ const aboutAsset = getImage(about.image);
 	}
 
 	.course-section {
-		background: #f7f4ef;
+		background: var(--color-page);
 	}
 
 	.course-grid {
@@ -478,23 +475,23 @@ const aboutAsset = getImage(about.image);
 
 	.theme-list {
 		align-content: start;
-		background: #ffffff;
-		border: 1px solid #e7dfd4;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
 		border-radius: 8px;
 		margin: 0;
 		padding: 28px;
 	}
 
 	.app-card {
-		background: #f7f4ef;
-		border: 1px solid #e7dfd4;
+		background: var(--color-page);
+		border: 1px solid var(--color-border);
 		border-radius: 8px;
 		padding: 34px;
 	}
 
 	.visit-section {
-		background: #2f557f;
-		color: #ffffff;
+		background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 62%, #d9791f 100%);
+		color: var(--color-surface);
 	}
 
 	.visit-inner {
@@ -520,7 +517,7 @@ const aboutAsset = getImage(about.image);
 	.visit-inner h2,
 	.visit-details h3,
 	.visit-details p {
-		color: #ffffff;
+		color: var(--color-surface);
 	}
 
 	.visit-details {
@@ -538,13 +535,13 @@ const aboutAsset = getImage(about.image);
 	}
 
 	.visit-details a {
-		color: #ffffff;
+		color: var(--color-surface);
 		text-decoration-color: rgba(255, 255, 255, 0.58);
 		text-underline-offset: 3px;
 	}
 
 	.visit-details a:hover {
-		text-decoration-color: #ffffff;
+		text-decoration-color: var(--color-surface);
 	}
 
 	.visit-details p + p {

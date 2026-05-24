@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import adventLogo from '../assets/branding/advent-logo.png';
 
 const today = new Date();
 const [siteEntry] = await getCollection('site');
@@ -17,6 +19,16 @@ const iconPaths = {
 <footer class="footer-main">
 	<div class="footer-content">
 		<div class="footer-info">
+			<Image
+				src={adventLogo}
+				alt={site.logoAlt}
+				width={54}
+				height={57}
+				class="footer-logo"
+				loading="lazy"
+				decoding="async"
+				quality={90}
+			/>
 			<p class="footer-text">
 				{site.footerText}
 			</p>
@@ -43,8 +55,8 @@ const iconPaths = {
 
 <style>
 	.footer-main {
-		background: linear-gradient(135deg, #f1f1f0 0%, #ffffff 100%);
-		border-top: 1px solid #e0e0e0;
+		background: linear-gradient(135deg, var(--color-surface-warm) 0%, var(--color-surface) 100%);
+		border-top: 1px solid var(--color-border);
 		padding: 60px 20px 40px;
 		font-family: var(--font-body);
 	}
@@ -63,12 +75,18 @@ const iconPaths = {
 		text-align: left;
 	}
 
+	.footer-logo {
+		height: 54px;
+		margin: 0 0 18px;
+		width: auto;
+	}
+
 	.footer-text,
 	.footer-contact {
 		font-size: 0.95rem;
 		line-height: 1.6;
 		margin: 0 0 10px;
-		color: #555;
+		color: var(--color-text-soft);
 	}
 
 	.footer-contact {
@@ -87,13 +105,13 @@ const iconPaths = {
 		justify-content: center;
 		width: 40px;
 		height: 40px;
-		color: #666;
+		color: var(--color-accent);
 		text-decoration: none;
 		transition: color 0.3s ease, transform 0.3s ease;
 	}
 
 	.footer-socials a:hover {
-		color: #333;
+		color: var(--color-primary-dark);
 		transform: translateY(-3px);
 	}
 
@@ -101,13 +119,13 @@ const iconPaths = {
 		max-width: 1200px;
 		margin: 0 auto;
 		padding-top: 30px;
-		border-top: 1px solid #e0e0e0;
+		border-top: 1px solid var(--color-border);
 		text-align: center;
 	}
 
 	.footer-bottom p {
 		font-size: 0.85rem;
-		color: #888;
+		color: #8a7768;
 		margin: 0;
 	}
 
@@ -124,6 +142,11 @@ const iconPaths = {
 
 		.footer-info {
 			text-align: center;
+		}
+
+		.footer-logo {
+			margin-left: auto;
+			margin-right: auto;
 		}
 
 		.footer-socials {

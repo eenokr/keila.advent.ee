@@ -14,21 +14,21 @@ const { title, description } = Astro.props;
 
 <style>
 	.info-card {
-		background: #f7f4ef;
-		border: 1px solid #e7dfd4;
+		background: var(--color-surface-warm);
+		border: 1px solid var(--color-border);
 		border-radius: 8px;
 		padding: 28px;
 	}
 
 	h3 {
-		color: #263f35;
+		color: var(--color-heading);
 		font-family: var(--font-heading);
 		font-size: 1.35rem;
 		margin: 0 0 14px;
 	}
 
 	p {
-		color: #55514b;
+		color: var(--color-text-soft);
 		font-size: 1rem;
 		line-height: 1.75;
 		margin: 0;
