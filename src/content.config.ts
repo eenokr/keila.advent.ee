@@ -18,7 +18,7 @@ const homepage = defineCollection({
 		image: z.string().optional(),
 		imageAlt: z.string().optional(),
 		buttons: z.array(buttonSchema).optional(),
-		cards: z.array(z.object({ title: z.string(), description: z.string() })).optional(),
+		cards: z.array(z.object({ title: z.string(), description: z.string(), icon: z.string().optional(), iconAlt: z.string().optional() })).optional(),
 		categories: z.array(z.string()).optional(),
 		categoriesLabel: z.string().optional(),
 		healthCategory: z.string().optional(),
