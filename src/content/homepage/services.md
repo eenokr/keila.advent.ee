@@ -3,10 +3,10 @@ eyebrow: "Kohtume laupäeviti"
 title: "Jumalateenistus ja piiblitund"
 cards:
   - title: "Jumalateenistus"
-    description: "Ootame sind laupäeviti kell 11.00 ühisele teenistusele, kus on laul, palve ja sõnum Piiblist."
+    description: "Laupäeviti kell 11.00"
   - title: "Piibli uurimine"
-    description: "Enne teenistust võtame aega, et koos Piiblit avada ja üksteise mõtteid kuulata."
+    description: "Peale teenistust kell 12.00"
   - title: "Kogukond"
-    description: "Meie koguduses on ruumi küsimustele, palvele ja sõbralikule osadusele."
+    description: "Kuu neljandal laupäeval ühine söömine peale Piibli uurimist"
 order: 2
 ---
