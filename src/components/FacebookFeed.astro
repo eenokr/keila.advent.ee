@@ -36,6 +36,7 @@ const normalizedPageUrl = pageUrl
 	const MIN_FACEBOOK_WIDTH = 180;
 	const MAX_FACEBOOK_WIDTH = 500;
 	const FACEBOOK_HEIGHT = 700;
+	const RESIZE_DEBOUNCE_MS = 250;
 
 	function clampFacebookWidth(width) {
 		return Math.max(MIN_FACEBOOK_WIDTH, Math.min(MAX_FACEBOOK_WIDTH, Math.floor(width)));
@@ -64,13 +65,15 @@ const normalizedPageUrl = pageUrl
 			return;
 		}
 
-		const availableWidth = feed.clientWidth;
-		const pluginWidth = clampFacebookWidth(availableWidth);
-		const nextSrc = buildFacebookPluginUrl(pageUrl, pluginWidth);
+		const pluginWidth = clampFacebookWidth(feed.clientWidth);
+		const previousWidth = Number(feed.dataset.facebookPluginWidth);
 
-		if (iframe.src !== nextSrc) {
-			iframe.src = nextSrc;
+		if (previousWidth === pluginWidth && iframe.src) {
+			return;
 		}
+
+		feed.dataset.facebookPluginWidth = String(pluginWidth);
+		iframe.src = buildFacebookPluginUrl(pageUrl, pluginWidth);
 	}
 
 	const feeds = document.querySelectorAll('.facebook-feed');
@@ -80,10 +83,16 @@ const normalizedPageUrl = pageUrl
 			return;
 		}
 
+		let resizeTimeout;
+
 		updateFacebookFeed(feed);
 
 		const resizeObserver = new ResizeObserver(() => {
-			updateFacebookFeed(feed);
+			window.clearTimeout(resizeTimeout);
+
+			resizeTimeout = window.setTimeout(() => {
+				updateFacebookFeed(feed);
+			}, RESIZE_DEBOUNCE_MS);
 		});
 
 		resizeObserver.observe(feed);

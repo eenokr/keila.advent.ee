@@ -16,5 +16,10 @@ cards:
     description: "Kuu neljandal laupäeval ühine söömine peale Piibli uurimist"
     icon: "/images/icons/uhine-soomine.webp"
     iconAlt: "Ühine söömine"
+
+  - title: "Osasaamine"
+    description: "Kuu neljandal laupäeval ühine söömine peale Piibli uurimist"
+    icon: "/images/icons/uhine-soomine.webp"
+    iconAlt: "Ühine söömine"
 order: 2
 ---
