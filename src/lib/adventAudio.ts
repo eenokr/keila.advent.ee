@@ -2,7 +2,7 @@ export interface AdventAudioItem {
 	title: string;
 	date?: string;
 	url: string;
-	audioUrl?: string;
+	imageUrl?: string;
 }
 
 export const ADVENT_AUDIO_SOURCES = {
@@ -62,39 +62,24 @@ function extractAudioCards(html: string, limit: number) {
 			if (!linkMatch) return undefined;
 
 			const dateMatch = itemHtml.match(/<span[^>]*class="[^"]*\bmuted\b[^"]*"[^>]*>([\s\S]*?)<\/span>/);
+			const imageMatch =
+				itemHtml.match(/<img[^>]+src="([^"]+)"/) ??
+				itemHtml.match(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/);
 
 			return {
 				title: cleanText(linkMatch[2]),
 				date: dateMatch ? cleanText(dateMatch[1]) : undefined,
 				url: toAbsoluteUrl(decodeHtml(linkMatch[1])),
+				imageUrl: imageMatch ? toAbsoluteUrl(decodeHtml(imageMatch[1])) : undefined,
 			};
 		})
-		.filter((item): item is Omit<AdventAudioItem, 'audioUrl'> => Boolean(item?.title && item.url))
+		.filter((item): item is AdventAudioItem => Boolean(item?.title && item.url))
 		.slice(0, limit);
-}
-
-function extractMp3Url(html: string) {
-	const mp3Urls = [
-		...html.matchAll(/https:\/\/(?:www\.)?advent\.ee\/fail\/[^"'<>\s]+?\.mp3(?:\?stream=1)?/g),
-	].map((match) => decodeHtml(match[0]));
-
-	const downloadUrl = mp3Urls.find((url) => !url.includes('?stream=1'));
-
-	return downloadUrl ?? mp3Urls[0];
 }
 
 export async function getAdventAudioItems(folderUrl: string, limit = 3): Promise<AdventAudioItem[]> {
 	const folderHtml = await fetchHtml(folderUrl);
 	if (!folderHtml) return [];
 
-	const folderItems = extractAudioCards(folderHtml, limit);
-
-	return Promise.all(
-		folderItems.map(async (item) => {
-			const itemHtml = await fetchHtml(item.url);
-			const audioUrl = itemHtml ? extractMp3Url(itemHtml) : undefined;
-
-			return { ...item, audioUrl };
-		}),
-	);
+	return extractAudioCards(folderHtml, limit);
 }
