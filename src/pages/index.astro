@@ -161,18 +161,16 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 					{entry.id === 'services' && (
 						<section class="info-section" id="services">
 							<div class="section-inner">
-								<SectionHeading eyebrow={services.eyebrow} title={services.title} />
-								<div class="info-grid">
-									{services.cards?.map((card) => (
-										<InfoCard {...card} />
-									))}
-								</div>
+								<SectionHeading eyebrow={services.eyebrow} title={services.title} description={services.description} />
+								{services.cards && services.cards.length > 0 && (
+									<div class="info-grid">
+										{services.cards.map((card) => (
+											<InfoCard {...card} />
+										))}
+									</div>
+								)}
 								{serviceScheduleItems.length > 0 && (
 									<div class="service-schedule">
-										<div class="service-schedule-heading">
-											<h3>{services.scheduleTitle ?? 'Järgmised kogunemised'}</h3>
-											{services.scheduleDescription && <p>{services.scheduleDescription}</p>}
-										</div>
 										<div class="service-schedule-grid">
 											{serviceScheduleItems.map((item) => (
 												<article
@@ -566,7 +564,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.service-schedule-grid {
 		display: grid;
 		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 14px;
+		gap: 18px;
 		margin-top: 22px;
 	}
 
@@ -574,20 +572,21 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		background: var(--color-page);
 		border: 1px solid var(--color-border);
 		border-radius: 8px;
-		padding: 18px;
+		min-height: 240px;
+		padding: 24px;
 	}
 
 	.service-schedule-card h4 {
 		color: var(--color-heading);
 		font-family: var(--font-heading);
-		font-size: 1.08rem;
+		font-size: 1.4rem;
 		line-height: 1.25;
-		margin: 0 0 12px;
+		margin: 0 0 20px;
 	}
 
 	.service-schedule-list {
 		color: var(--color-text-soft);
-		font-size: 0.95rem;
+		font-size: 1.08rem;
 		line-height: 1.55;
 		list-style: none;
 		margin: 0;
@@ -597,7 +596,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.service-schedule-list li {
 		align-items: center;
 		display: flex;
-		gap: 9px;
+		gap: 14px;
 		list-style: none;
 	}
 
@@ -606,14 +605,14 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.service-schedule-list li + li {
-		margin-top: 8px;
+		margin-top: 12px;
 	}
 
 	.service-schedule-list img {
 		flex: 0 0 auto;
-		height: 18px;
+		height: 32px;
 		object-fit: contain;
-		width: 18px;
+		width: 32px;
 	}
 
 	.service-schedule-card.is-empty {
@@ -999,9 +998,18 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 		.info-grid,
 		.resource-card-grid,
-		.format-grid,
-		.service-schedule-grid {
+		.format-grid {
 			grid-template-columns: 1fr;
+		}
+
+		.service-schedule-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 10px;
+		}
+
+		.service-schedule-card {
+			min-height: 210px;
+			padding: 16px;
 		}
 
 		.advent-audio-grid {
