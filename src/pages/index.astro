@@ -29,14 +29,13 @@ const [siteEntry] = await getCollection('site');
 const [contact] = await getCollection('contact');
 const site = siteEntry.data;
 const homepage = Object.fromEntries(homepageEntries.map((entry) => [entry.id, entry.data]));
-const orderedHomepageEntries = homepageEntries
-	.filter((entry) => entry.id !== 'hero')
-	.sort((a, b) => a.data.order - b.data.order);
+const orderedHomepageEntries = homepageEntries.sort((a, b) => a.data.order - b.data.order);
 
 const hero = homepage.hero;
 const services = homepage.services;
 const about = homepage.about;
 const facebook = homepage.facebook;
+const audio = homepage.audio;
 const resources = homepage.resources;
 const course = homepage.course;
 const app = homepage.app;
@@ -61,25 +60,22 @@ function getResourceEntries(key: string) {
 
 const heroAsset = getImage(hero.image);
 const aboutAsset = getImage(about.image);
-const uheskoosImage = getImage('stuudio.jpeg');
 const facebookPageUrl = facebook.buttons?.find((button) => button.link.includes('facebook.com'))?.link;
 const [uheskoosAudioItems, sermonAudioItems] = await Promise.all([
 	getAdventAudioItems(ADVENT_AUDIO_SOURCES.uheskoos, 4),
 	getAdventAudioItems(ADVENT_AUDIO_SOURCES.sermons, 4),
 ]);
-const adventAudioBlocks = [
-	{
-		title: 'Üheskoos raadiosaated',
-		sourceUrl: ADVENT_AUDIO_SOURCES.uheskoos,
-		imageUrl: uheskoosImage?.src,
-		items: uheskoosAudioItems,
-	},
-	{
-		title: 'Jutlused',
-		sourceUrl: ADVENT_AUDIO_SOURCES.sermons,
-		items: sermonAudioItems,
-	},
-].filter((block) => block.items.length > 0);
+const audioItemsByKey = {
+	uheskoos: uheskoosAudioItems,
+	sermons: sermonAudioItems,
+};
+const adventAudioBlocks = (audio.audioSources ?? [])
+	.map((source) => ({
+		...source,
+		imageUrl: getImage(source.image)?.src,
+		items: audioItemsByKey[source.key],
+	}))
+	.filter((block) => block.items.length > 0);
 ---
 
 <html lang="et">
@@ -89,36 +85,37 @@ const adventAudioBlocks = [
 	<body>
 		<Header />
 		<main class="page-wrapper">
-			<section class="hero-section" id="home">
-				<div class="hero-content">
-					<div class="hero-copy">
-						
-						<h1>{hero.title}</h1>
-						<p class="hero-intro">{hero.description}</p>
-						<div class="hero-actions">
-							{hero.buttons?.map((button) => (
-								<CtaButton {...button} />
-							))}
-						</div>
-					</div>
-					{heroAsset && (
-						<div class="hero-image-card">
-							<Picture
-								src={heroAsset}
-								formats={['webp']}
-								widths={[640, 960, 1200]}
-								sizes="(max-width: 860px) calc(100vw - 36px), min(42vw, 500px)"
-								alt={hero.imageAlt ?? ''}
-								loading="eager"
-								quality={85}
-							/>
-						</div>
-					)}
-				</div>
-			</section>
-
 			{orderedHomepageEntries.map((entry) => (
 				<>
+					{entry.id === 'hero' && (
+						<section class="hero-section" id="home">
+							<div class="hero-content">
+								<div class="hero-copy">
+									<h1>{hero.title}</h1>
+									<p class="hero-intro">{hero.description}</p>
+									<div class="hero-actions">
+										{hero.buttons?.map((button) => (
+											<CtaButton {...button} />
+										))}
+									</div>
+								</div>
+								{heroAsset && (
+									<div class="hero-image-card">
+										<Picture
+											src={heroAsset}
+											formats={['webp']}
+											widths={[640, 960, 1200]}
+											sizes="(max-width: 860px) calc(100vw - 36px), min(42vw, 500px)"
+											alt={hero.imageAlt ?? ''}
+											loading="eager"
+											quality={85}
+										/>
+									</div>
+								)}
+							</div>
+						</section>
+					)}
+
 					{entry.id === 'services' && (
 						<section class="info-section" id="services">
 							<div class="section-inner">
@@ -173,6 +170,53 @@ const adventAudioBlocks = [
 						</section>
 					)}
 
+					{entry.id === 'audio' && (
+						<section class="resources-section" id="audio">
+							<div class="section-inner">
+								<SectionHeading eyebrow={audio.eyebrow} title={audio.title} description={audio.description} />
+
+								<div class="resource-groups">
+									<article class="resource-group">
+										<div class="advent-audio-blocks">
+											{adventAudioBlocks.map((block) => (
+												<div class="advent-audio-block">
+													<div class="advent-audio-heading">
+														<h4>{block.title}</h4>
+														<CtaButton
+															text={block.buttonText}
+															link={block.sourceUrl}
+															variant="secondary"
+															external
+															ariaLabel={`${block.buttonText}: ${block.title}`}
+														/>
+													</div>
+													<div class="advent-audio-grid">
+														{block.items.map((item) => (
+															<a class="advent-audio-card" href={item.url} target="_blank" rel="noopener noreferrer">
+																<div class="advent-audio-image" aria-hidden="true">
+																	{block.imageUrl || item.imageUrl ? (
+																		<img src={block.imageUrl ?? item.imageUrl} alt="" loading="lazy" />
+																	) : (
+																		<span />
+																	)}
+																</div>
+																<div class="advent-audio-card-copy">
+																	{item.date && <span>{item.date}</span>}
+																	<h5>{item.title}</h5>
+																	<p>Kuula advent.ee lehel</p>
+																</div>
+															</a>
+														))}
+													</div>
+												</div>
+											))}
+										</div>
+									</article>
+								</div>
+							</div>
+						</section>
+					)}
+
 					{entry.id === 'resources' && (
 						<section class="resources-section" id="materjalid">
 							<div class="section-inner">
@@ -189,52 +233,15 @@ const adventAudioBlocks = [
 												<p class="eyebrow">{group.eyebrow}</p>
 												<h3>{group.title}</h3>
 											</div>
-											{group.key === 'sermons' ? (
-												<div class="advent-audio-blocks">
-													{adventAudioBlocks.map((block) => (
-														<div class="advent-audio-block">
-															<div class="advent-audio-heading">
-																<h4>{block.title}</h4>
-																<CtaButton
-																	text="Kuula veel"
-																	link={block.sourceUrl}
-																	variant="secondary"
-																	external
-																	ariaLabel={`Kuula veel: ${block.title}`}
-																/>
-															</div>
-															<div class="advent-audio-grid">
-																{block.items.map((item) => (
-																	<a class="advent-audio-card" href={item.url} target="_blank" rel="noopener noreferrer">
-																		<div class="advent-audio-image" aria-hidden="true">
-																			{block.imageUrl || item.imageUrl ? (
-																				<img src={block.imageUrl ?? item.imageUrl} alt="" loading="lazy" />
-																			) : (
-																				<span />
-																			)}
-																		</div>
-																		<div class="advent-audio-card-copy">
-																			{item.date && <span>{item.date}</span>}
-																			<h5>{item.title}</h5>
-																			<p>Kuula advent.ee lehel</p>
-																		</div>
-																	</a>
-																))}
-															</div>
-														</div>
-													))}
-												</div>
-											) : (
-												<div class="resource-card-grid compact">
-													{getResourceEntries(group.key).map((entry) => (
-														<ContentCard
-															title={entry.data.title}
-															label={entry.data.category}
-															href={`${group.key === 'sermons' ? 'sermons' : 'articles'}/${entry.id}/`}
-														/>
-													))}
-												</div>
-											)}
+											<div class="resource-card-grid compact">
+												{getResourceEntries(group.key).map((entry) => (
+													<ContentCard
+														title={entry.data.title}
+														label={entry.data.category}
+														href={`${group.key === 'sermons' ? 'sermons' : 'articles'}/${entry.id}/`}
+													/>
+												))}
+											</div>
 										</article>
 									))}
 

@@ -7,5 +7,5 @@ buttons:
     link: "https://sabbath-school.adventech.io/et"
     variant: "primary"
     external: true
-order: 7
+order: 8
 ---
