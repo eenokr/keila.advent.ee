@@ -55,3 +55,42 @@ const imageURL = new URL(image.src, Astro.url);
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={imageURL} />
+<script>
+((doc, win) => {
+	const prefersReduced = win.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	if (prefersReduced) return;
+	doc.classList.add('animations-supported');
+
+	function animateList(elements: Array<Element>, baseDelay = 0, delayStep = 40, animationClass = 'animate-on-load') {
+		elements.forEach((element: Element, index: number) => {
+			if (!element.classList.contains('visible')) {
+				element.classList.add(animationClass);
+				setTimeout(() => element.classList.add('visible'), baseDelay + index * delayStep);
+			}
+		});
+	}
+
+	document.addEventListener('DOMContentLoaded', () => {
+		animateList(Array.from(doc.querySelectorAll('h1, h2, h3, h4, h5, h6')), 60, 80);
+		animateList(Array.from(doc.querySelectorAll('img, picture')), 120, 60, 'animate-img-load');
+		animateList(Array.from(doc.querySelectorAll('p')), 220, 40);
+
+		const scrollObserver = new IntersectionObserver((entries, observer) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('visible');
+					observer.unobserve(entry.target);
+				}
+			});
+		}, {
+			threshold: 0.18,
+		});
+
+		Array.from(doc.querySelectorAll('section, article, .content-card, .optimized-image, .info-card, .section-heading'))
+			.forEach((element) => {
+				element.classList.add('scroll-reveal');
+				scrollObserver.observe(element);
+			});
+	});
+})(document.documentElement, window);
+</script>

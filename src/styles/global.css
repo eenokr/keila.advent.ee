@@ -113,10 +113,58 @@ p {
 	margin-bottom: 1rem;
 }
 
-img {
+img, picture,
+.optimized-image img,
+.optimized-image picture {
 	max-width: 100%;
 	height: auto;
 	display: block;
+	transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+}
+
+img:hover,
+.optimized-image img:hover,
+picture:hover {
+	transform: scale(1.03);
+}
+
+html.animations-supported .animate-on-load,
+html.animations-supported .scroll-reveal {
+	opacity: 0;
+	transform: translateY(18px);
+	will-change: transform, opacity;
+}
+
+html.animations-supported .animate-img-load {
+	transform: scale(0.98);
+}
+
+html.animations-supported .animate-on-load.visible,
+html.animations-supported .animate-img-load.visible,
+html.animations-supported .scroll-reveal.visible {
+	opacity: 1;
+	transform: translateY(0) scale(1);
+}
+
+html.animations-supported .animate-img-load.visible {
+	transform: scale(1);
+}
+
+section,
+article,
+.content-card,
+.info-card,
+.optimized-image,
+.header-main,
+.footer-main {
+	transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+button,
+.button,
+.header-cta,
+.nav-link {
+	transition: all 0.3s ease;
 }
 
 code {
@@ -151,6 +199,20 @@ hr {
 	border: none;
 	border-top: 1px solid var(--color-border);
 	margin: 2rem 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation: none !important;
+		transition: none !important;
+		scroll-behavior: auto !important;
+	}
 }
 
 .sr-only {
