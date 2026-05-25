@@ -158,7 +158,9 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 						<section class="facebook-section" id="facebook">
 							<div class="section-inner social-panel">
 								<div class="social-copy">
-									<SectionHeading eyebrow={facebook.eyebrow} title={facebook.title} description={facebook.description} />
+									<p class="eyebrow">{facebook.eyebrow}</p>
+									<h2>{facebook.title}</h2>
+									{facebook.description && <p>{facebook.description}</p>}
 									<div class="social-actions">
 										{facebook.buttons?.map((button) => (
 											<CtaButton {...button} />
@@ -365,6 +367,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.hero-copy h1,
 	.about-copy h2,
+	.facebook-section .social-copy h2,
 	.visit-inner h2 {
 		color: var(--color-heading);
 		font-family: var(--font-heading);
@@ -435,6 +438,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.about-copy h2,
+	.facebook-section .social-copy h2,
 	.course-grid h2,
 	.app-card h2,
 	.visit-inner h2 {
@@ -459,6 +463,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.about-copy p,
+	.facebook-section .social-copy p:not(.eyebrow),
 	.visit-details p {
 		color: var(--color-text-soft);
 		font-size: 1rem;
@@ -485,8 +490,34 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		margin-top: 22px;
 	}
 
+	.facebook-section .social-copy p:not(.eyebrow) {
+		margin-top: 22px;
+	}
+
 	.facebook-section {
 		background: var(--color-page);
+	}
+
+	.facebook-section .social-panel {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 500px);
+		align-items: center;
+		gap: 58px;
+	}
+
+	.facebook-section .social-panel :global(.facebook-feed),
+	.facebook-section .social-panel :global(.facebook-feed-empty) {
+		justify-self: end;
+		width: min(100%, 500px);
+	}
+
+	.facebook-section .social-copy {
+		justify-self: start;
+		text-align: left;
+	}
+
+	.social-copy {
+		max-width: 420px;
 	}
 
 	.social-panel,
@@ -498,7 +529,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.social-copy {
-		max-width: 620px;
+		max-width: 800px;
 	}
 
 	.social-actions {
@@ -810,6 +841,16 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 		.advent-audio-grid {
 			order: 1;
+		}
+
+		.facebook-section .social-panel {
+			grid-template-columns: 1fr;
+		}
+
+		.facebook-section .social-panel :global(.facebook-feed),
+		.facebook-section .social-panel :global(.facebook-feed-empty) {
+			justify-self: center;
+			width: min(100%, 500px);
 		}
 
 		.social-panel,
