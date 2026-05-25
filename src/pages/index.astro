@@ -11,6 +11,10 @@ import Header from '../components/Header.astro';
 import InfoCard from '../components/InfoCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import { ADVENT_AUDIO_SOURCES, getAdventAudioItems } from '../lib/adventAudio';
+import { getServiceScheduleItems } from '../lib/serviceSchedule';
+
+const SERVICE_SCHEDULE_CSV_URL =
+	'https://docs.google.com/spreadsheets/d/e/2PACX-1vTOmThNzJymlMrI5PiXxN5jcQTAotZvXrbYCZwDWQ8s2fqvbOckV6-XjCFkyUulLYUUl0HOqpyYIxrO/pub?gid=1165865253&single=true&output=csv';
 
 const imageModules = import.meta.glob<ImageMetadata>('../assets/images/*', {
 	eager: true,
@@ -43,6 +47,43 @@ const contactInfo = contact.data;
 const healthCategory = resources.healthCategory ?? 'Tervis';
 const articleCards = articles.filter((entry) => entry.data.category !== healthCategory);
 const healthCards = articles.filter((entry) => entry.data.category === healthCategory);
+const serviceScheduleActivities = services.scheduleActivities ?? [
+	{
+		key: 'jutlus',
+		positiveText: 'Jutlus toimub',
+		negativeText: 'Jutlust ei toimu',
+		icon: '/images/icons/jumalateenistus1.svg',
+		iconAlt: 'Jutlus',
+	},
+	{
+		key: 'piiblitund',
+		positiveText: 'Piiblitund toimub',
+		negativeText: 'Piiblitundi ei toimu',
+		icon: '/images/icons/bible1.svg',
+		iconAlt: 'Piiblitund',
+	},
+	{
+		key: 'lasteTundRl',
+		positiveText: 'Lastetund toimub',
+		negativeText: 'Lastetund ei toimu',
+		icon: '/images/icons/bible1.svg',
+		iconAlt: 'Lastetund',
+	},
+	{
+		key: 'soomine',
+		positiveText: 'Söömine toimub',
+		negativeText: 'Söömine ei toimu',
+		icon: '/images/icons/uhine-soomine.webp',
+		iconAlt: 'Söömine',
+	},
+	{
+		key: 'osasaamine',
+		positiveText: 'Osasaamine toimub',
+		negativeText: 'Osasaamine ei toimu',
+		icon: '/images/icons/jumalateenistus1.svg',
+		iconAlt: 'Osasaamine',
+	},
+] as const;
 
 function getImage(filename?: string) {
 	if (!filename) return undefined;
@@ -61,7 +102,8 @@ function getResourceEntries(key: string) {
 const heroAsset = getImage(hero.image);
 const aboutAsset = getImage(about.image);
 const facebookPageUrl = facebook.pageUrl ?? facebook.buttons?.find((button) => button.link.includes('facebook.com'))?.link;
-const [uheskoosAudioItems, sermonAudioItems] = await Promise.all([
+const [serviceScheduleItems, uheskoosAudioItems, sermonAudioItems] = await Promise.all([
+	getServiceScheduleItems(SERVICE_SCHEDULE_CSV_URL, 4),
 	getAdventAudioItems(ADVENT_AUDIO_SOURCES.uheskoos, 4),
 	getAdventAudioItems(ADVENT_AUDIO_SOURCES.sermons, 4),
 ]);
@@ -125,6 +167,42 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 										<InfoCard {...card} />
 									))}
 								</div>
+								{serviceScheduleItems.length > 0 && (
+									<div class="service-schedule">
+										<div class="service-schedule-heading">
+											<h3>{services.scheduleTitle ?? 'Järgmised kogunemised'}</h3>
+											{services.scheduleDescription && <p>{services.scheduleDescription}</p>}
+										</div>
+										<div class="service-schedule-grid">
+											{serviceScheduleItems.map((item) => (
+												<article
+													class:list={[
+														'service-schedule-card',
+														!serviceScheduleActivities.some((activity) => item[activity.key]) && 'is-empty',
+													]}
+												>
+													<h4>{item.date}</h4>
+													{serviceScheduleActivities.some((activity) => item[activity.key]) ? (
+														<ul class="service-schedule-list">
+															{serviceScheduleActivities
+																.filter((activity) => item[activity.key])
+																.map((activity) => (
+																	<li>
+																		{activity.icon && <img src={activity.icon} alt={activity.iconAlt ?? ''} loading="lazy" />}
+																		<span>{activity.positiveText}</span>
+																	</li>
+																))}
+														</ul>
+													) : (
+														<div class="service-schedule-empty" aria-label="Sel päeval tegevusi ei toimu">
+															<span class="schedule-lock" aria-hidden="true"></span>
+														</div>
+													)}
+												</article>
+											))}
+										</div>
+									</div>
+								)}
 							</div>
 						</section>
 					)}
@@ -460,6 +538,118 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 18px;
 		margin-top: 38px;
+	}
+
+	.service-schedule {
+		margin-top: 38px;
+	}
+
+	.service-schedule-heading {
+		max-width: 680px;
+	}
+
+	.service-schedule-heading h3 {
+		color: var(--color-heading);
+		font-family: var(--font-heading);
+		font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+		line-height: 1.2;
+		margin: 0;
+	}
+
+	.service-schedule-heading p {
+		color: var(--color-text-soft);
+		font-size: 1rem;
+		line-height: 1.65;
+		margin: 12px 0 0;
+	}
+
+	.service-schedule-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 14px;
+		margin-top: 22px;
+	}
+
+	.service-schedule-card {
+		background: var(--color-page);
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		padding: 18px;
+	}
+
+	.service-schedule-card h4 {
+		color: var(--color-heading);
+		font-family: var(--font-heading);
+		font-size: 1.08rem;
+		line-height: 1.25;
+		margin: 0 0 12px;
+	}
+
+	.service-schedule-list {
+		color: var(--color-text-soft);
+		font-size: 0.95rem;
+		line-height: 1.55;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.service-schedule-list li {
+		align-items: center;
+		display: flex;
+		gap: 9px;
+		list-style: none;
+	}
+
+	.service-schedule-list li::marker {
+		content: '';
+	}
+
+	.service-schedule-list li + li {
+		margin-top: 8px;
+	}
+
+	.service-schedule-list img {
+		flex: 0 0 auto;
+		height: 18px;
+		object-fit: contain;
+		width: 18px;
+	}
+
+	.service-schedule-card.is-empty {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		min-height: 154px;
+	}
+
+	.service-schedule-empty {
+		display: grid;
+		flex: 1;
+		place-items: center;
+		width: 100%;
+	}
+
+	.schedule-lock {
+		border: 7px solid var(--color-border-strong);
+		border-radius: 8px;
+		height: 42px;
+		opacity: 0.55;
+		position: relative;
+		width: 52px;
+	}
+
+	.schedule-lock::before {
+		border: 7px solid var(--color-border-strong);
+		border-bottom: 0;
+		border-radius: 28px 28px 0 0;
+		content: '';
+		height: 32px;
+		left: 50%;
+		position: absolute;
+		top: -32px;
+		transform: translateX(-50%);
+		width: 34px;
 	}
 
 	.about-copy p,
@@ -809,7 +999,8 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 		.info-grid,
 		.resource-card-grid,
-		.format-grid {
+		.format-grid,
+		.service-schedule-grid {
 			grid-template-columns: 1fr;
 		}
 

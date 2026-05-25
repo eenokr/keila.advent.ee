@@ -17,6 +17,19 @@ const homepage = defineCollection({
 		description: z.string().optional(),
 		image: z.string().optional(),
 		imageAlt: z.string().optional(),
+		scheduleTitle: z.string().optional(),
+		scheduleDescription: z.string().optional(),
+		scheduleActivities: z
+			.array(
+				z.object({
+					key: z.enum(['jutlus', 'piiblitund', 'lasteTundRl', 'soomine', 'osasaamine']),
+					positiveText: z.string(),
+					negativeText: z.string(),
+					icon: z.string().optional(),
+					iconAlt: z.string().optional(),
+				}),
+			)
+			.optional(),
 		buttons: z.array(buttonSchema).optional(),
 		cards: z.array(z.object({ title: z.string(), description: z.string(), icon: z.string().optional(), iconAlt: z.string().optional() })).optional(),
 		categories: z.array(z.string()).optional(),
