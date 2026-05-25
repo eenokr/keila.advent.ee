@@ -60,7 +60,7 @@ function getResourceEntries(key: string) {
 
 const heroAsset = getImage(hero.image);
 const aboutAsset = getImage(about.image);
-const facebookPageUrl = facebook.buttons?.find((button) => button.link.includes('facebook.com'))?.link;
+const facebookPageUrl = facebook.pageUrl ?? facebook.buttons?.find((button) => button.link.includes('facebook.com'))?.link;
 const [uheskoosAudioItems, sermonAudioItems] = await Promise.all([
 	getAdventAudioItems(ADVENT_AUDIO_SOURCES.uheskoos, 4),
 	getAdventAudioItems(ADVENT_AUDIO_SOURCES.sermons, 4),
