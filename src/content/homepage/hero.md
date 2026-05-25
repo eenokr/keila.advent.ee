@@ -7,8 +7,8 @@ buttons:
   - text: "Jumalateenistused"
     link: "#services"
     variant: "primary"
-  - text: "Võta ühendust"
-    link: "#contact"
+  - text: "Kursus"
+    link: "#kursus"
     variant: "secondary"
 order: 1
 ---

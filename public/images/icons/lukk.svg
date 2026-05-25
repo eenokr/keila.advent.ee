@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Luku ikoon</title>
+  <desc id="desc">Minimalistlik luku ikoon samas terrakotapruunis stiilis, ilma võtmeaugu ja alumise kriipsuta.</desc>
+  <g fill="#AF6F4E">
+    <path d="M20 28v-7c0-7.2 5.1-12.5 12-12.5S44 13.8 44 21v7h-6v-7c0-4-2.4-6.8-6-6.8S26 17 26 21v7h-6z"/>
+    <rect x="16" y="26" width="32" height="28" rx="3"/>
+  </g>
+</svg>

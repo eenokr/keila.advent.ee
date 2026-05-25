@@ -66,7 +66,7 @@ const serviceScheduleActivities = services.scheduleActivities ?? [
 		key: 'lasteTundRl',
 		positiveText: 'Lastetund toimub',
 		negativeText: 'Lastetund ei toimu',
-		icon: '/images/icons/bible1.svg',
+		icon: '/images/icons/lastetund.svg',
 		iconAlt: 'Lastetund',
 	},
 	{
@@ -80,7 +80,7 @@ const serviceScheduleActivities = services.scheduleActivities ?? [
 		key: 'osasaamine',
 		positiveText: 'Osasaamine toimub',
 		negativeText: 'Osasaamine ei toimu',
-		icon: '/images/icons/jumalateenistus1.svg',
+		icon: '/images/icons/osasaamise.svg',
 		iconAlt: 'Osasaamine',
 	},
 ] as const;
@@ -193,7 +193,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 														</ul>
 													) : (
 														<div class="service-schedule-empty" aria-label="Sel päeval tegevusi ei toimu">
-															<span class="schedule-lock" aria-hidden="true"></span>
+															<img class="schedule-lock" src="/images/icons/lukk.svg" alt="" loading="lazy" />
 														</div>
 													)}
 												</article>
@@ -579,14 +579,14 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.service-schedule-card h4 {
 		color: var(--color-heading);
 		font-family: var(--font-heading);
-		font-size: 1.4rem;
+		font-size: 1.55rem;
 		line-height: 1.25;
-		margin: 0 0 20px;
+		margin: 0 0 12px;
 	}
 
 	.service-schedule-list {
 		color: var(--color-text-soft);
-		font-size: 1.08rem;
+		font-size: 1.2rem;
 		line-height: 1.55;
 		list-style: none;
 		margin: 0;
@@ -605,7 +605,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.service-schedule-list li + li {
-		margin-top: 12px;
+		margin-top: 7px;
 	}
 
 	.service-schedule-list img {
@@ -617,38 +617,29 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.service-schedule-card.is-empty {
 		align-items: center;
+		border-color: transparent;
 		display: flex;
 		flex-direction: column;
 		min-height: 154px;
+	}
+
+	.service-schedule-card.is-empty h4 {
+		align-self: stretch;
 	}
 
 	.service-schedule-empty {
 		display: grid;
 		flex: 1;
 		place-items: center;
+		transform: translateY(-10px);
 		width: 100%;
 	}
 
 	.schedule-lock {
-		border: 7px solid var(--color-border-strong);
-		border-radius: 8px;
-		height: 42px;
+		height: 124px;
 		opacity: 0.55;
-		position: relative;
-		width: 52px;
-	}
-
-	.schedule-lock::before {
-		border: 7px solid var(--color-border-strong);
-		border-bottom: 0;
-		border-radius: 28px 28px 0 0;
-		content: '';
-		height: 32px;
-		left: 50%;
-		position: absolute;
-		top: -32px;
-		transform: translateX(-50%);
-		width: 34px;
+		object-fit: contain;
+		width: 124px;
 	}
 
 	.about-copy p,
