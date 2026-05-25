@@ -5,7 +5,7 @@ category: "Tervis"
 pubDate: 2026-01-11
 ---
 
-<img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80" alt="Magaja öösel" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80" alt="Magaja öösel" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 Une rütm on keha ja aju taastumise alus. Kui magame õiges ajal ja piisavalt, on lihtsam säilitada energiat, keskendumist ja emotsionaalset tasakaalu. Selle artikli eesmärk on selgitada, miks 22:00–6:00 on paljude jaoks parim aeg magamiseks ning kuidas paremini magada.
 
@@ -17,7 +17,7 @@ Kui meie une tsükkel katkeb, ei saa keha vajalikke taastumisfaase täielikult l
 
 Une kvaliteet on sageli olulisem kui ainult unetunnid, sest ristmikul esinev sügav uni on see, mis annab kehale taastava jõu ning vaimule selguse.
 
-<img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80" alt="Öine laius" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80" alt="Öine laius" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 ## Miks on 22:00–6:00 ideaalne?
 
@@ -35,7 +35,7 @@ Pikaajaliselt seostatakse kroonilist unepuudust südame-veresoonkonna haiguste, 
 
 Unepuuduse tulemusel võib tekkida ka kehakaalu tõus, kuna hormoonid, mis reguleerivad nälga ja küllastust, muutuvad tasakaalust välja. See näitab, et hea öörahu on oluline kõigi keha funktsioonide jaoks.
 
-<img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80" alt="Rahulik öö" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80" alt="Rahulik öö" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 ## Nõuanded parema une jaoks
 
@@ -53,7 +53,7 @@ Kui sul on raskusi magamajäämisega, proovi lihtsaid hingamisharjutusi või soo
 
 Õige valgus aitab ka: õhtune soe valgus ja hommikune loomulik valgus annavad kehale teada, millal on õige aeg ärgata ja millal valmistuda magama minema.
 
-<img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80" alt="Rahulik öö" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80" alt="Rahulik öö" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 ## Mida teha, kui uneharjumused on juba häiritud?
 

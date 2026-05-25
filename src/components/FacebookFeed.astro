@@ -37,6 +37,7 @@ const normalizedPageUrl = pageUrl
 	const MAX_FACEBOOK_WIDTH = 500;
 	const FACEBOOK_HEIGHT = 700;
 	const RESIZE_DEBOUNCE_MS = 250;
+	const LOAD_ROOT_MARGIN = '500px 0px';
 
 	function clampFacebookWidth(width) {
 		return Math.max(MIN_FACEBOOK_WIDTH, Math.min(MAX_FACEBOOK_WIDTH, Math.floor(width)));
@@ -76,18 +77,13 @@ const normalizedPageUrl = pageUrl
 		iframe.src = buildFacebookPluginUrl(pageUrl, pluginWidth);
 	}
 
-	const feeds = document.querySelectorAll('.facebook-feed');
-
-	feeds.forEach((feed) => {
-		if (!(feed instanceof HTMLElement)) {
-			return;
-		}
-
+	function prepareFacebookFeed(feed) {
 		let resizeTimeout;
+		let resizeObserver;
 
 		updateFacebookFeed(feed);
 
-		const resizeObserver = new ResizeObserver(() => {
+		resizeObserver = new ResizeObserver(() => {
 			window.clearTimeout(resizeTimeout);
 
 			resizeTimeout = window.setTimeout(() => {
@@ -96,7 +92,34 @@ const normalizedPageUrl = pageUrl
 		});
 
 		resizeObserver.observe(feed);
-	});
+	}
+
+	const feeds = document.querySelectorAll('.facebook-feed');
+
+	if ('IntersectionObserver' in window) {
+		const feedObserver = new IntersectionObserver((entries, observer) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting && entry.target instanceof HTMLElement) {
+					prepareFacebookFeed(entry.target);
+					observer.unobserve(entry.target);
+				}
+			});
+		}, {
+			rootMargin: LOAD_ROOT_MARGIN,
+		});
+
+		feeds.forEach((feed) => {
+			if (feed instanceof HTMLElement) {
+				feedObserver.observe(feed);
+			}
+		});
+	} else {
+		feeds.forEach((feed) => {
+			if (feed instanceof HTMLElement) {
+				prepareFacebookFeed(feed);
+			}
+		});
+	}
 </script>
 
 <style>

@@ -5,7 +5,7 @@ category: "Tervis"
 pubDate: 2026-01-08
 ---
 
-<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80" alt="Tervislikud toidud" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80" alt="Tervislikud toidud" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 Toit ei ole lihtsalt keha kütus – see on pikaajalise tervise alustala. Õige valik võib tugevdada immuunsüsteemi, leevendada põletikku ja toetada vaimset ning füüsilist elujõudu. Adventi tervisemõtte järgi on inimene loodud tervislikult elama ning toitumine on üks otsustavamaid viise, kuidas seda eesmärki järgida.
 
@@ -19,7 +19,7 @@ Ehkki ükski toit ei pruugi haigust täielikult ravida, on võimalik paljud haig
 
 Põletik on tänapäeva ühiskonna üks levinumaid vaevusi. Kui toitumine on rikas antioksüdantide poolest, võivad antioksüdandid neutraliseerida vabu radikaale ja vähendada rakkude kahjustusi. See võib omakorda ennetada südame-veresoonkonna haigusi ning teisi kroonilisi seisundeid.
 
-<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80" alt="Roheline salat ja tervislikud koostisosad" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80" alt="Roheline salat ja tervislikud koostisosad" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 ## Millised toidud kenasti terveks teevad?
 
@@ -31,7 +31,7 @@ Mõned healoomulised toitainete kombinatsioonid toimivad eriti hästi, näiteks 
 
 Lisaks köögiviljadele toovad metsalihast vabastatud valguallikad, näiteks oad ja kikerherned, kehasse vajalikke aminohappeid. Ühendades neid täistera ja värske lehtköögiviljaga, saab valmistada eineid, mis on kergesti seeditavad ja pikaajalist jõudu andvad.
 
-<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80" alt="Värviline söögilaud" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80" alt="Värviline söögilaud" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 ## Taimne toitumine ja Adventi terviselähenemine
 
@@ -43,7 +43,7 @@ Samas on oluline säilitada tasakaal ja kuulata oma keha. Iga inimese vajadused 
 
 Mõned inimesed leiavad, et toitumise korrigeerimine aitab ka meeleolu stabiliseerida. Kui organism saab piisavalt vitamiine ja mineraale, on mõistus selgem ning emotsioonidega toimetulek lihtsam.
 
-<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80" alt="Toidupüramiid ja tervislik valik" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80" alt="Toidupüramiid ja tervislik valik" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 ## Mida vältida ja kuidas terved harjumused kujundada?
 

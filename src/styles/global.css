@@ -119,52 +119,29 @@ img, picture,
 	max-width: 100%;
 	height: auto;
 	display: block;
-	transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+	transition: opacity 0.28s ease;
 }
 
-img:hover,
-.optimized-image img:hover,
-picture:hover {
-	transform: scale(1.03);
-}
-
-html.animations-supported .animate-on-load,
 html.animations-supported .scroll-reveal {
 	opacity: 0;
-	transform: translateY(18px);
+	transform: translateY(16px);
 	will-change: transform, opacity;
 }
 
-html.animations-supported .animate-img-load {
-	transform: scale(0.98);
-}
-
-html.animations-supported .animate-on-load.visible,
-html.animations-supported .animate-img-load.visible,
 html.animations-supported .scroll-reveal.visible {
 	opacity: 1;
-	transform: translateY(0) scale(1);
+	transform: translateY(0);
 }
 
-html.animations-supported .animate-img-load.visible {
-	transform: scale(1);
-}
-
-section,
-article,
-.content-card,
-.info-card,
-.optimized-image,
-.header-main,
-.footer-main {
-	transition: opacity 0.45s ease, transform 0.45s ease;
+html.animations-supported .scroll-reveal {
+	transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 button,
 .button,
 .header-cta,
 .nav-link {
-	transition: all 0.3s ease;
+	transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 code {

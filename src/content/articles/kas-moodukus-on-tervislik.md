@@ -5,7 +5,7 @@ category: "Tervis"
 pubDate: 2026-01-10
 ---
 
-<img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&q=80" alt="Tasakaalustatud söögikord" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&q=80" alt="Tasakaalustatud söögikord" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 Mõõdukus on tervise vundament. See ei ole range piirang, vaid oskus teha valikuid, mis toetavad nii keha kui ka vaimu. Eestis, kus kiire elutempo kipub sööma aega ja tähelepanu, aitab mõõdukuse printsiip hoida elus selgust ja pikaajalist heaolu.
 
@@ -19,7 +19,7 @@ Lisaks toitumisele hõlmab mõõdukus ka päevarežiimi. Püüdke leida aeg puhk
 
 Mõõdukusest ei pea rääkima ainult ühe päeva kaupa. Selle asemel mõtle, kuidas suvaline nädal või kuu välja näeb. Kas sinu menüü on mitmekesine? Kas teed piisavalt pause? Väikeste muutustega saab kaua kestvaid tulemusi.
 
-<img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&q=80" alt="Inimene valmistab väikest tervislikku einet" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&q=80" alt="Inimene valmistab väikest tervislikku einet" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 ## Mõõdukus toitumises ja elustiilis
 
@@ -37,7 +37,7 @@ Mõõdukust on lihtsam hoida, kui seda jagada teistega. Pere või sõpradega üh
 
 Kiriku- või kogukonnaüritustel saab jagada õppetunde ning toetada üksteist pikaajaliste eesmärkide suunas. Kui mõõdukust nähakse kui väärtust, ei tunne keegi end ajendatud vaid piirata, vaid pigem kaasatuna tervisesse suunatud teekonda.
 
-<img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&q=80" alt="Loodus ja tasakaal" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&q=80" alt="Loodus ja tasakaal" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 ## Piibellik perspektiiv talitluses
 

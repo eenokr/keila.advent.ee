@@ -20,6 +20,11 @@ const imageModules = import.meta.glob<ImageMetadata>('../assets/images/*', {
 	eager: true,
 	import: 'default',
 });
+const iconModules = import.meta.glob<string>('../assets/icons/*', {
+	eager: true,
+	import: 'default',
+	query: '?url',
+});
 
 const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
@@ -52,51 +57,50 @@ const serviceScheduleActivities = services.scheduleActivities ?? [
 		key: 'jutlus',
 		positiveText: 'Jutlus toimub',
 		negativeText: 'Jutlust ei toimu',
-		icon: '/images/icons/jumalateenistus1.svg',
+		icon: 'jumalateenistus1.svg',
 		iconAlt: 'Jutlus',
 	},
 	{
 		key: 'piiblitund',
 		positiveText: 'Piiblitund toimub',
 		negativeText: 'Piiblitundi ei toimu',
-		icon: '/images/icons/bible1.svg',
+		icon: 'bible1.svg',
 		iconAlt: 'Piiblitund',
 	},
 	{
 		key: 'lasteTundRl',
 		positiveText: 'Lastetund toimub',
 		negativeText: 'Lastetund ei toimu',
-		icon: '/images/icons/lastetund.svg',
+		icon: 'lastetund.svg',
 		iconAlt: 'Lastetund',
 	},
 	{
 		key: 'soomine',
 		positiveText: 'Söömine toimub',
 		negativeText: 'Söömine ei toimu',
-		icon: '/images/icons/uhine-soomine.webp',
+		icon: 'uhine-soomine.webp',
 		iconAlt: 'Söömine',
 	},
 	{
 		key: 'osasaamine',
 		positiveText: 'Osasaamine toimub',
 		negativeText: 'Osasaamine ei toimu',
-		icon: '/images/icons/osasaamise.svg',
+		icon: 'osasaamise.svg',
 		iconAlt: 'Osasaamine',
 	},
 ] as const;
-const base = import.meta.env.BASE_URL;
-
-function withBasePath(path: string) {
-	if (path.startsWith('http') || path.startsWith('data:')) return path;
-	if (path.startsWith('/')) return `${base}${path.slice(1)}`;
-
-	return `${base}${path}`;
-}
 
 function getImage(filename?: string) {
 	if (!filename) return undefined;
 
 	return imageModules[`../assets/images/${filename}`];
+}
+
+function getIcon(filename?: string) {
+	if (!filename) return undefined;
+	if (filename.startsWith('http') || filename.startsWith('data:')) return filename;
+
+	return iconModules[`../assets/icons/${filename.replace(/^\/?(images\/icons\/)?/, '')}`];
 }
 
 function getResourceEntries(key: string) {
@@ -158,6 +162,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 											sizes="(max-width: 860px) calc(100vw - 36px), min(42vw, 500px)"
 											alt={hero.imageAlt ?? ''}
 											loading="eager"
+											fetchpriority="high"
 											quality={85}
 										/>
 									</div>
@@ -192,16 +197,20 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 														<ul class="service-schedule-list">
 															{serviceScheduleActivities
 																.filter((activity) => item[activity.key])
-																.map((activity) => (
-																	<li>
-																		{activity.icon && <img src={withBasePath(activity.icon)} alt={activity.iconAlt ?? ''} loading="lazy" />}
-																		<span>{activity.positiveText}</span>
-																	</li>
-																))}
+																.map((activity) => {
+																	const activityIcon = getIcon(activity.icon);
+
+																	return (
+																		<li>
+																			{activityIcon && <img src={activityIcon} alt={activity.iconAlt ?? ''} loading="lazy" />}
+																			<span>{activity.positiveText}</span>
+																		</li>
+																	);
+																})}
 														</ul>
 													) : (
 														<div class="service-schedule-empty" aria-label="Sel päeval tegevusi ei toimu">
-															<img class="schedule-lock" src={withBasePath('/images/icons/lukk.svg')} alt="" loading="lazy" />
+															<img class="schedule-lock" src={getIcon('lukk.svg')} alt="" loading="lazy" />
 														</div>
 													)}
 												</article>

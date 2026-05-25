@@ -5,7 +5,7 @@ category: "Tervis"
 pubDate: 2026-01-09
 ---
 
-<img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80" alt="Päikesekiirtes loodus" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80" alt="Päikesekiirtes loodus" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 Eestis on D-vitamiini puudus tavaline, eriti sügisel ja talvel. Kuna meie pindala ja ilmastik piiravad päikesevalgust, tekib paljudel inimestel krooniline puudus, mis mõjutab nii luid, immuunsust kui ka meeleolu. Selle peatusega artikkel selgitab, miks D-vitamiin on oluline ja kuidas seda targalt toetada.
 
@@ -17,7 +17,7 @@ Lisaks reguleerib D-vitamiin immuunsüsteemi vastust. Uuringud näitavad, et pii
 
 D-vitamiin mõjutab ka südame tervist: piisav tase aitab toetada vererõhku ja veresoonte elastsust. Kuna meie keha toodab D-vitamiini peamiselt päikesevalguse abil, võib pikk talvine periood ilma piisava valguseta mõjutada organismi tasakaalu.
 
-<img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80" alt="Päikeseloojang rannas" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80" alt="Päikeseloojang rannas" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 ## D-vitamiini puuduse sümptomid Eestis
 
@@ -35,7 +35,7 @@ Rasedad naised, imetavad emad ja eakad inimesed võivad vajada suuremat annust. 
 
 Laste puhul on oluline järgida vanusepõhiseid soovitusi ning pöörata tähelepanu sellele, et toidulisandid oleksid sobiva annuse ja kvaliteediga.
 
-<img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80" alt="Päikesevalgus puude vahel" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80" alt="Päikesevalgus puude vahel" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 ## Parimad D-vitamiini allikad
 
@@ -53,7 +53,7 @@ Päikesepuhanägemine on parim kombinatsioon: suvel välimine liikumine ja talve
 
 Kui toidulisandi tarbimine on vajalik, tuleks seda kombineerida alkoholivaba ja rasvarikka toiduga, kuna rasvlahustuv vitamiin imendub paremini koos rasvaga.
 
-<img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80" alt="Päikesevalgus puude vahel" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
+<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80" alt="Päikesevalgus puude vahel" style="width:100%;height:400px;object-fit:cover;margin:40px 0;" />
 
 ## Igapäevased praktikad ja lihtsad sammud
 
