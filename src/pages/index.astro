@@ -789,8 +789,20 @@ const adventAudioBlocks = [
 		}
 
 		.advent-audio-heading {
-			align-items: flex-start;
-			flex-direction: column;
+			display: contents;
+		}
+
+		.advent-audio-heading h4 {
+			order: 0;
+		}
+
+		.advent-audio-heading :global(.button) {
+			order: 2;
+			justify-self: start;
+		}
+
+		.advent-audio-grid {
+			order: 1;
 		}
 
 		.social-panel,
