@@ -31,6 +31,17 @@ const homepage = defineCollection({
 				}),
 			)
 			.optional(),
+		audioSources: z
+			.array(
+				z.object({
+					key: z.enum(['uheskoos', 'sermons']),
+					title: z.string(),
+					sourceUrl: z.string(),
+					buttonText: z.string().default('Kuula veel'),
+					image: z.string().optional(),
+				}),
+			)
+			.optional(),
 		formatsLabel: z.string().optional(),
 		themes: z.array(z.string()).optional(),
 		themesLabel: z.string().optional(),

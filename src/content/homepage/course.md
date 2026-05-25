@@ -16,5 +16,5 @@ themes:
   - "Tervis"
   - "Kogudus"
 themesLabel: "Usk ja elu kursuse teemad"
-order: 6
+order: 7
 ---

@@ -137,18 +137,21 @@ function withBase(href: string) {
 		line-height: 1.18;
 		max-width: 170px;
 		text-transform: uppercase;
-		transition: transform 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+		/* match logo transitions for consistent interaction */
+		transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease, color 0.3s ease;
 	}
 
 	.brand-title-line {
 		display: block;
 	}
 
+	/* apply the same interactive transform as the logo */
 	.brand:hover .brand-title,
 	.brand:focus-visible .brand-title,
 	.brand:active .brand-title {
-		transform: translateY(-2px) scale(1.02);
+		transform: scale(1.05) translateY(-2px);
 		opacity: 0.95;
+		filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.14));
 		color: var(--color-primary);
 	}
 
