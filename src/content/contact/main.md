@@ -12,8 +12,10 @@ fields:
 serviceTime: "kell 11.00"
 bibleStudyTime: "kell 12.00"
 address: "Põllu 5, Keila"
+mapTitle: "Keila Adventkogudus Google Mapsis"
+mapEmbedUrl: "https://www.google.com/maps?q=P%C3%B5llu%205%2C%20Keila%2C%20Estonia&output=embed"
 pastor: "Marge Randlepp"
-phone: "+372 56 56 21 31"
+phone: "+372 5656 2131"
 phoneHref: "+37256562131"
 email: "keila@advent.ee"
 ---

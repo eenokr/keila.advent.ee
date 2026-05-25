@@ -113,6 +113,8 @@ const contact = defineCollection({
 		serviceTime: z.string(),
 		bibleStudyTime: z.string(),
 		address: z.string(),
+		mapTitle: z.string().optional(),
+		mapEmbedUrl: z.string().optional(),
 		pastor: z.string(),
 		phone: z.string(),
 		phoneHref: z.string(),
