@@ -25,10 +25,7 @@ socials:
   - label: "Keila Adventkogudus Facebookis"
     href: "https://www.facebook.com/KeilaSPA/"
     type: "facebook"
-  - label: "Instagram"
-    href: "https://instagram.com"
-    type: "instagram"
-  - label: "YouTube"
-    href: "https://youtube.com"
+  - label: "Keila Adventkogudus YouTube'is"
+    href: "https://www.youtube.com/@keilaadventkogudus3623"
     type: "youtube"
 ---
