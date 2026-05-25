@@ -14,7 +14,7 @@ footerContact: "Keila, Harjumaa"
 footerCopyright: "Kõik õigused reserveeritud."
 nav:
   - label: "Avaleht"
-    href: "/"
+    href: "#home"
   - label: "Meist"
     href: "#about"
   - label: "Jumalateenistus"

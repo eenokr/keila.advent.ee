@@ -10,6 +10,7 @@ const site = siteEntry.data;
 const navItems = site.nav;
 const titleLineOne = site.titleLine1;
 const titleLineTwo = site.titleLine2;
+const currentPath = Astro.url.pathname;
 const imageModules = import.meta.glob<ImageMetadata>('../assets/images/*', {
 	eager: true,
 	import: 'default',
@@ -18,7 +19,7 @@ const logoAsset = site.logoImage === 'advent-logo.png' ? adventLogo : imageModul
 
 function withBase(href: string) {
 	if (href.startsWith('http')) return href;
-	if (href.startsWith('#')) return `${base}${href}`;
+	if (href.startsWith('#')) return currentPath === base ? href : `${base}${href}`;
 	if (href === '/') return base;
 
 	return `${base}${href.replace(/^\//, '')}`;
