@@ -64,8 +64,8 @@ const aboutAsset = getImage(about.image);
 const uheskoosImage = getImage('stuudio.jpeg');
 const facebookPageUrl = facebook.buttons?.find((button) => button.link.includes('facebook.com'))?.link;
 const [uheskoosAudioItems, sermonAudioItems] = await Promise.all([
-	getAdventAudioItems(ADVENT_AUDIO_SOURCES.uheskoos, 5),
-	getAdventAudioItems(ADVENT_AUDIO_SOURCES.sermons, 5),
+	getAdventAudioItems(ADVENT_AUDIO_SOURCES.uheskoos, 4),
+	getAdventAudioItems(ADVENT_AUDIO_SOURCES.sermons, 4),
 ]);
 const adventAudioBlocks = [
 	{
@@ -580,7 +580,7 @@ const adventAudioBlocks = [
 
 	.advent-audio-grid {
 		display: grid;
-		grid-template-columns: repeat(5, minmax(0, 1fr));
+		grid-template-columns: repeat(4, minmax(0, 1fr));
 		gap: 10px;
 	}
 
@@ -771,9 +771,21 @@ const adventAudioBlocks = [
 
 		.info-grid,
 		.resource-card-grid,
-		.format-grid,
-		.advent-audio-grid {
+		.format-grid {
 			grid-template-columns: 1fr;
+		}
+
+		.advent-audio-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 8px;
+		}
+
+		.advent-audio-card {
+			min-width: 0;
+		}
+
+		.advent-audio-card-copy {
+			padding: 9px;
 		}
 
 		.advent-audio-heading {
@@ -804,6 +816,23 @@ const adventAudioBlocks = [
 
 		.hero-actions {
 			width: 100%;
+		}
+
+		.advent-audio-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.advent-audio-card span {
+			font-size: 0.64rem;
+		}
+
+		.advent-audio-card h5 {
+			font-size: 0.78rem;
+			overflow-wrap: anywhere;
+		}
+
+		.advent-audio-card p {
+			font-size: 0.72rem;
 		}
 	}
 </style>
