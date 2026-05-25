@@ -4,12 +4,12 @@ title: "Jumalateenistus ja piiblitund"
 cards:
   - title: "Jumalateenistus"
     description: "Laupäeviti kell 11.00"
-    icon: "/images/icons/jumalateenistus.svg"
+    icon: "/images/icons/jumalateenistus1.svg"
     iconAlt: "Jumalateenistus"
 
   - title: "Piibli uurimine"
     description: "Peale teenistust kell 12.00"
-    icon: "/images/icons/bible.svg"
+    icon: "/images/icons/bible1.svg"
     iconAlt: "Piibel"
 
   - title: "Ühine söömine"
