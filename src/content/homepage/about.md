@@ -1,6 +1,6 @@
 ---
 eyebrow: "Meist"
-title: "Väike kogudus, avatud süda."
+title: "Väike kogudus, suur süda."
 description: "Keila Adventkogudus on kristlik kogukond, kus soovime koos õppida tundma Jeesust, toetada üksteist ja teenida oma linna heaga.\n\nSa ei pea kõike teadma ega oskama. Tule nii, nagu oled. Meil on hea meel sind näha."
 image: "ulistus.jpg"
 imageAlt: "Koguduse ülistus ja laulmine teenistusel"
