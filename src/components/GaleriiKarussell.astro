@@ -17,11 +17,11 @@ const firstSlide = slides[0];
 ---
 
 {slides.length > 0 && (
-	<div class="announcement-carousel" data-announcement-carousel data-interval-ms={intervalMs}>
-		<div class="announcement-slides" aria-live="polite">
+	<div class="gallery-carousel" data-gallery-carousel data-interval-ms={intervalMs}>
+		<div class="gallery-slides" aria-live="polite">
 			{slides.map((slide, index) => (
-				<div class:list={['announcement-slide', index === 0 && 'is-active']} data-announcement-slide>
-					<div class="announcement-image">
+				<div class:list={['gallery-slide', index === 0 && 'is-active']} data-gallery-slide>
+					<div class="gallery-image">
 						<Picture
 							src={slide.image}
 							formats={['webp']}
@@ -38,8 +38,8 @@ const firstSlide = slides[0];
 				</div>
 			))}
 			{slides.length > 1 && firstSlide && (
-				<div class="announcement-slide" data-announcement-clone aria-hidden="true">
-					<div class="announcement-image">
+				<div class="gallery-slide" data-gallery-clone aria-hidden="true">
+					<div class="gallery-image">
 						<Picture
 							src={firstSlide.image}
 							formats={['webp']}
@@ -57,13 +57,13 @@ const firstSlide = slides[0];
 			)}
 		</div>
 
-		<div class="announcement-controls" aria-label="Teadete valik">
-			<div class="announcement-dots">
+		<div class="gallery-controls" aria-label="Teadete valik">
+			<div class="gallery-dots">
 				{slides.map((_, index) => (
 					<button
-						class:list={['announcement-dot', index === 0 && 'is-active']}
+						class:list={['gallery-dot', index === 0 && 'is-active']}
 						type="button"
-						data-announcement-dot
+						data-gallery-dot
 						aria-label={`Näita teadet ${index + 1}`}
 						aria-current={index === 0 ? 'true' : 'false'}
 					/>
@@ -74,17 +74,17 @@ const firstSlide = slides[0];
 )}
 
 <script>
-	const carousels = document.querySelectorAll('[data-announcement-carousel]');
+	const carousels = document.querySelectorAll('[data-gallery-carousel]');
 
 	carousels.forEach((carousel) => {
 		if (!(carousel instanceof HTMLElement)) return;
 
-		const slides = Array.from(carousel.querySelectorAll('[data-announcement-slide]'));
-		const dots = Array.from(carousel.querySelectorAll('[data-announcement-dot]'));
+		const slides = Array.from(carousel.querySelectorAll('[data-gallery-slide]'));
+		const dots = Array.from(carousel.querySelectorAll('[data-gallery-dot]'));
 		const intervalMs = Number(carousel.dataset.intervalMs) || 4500;
 		const swipeThreshold = 40;
 		const wheelThreshold = 35;
-		const slideTrack = carousel.querySelector('.announcement-slides');
+		const slideTrack = carousel.querySelector('.gallery-slides');
 		let activeIndex = 0;
 		let startX = 0;
 		let startY = 0;
@@ -247,7 +247,7 @@ const firstSlide = slides[0];
 </script>
 
 <style>
-	.announcement-carousel {
+	.gallery-carousel {
 		aspect-ratio: 16 / 10;
 		background: transparent;
 		border-radius: 8px;
@@ -258,16 +258,16 @@ const firstSlide = slides[0];
 		user-select: none;
 	}
 
-	.announcement-slides,
-	.announcement-image,
-	.announcement-image :global(picture),
-	.announcement-slide :global(picture),
-	.announcement-slide :global(img) {
+	.gallery-slides,
+	.gallery-image,
+	.gallery-image :global(picture),
+	.gallery-slide :global(picture),
+	.gallery-slide :global(img) {
 		height: 100%;
 		width: 100%;
 	}
 
-	.announcement-slides {
+	.gallery-slides {
 		--active-index: 0;
 		--drag-offset: 0px;
 		display: flex;
@@ -275,15 +275,15 @@ const firstSlide = slides[0];
 		transition: transform 0.95s cubic-bezier(0.2, 0.8, 0.2, 1);
 	}
 
-	.announcement-carousel.is-dragging .announcement-slides {
+	.gallery-carousel.is-dragging .gallery-slides {
 		transition: none;
 	}
 
-	.announcement-carousel.is-snapping .announcement-slides {
+	.gallery-carousel.is-snapping .gallery-slides {
 		transition: none;
 	}
 
-	.announcement-slide {
+	.gallery-slide {
 		flex: 0 0 100%;
 		height: 100%;
 		min-width: 100%;
@@ -292,34 +292,34 @@ const firstSlide = slides[0];
 		width: 100%;
 	}
 
-	.announcement-slide.is-active {
+	.gallery-slide.is-active {
 		z-index: 1;
 	}
 
-	.announcement-slide :global(picture) {
+	.gallery-slide :global(picture) {
 		display: block;
 	}
 
-	.announcement-image {
+	.gallery-image {
 		inset: 0;
 		position: absolute;
 	}
 
-	.announcement-image {
+	.gallery-image {
 		z-index: 1;
 	}
 
-	.announcement-slide :global(img) {
+	.gallery-slide :global(img) {
 		-webkit-user-drag: none;
 		pointer-events: none;
 		user-select: none;
 	}
 
-	.announcement-image :global(img) {
+	.gallery-image :global(img) {
 		object-fit: cover;
 	}
 
-	.announcement-controls {
+	.gallery-controls {
 		align-items: center;
 		display: flex;
 		gap: 10px;
@@ -329,13 +329,13 @@ const firstSlide = slides[0];
 		z-index: 3;
 	}
 
-	.announcement-dots {
+	.gallery-dots {
 		align-items: center;
 		display: flex;
 		gap: 10px;
 	}
 
-	.announcement-dot {
+	.gallery-dot {
 		background: rgba(255, 255, 255, 0.48);
 		border: 0;
 		border-radius: 999px;
@@ -347,32 +347,32 @@ const firstSlide = slides[0];
 		width: 13px;
 	}
 
-	.announcement-dot.is-active {
+	.gallery-dot.is-active {
 		background: rgba(255, 255, 255, 0.95);
 		box-shadow: 0 2px 10px rgba(32, 24, 20, 0.2);
 		transform: scale(1.12);
 	}
 
-	.announcement-dot:hover,
-	.announcement-dot:focus-visible {
+	.gallery-dot:hover,
+	.gallery-dot:focus-visible {
 		background: rgba(255, 255, 255, 0.88);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.announcement-slides,
-		.announcement-dot {
+		.gallery-slides,
+		.gallery-dot {
 			transition: none;
 		}
 	}
 
 	@media (max-width: 860px) {
-		.announcement-carousel {
+		.gallery-carousel {
 			aspect-ratio: 16 / 11;
 		}
 	}
 
 	@media (max-width: 520px) {
-		.announcement-controls {
+		.gallery-controls {
 			right: 14px;
 			top: 14px;
 		}

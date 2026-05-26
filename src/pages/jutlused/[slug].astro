@@ -1,14 +1,14 @@
 ---
 import { getCollection, render } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import Header from '../../components/Header.astro';
+import PeaMeta from '../../components/PeaMeta.astro';
+import Jalus from '../../components/Jalus.astro';
+import Pais from '../../components/Pais.astro';
 
 export async function getStaticPaths() {
 	const sermons = await getCollection('sermons', ({ data }) => !data.draft);
 
 	return sermons.map((entry) => ({
-		params: { id: entry.id },
+		params: { slug: entry.id },
 		props: { entry },
 	}));
 }
@@ -21,14 +21,14 @@ const site = siteEntry.data;
 
 <html lang="et">
 	<head>
-		<BaseHead
+		<PeaMeta
 			title={`${entry.data.title} | ${site.title}`}
 			description={entry.data.description ?? entry.data.title}
 			siteTitle={site.title}
 		/>
 	</head>
 	<body>
-		<Header />
+		<Pais />
 		<main class="sermon-page">
 			<article class="sermon-wrapper">
 				<p class="eyebrow">{entry.data.category}</p>
@@ -44,7 +44,7 @@ const site = siteEntry.data;
 				</div>
 			</article>
 		</main>
-		<Footer />
+		<Jalus />
 	</body>
 </html>
 

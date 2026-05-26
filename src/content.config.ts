@@ -9,8 +9,11 @@ const buttonSchema = z.object({
 	ariaLabel: z.string().optional(),
 });
 
-const homepage = defineCollection({
-	loader: glob({ base: './src/content/homepage', pattern: '**/*.md' }),
+const koduleht = defineCollection({
+	loader: glob({
+		base: './src/content/koduleht',
+		pattern: '{avaleht,kogunemised,meist,facebooki-uudised,jutlused-ja-raadiosaated,veebikoolitus,oppetuki-app}.md',
+	}),
 	schema: z.object({
 		title: z.string(),
 		eyebrow: z.string().optional(),
@@ -24,7 +27,6 @@ const homepage = defineCollection({
 				z.object({
 					key: z.enum(['jutlus', 'piiblitund', 'lasteTundRl', 'soomine', 'osasaamine']),
 					positiveText: z.string(),
-					negativeText: z.string(),
 					icon: z.string().optional(),
 					iconAlt: z.string().optional(),
 				}),
@@ -32,18 +34,6 @@ const homepage = defineCollection({
 			.optional(),
 		buttons: z.array(buttonSchema).optional(),
 		cards: z.array(z.object({ title: z.string(), description: z.string(), icon: z.string().optional(), iconAlt: z.string().optional() })).optional(),
-		categories: z.array(z.string()).optional(),
-		categoriesLabel: z.string().optional(),
-		healthCategory: z.string().optional(),
-		groups: z
-			.array(
-				z.object({
-					key: z.enum(['articles', 'sermons', 'health']),
-					eyebrow: z.string(),
-					title: z.string(),
-				}),
-			)
-			.optional(),
 		audioSources: z
 			.array(
 				z.object({
@@ -55,22 +45,9 @@ const homepage = defineCollection({
 				}),
 			)
 			.optional(),
-		formatsLabel: z.string().optional(),
 		themes: z.array(z.string()).optional(),
 		themesLabel: z.string().optional(),
 		order: z.number().default(0),
-	}),
-});
-
-const articles = defineCollection({
-	loader: glob({ base: './src/content/articles', pattern: '**/*.{md,mdx}' }),
-	schema: z.object({
-		title: z.string(),
-		description: z.string(),
-		category: z.string(),
-		pubDate: z.coerce.date(),
-		image: z.string().optional(),
-		draft: z.boolean().default(false),
 	}),
 });
 
@@ -86,17 +63,8 @@ const sermons = defineCollection({
 	}),
 });
 
-const ministry = defineCollection({
-	loader: glob({ base: './src/content/ministry', pattern: '**/*.md' }),
-	schema: z.object({
-		title: z.string(),
-		description: z.string(),
-		order: z.number().default(0),
-	}),
-});
-
 const contact = defineCollection({
-	loader: glob({ base: './src/content/contact', pattern: '**/*.md' }),
+	loader: glob({ base: './src/content/koduleht', pattern: 'kontakt.md' }),
 	schema: z.object({
 		title: z.string(),
 		eyebrow: z.string().optional(),
@@ -122,18 +90,8 @@ const contact = defineCollection({
 	}),
 });
 
-const announcements = defineCollection({
-	loader: glob({ base: './src/content/announcements', pattern: '**/*.md' }),
-	schema: z.object({
-		title: z.string(),
-		description: z.string(),
-		date: z.coerce.date(),
-		link: z.string().optional(),
-	}),
-});
-
 const site = defineCollection({
-	loader: glob({ base: './src/content/site', pattern: '**/*.md' }),
+	loader: glob({ base: './src/content/koduleht', pattern: 'uldinfo.md' }),
 	schema: z.object({
 		title: z.string(),
 		titleLine1: z.string(),
@@ -151,4 +109,4 @@ const site = defineCollection({
 	}),
 });
 
-export const collections = { homepage, articles, sermons, ministry, contact, announcements, site };
+export const collections = { koduleht, sermons, contact, site };
