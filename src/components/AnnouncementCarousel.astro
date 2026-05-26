@@ -13,6 +13,7 @@ interface Props {
 }
 
 const { slides, intervalMs = 4500 } = Astro.props;
+const firstSlide = slides[0];
 ---
 
 {slides.length > 0 && (
@@ -24,8 +25,8 @@ const { slides, intervalMs = 4500 } = Astro.props;
 						<Picture
 							src={slide.image}
 							formats={['webp']}
-							widths={[560, 960]}
-							sizes="(max-width: 860px) calc(100vw - 36px), min(42vw, 500px)"
+							widths={[720, 1200]}
+							sizes="(max-width: 860px) calc(100vw - 36px), min(54vw, 820px)"
 							alt={slide.alt}
 							loading={index === 0 ? 'eager' : 'lazy'}
 							fetchpriority={index === 0 ? 'high' : 'auto'}
@@ -36,6 +37,24 @@ const { slides, intervalMs = 4500 } = Astro.props;
 					</div>
 				</div>
 			))}
+			{slides.length > 1 && firstSlide && (
+				<div class="announcement-slide" data-announcement-clone aria-hidden="true">
+					<div class="announcement-image">
+						<Picture
+							src={firstSlide.image}
+							formats={['webp']}
+							widths={[720, 1200]}
+							sizes="(max-width: 860px) calc(100vw - 36px), min(54vw, 820px)"
+							alt=""
+							loading="lazy"
+							fetchpriority="auto"
+							draggable="false"
+							decoding="async"
+							quality={82}
+						/>
+					</div>
+				</div>
+			)}
 		</div>
 
 		<div class="announcement-controls" aria-label="Teadete valik">
@@ -72,11 +91,12 @@ const { slides, intervalMs = 4500 } = Astro.props;
 		let isDragging = false;
 		let wheelLocked = false;
 		let timer;
+		let snapTimer;
 
 		if (!(slideTrack instanceof HTMLElement)) return;
 
-		function updateSlidePosition() {
-			slideTrack.style.setProperty('--active-index', String(activeIndex));
+		function updateSlidePosition(trackIndex = activeIndex) {
+			slideTrack.style.setProperty('--active-index', String(trackIndex));
 		}
 
 		function setDragOffset(offset = 0) {
@@ -87,14 +107,16 @@ const { slides, intervalMs = 4500 } = Astro.props;
 			if (slides.length === 0) return;
 
 			const normalizedIndex = (nextIndex + slides.length) % slides.length;
+			const isForwardWrap = activeIndex === slides.length - 1 && nextIndex > activeIndex && normalizedIndex === 0;
 
 			if (normalizedIndex === activeIndex) {
 				setDragOffset();
 				return;
 			}
 
+			window.clearTimeout(snapTimer);
 			activeIndex = normalizedIndex;
-			updateSlidePosition();
+			updateSlidePosition(isForwardWrap ? slides.length : activeIndex);
 			setDragOffset();
 			slides.forEach((slide, index) => {
 				slide.classList.toggle('is-active', index === activeIndex);
@@ -105,6 +127,16 @@ const { slides, intervalMs = 4500 } = Astro.props;
 				dot.classList.toggle('is-active', isActive);
 				dot.setAttribute('aria-current', String(isActive));
 			});
+
+			if (isForwardWrap) {
+				snapTimer = window.setTimeout(() => {
+					carousel.classList.add('is-snapping');
+					updateSlidePosition(0);
+					window.requestAnimationFrame(() => {
+						carousel.classList.remove('is-snapping');
+					});
+				}, 980);
+			}
 		}
 
 		function stopTimer() {
@@ -201,7 +233,7 @@ const { slides, intervalMs = 4500 } = Astro.props;
 
 <style>
 	.announcement-carousel {
-		aspect-ratio: 4 / 5;
+		aspect-ratio: 16 / 10;
 		background: transparent;
 		border-radius: 8px;
 		box-shadow: var(--shadow-warm);
@@ -229,6 +261,10 @@ const { slides, intervalMs = 4500 } = Astro.props;
 	}
 
 	.announcement-carousel.is-dragging .announcement-slides {
+		transition: none;
+	}
+
+	.announcement-carousel.is-snapping .announcement-slides {
 		transition: none;
 	}
 
@@ -265,17 +301,16 @@ const { slides, intervalMs = 4500 } = Astro.props;
 	}
 
 	.announcement-image :global(img) {
-		object-fit: contain;
+		object-fit: cover;
 	}
 
 	.announcement-controls {
 		align-items: center;
 		display: flex;
 		gap: 10px;
-		bottom: 16px;
-		left: 50%;
+		right: 22px;
+		top: 22px;
 		position: absolute;
-		transform: translateX(-50%);
 		z-index: 3;
 	}
 
@@ -286,28 +321,26 @@ const { slides, intervalMs = 4500 } = Astro.props;
 	}
 
 	.announcement-dot {
-		background: rgba(255, 255, 255, 0.72);
-		border: 1px solid rgba(48, 35, 28, 0.38);
+		background: rgba(255, 255, 255, 0.48);
+		border: 0;
 		border-radius: 999px;
-		box-shadow: 0 1px 3px rgba(32, 24, 20, 0.16);
+		box-shadow: 0 1px 8px rgba(32, 24, 20, 0.14);
 		cursor: pointer;
-		height: 10px;
+		height: 13px;
 		padding: 0;
-		transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, height 0.2s ease, width 0.2s ease;
-		width: 10px;
+		transition: background-color 0.2s ease, transform 0.2s ease, height 0.2s ease, width 0.2s ease;
+		width: 13px;
 	}
 
 	.announcement-dot.is-active {
-		background: var(--color-accent);
-		border-color: rgba(255, 255, 255, 0.82);
-		box-shadow: 0 1px 4px rgba(32, 24, 20, 0.22);
-		height: 15px;
-		width: 15px;
+		background: rgba(255, 255, 255, 0.95);
+		box-shadow: 0 2px 10px rgba(32, 24, 20, 0.2);
+		transform: scale(1.12);
 	}
 
 	.announcement-dot:hover,
 	.announcement-dot:focus-visible {
-		border-color: var(--color-accent);
+		background: rgba(255, 255, 255, 0.88);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
@@ -325,7 +358,8 @@ const { slides, intervalMs = 4500 } = Astro.props;
 
 	@media (max-width: 520px) {
 		.announcement-controls {
-			bottom: 12px;
+			right: 14px;
+			top: 14px;
 		}
 	}
 </style>
