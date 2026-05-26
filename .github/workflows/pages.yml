@@ -1,7 +1,7 @@
-name: Deploy to GitHub Pages
+name: Deploy Astro site to GitHub Pages
 
 on:
-  # Build and deploy the site whenever real changes land on main.
+  # Build and deploy the site whenever changes land on main.
   push:
     branches:
       - main
@@ -18,8 +18,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: github-pages
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -30,14 +30,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Configure the Node.js version required by this Astro release and enable npm cache.
+      # Use Node.js 22 and cache npm dependencies between builds.
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
 
-      # Configure GitHub Pages metadata for the deployment environment.
+      # Configure GitHub Pages metadata for this deployment.
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
