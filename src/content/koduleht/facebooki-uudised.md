@@ -1,5 +1,4 @@
 ---
-eyebrow: "Jeesus"
 title: "Miks Jeesus?"
 description: |
   Miks elu? Miks andestus? Miks eesmärk? Miks rahu? Miks lootus? Sellepärast, et Jeesus Kristus on vastus kõigile neile küsimustele!

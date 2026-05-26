@@ -13,12 +13,30 @@ interface Props {
 }
 
 const { slides, intervalMs = 4500 } = Astro.props;
-const firstSlide = slides[0];
+const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 ---
 
 {slides.length > 0 && (
 	<div class="gallery-carousel" data-gallery-carousel data-interval-ms={intervalMs}>
-		<div class="gallery-slides" aria-live="polite">
+		<div class="gallery-slides" aria-live="polite" style={`--active-index: ${initialTrackIndex}; --drag-offset: 0px;`}>
+			{slides.length > 1 && slides.map((slide) => (
+				<div class="gallery-slide" aria-hidden="true">
+					<div class="gallery-image">
+						<Picture
+							src={slide.image}
+							formats={['webp']}
+							widths={[720, 1200]}
+							sizes="(max-width: 860px) calc(100vw - 36px), min(54vw, 820px)"
+							alt=""
+							loading="lazy"
+							fetchpriority="auto"
+							draggable="false"
+							decoding="async"
+							quality={82}
+						/>
+					</div>
+				</div>
+			))}
 			{slides.map((slide, index) => (
 				<div class:list={['gallery-slide', index === 0 && 'is-active']} data-gallery-slide>
 					<div class="gallery-image">
@@ -37,11 +55,11 @@ const firstSlide = slides[0];
 					</div>
 				</div>
 			))}
-			{slides.length > 1 && firstSlide && (
-				<div class="gallery-slide" data-gallery-clone aria-hidden="true">
+			{slides.length > 1 && slides.map((slide) => (
+				<div class="gallery-slide" aria-hidden="true">
 					<div class="gallery-image">
 						<Picture
-							src={firstSlide.image}
+							src={slide.image}
 							formats={['webp']}
 							widths={[720, 1200]}
 							sizes="(max-width: 860px) calc(100vw - 36px), min(54vw, 820px)"
@@ -54,7 +72,7 @@ const firstSlide = slides[0];
 						/>
 					</div>
 				</div>
-			)}
+			))}
 		</div>
 
 		<div class="gallery-controls" aria-label="Teadete valik">
@@ -92,10 +110,16 @@ const firstSlide = slides[0];
 		let wheelLocked = false;
 		let timer;
 		let snapTimer;
+		let isWrapping = false;
+		let transitionCleanup;
 
 		if (!(slideTrack instanceof HTMLElement)) return;
 
-		function updateSlidePosition(trackIndex = activeIndex) {
+		function getTrackIndex(index) {
+			return slides.length > 1 ? slides.length + index : index;
+		}
+
+		function updateSlidePosition(trackIndex = getTrackIndex(activeIndex)) {
 			slideTrack.style.setProperty('--active-index', String(trackIndex));
 		}
 
@@ -103,18 +127,25 @@ const firstSlide = slides[0];
 			slideTrack.style.setProperty('--drag-offset', `${offset}px`);
 		}
 
-		function snapToRealFirstSlide() {
+		function snapToRealSlide(index = activeIndex) {
 			carousel.classList.add('is-snapping');
-			updateSlidePosition(0);
+			setDragOffset();
+			updateSlidePosition(getTrackIndex(index));
 			slideTrack.offsetHeight;
-			carousel.classList.remove('is-snapping');
+			requestAnimationFrame(() => {
+				requestAnimationFrame(() => {
+					carousel.classList.remove('is-snapping');
+					isWrapping = false;
+				});
+			});
 		}
 
 		function setActiveSlide(nextIndex) {
-			if (slides.length === 0) return;
+			if (slides.length === 0 || isWrapping) return;
 
 			const normalizedIndex = (nextIndex + slides.length) % slides.length;
 			const isForwardWrap = activeIndex === slides.length - 1 && nextIndex > activeIndex && normalizedIndex === 0;
+			const isBackwardWrap = activeIndex === 0 && nextIndex < activeIndex && normalizedIndex === slides.length - 1;
 
 			if (normalizedIndex === activeIndex) {
 				setDragOffset();
@@ -122,8 +153,16 @@ const firstSlide = slides[0];
 			}
 
 			window.clearTimeout(snapTimer);
+			transitionCleanup?.();
+			transitionCleanup = undefined;
 			activeIndex = normalizedIndex;
-			updateSlidePosition(isForwardWrap ? slides.length : activeIndex);
+			updateSlidePosition(
+				isForwardWrap
+					? slides.length * 2
+					: isBackwardWrap
+						? slides.length - 1
+						: getTrackIndex(activeIndex),
+			);
 			setDragOffset();
 			slides.forEach((slide, index) => {
 				slide.classList.toggle('is-active', index === activeIndex);
@@ -135,19 +174,25 @@ const firstSlide = slides[0];
 				dot.setAttribute('aria-current', String(isActive));
 			});
 
-			if (isForwardWrap) {
+			if (isForwardWrap || isBackwardWrap) {
+				isWrapping = true;
 				const handleTransitionEnd = (event) => {
 					if (event.propertyName !== 'transform') return;
 
 					window.clearTimeout(snapTimer);
-					slideTrack.removeEventListener('transitionend', handleTransitionEnd);
-					snapToRealFirstSlide();
+					transitionCleanup?.();
+					transitionCleanup = undefined;
+					snapToRealSlide(activeIndex);
 				};
 
+				transitionCleanup = () => {
+					slideTrack.removeEventListener('transitionend', handleTransitionEnd);
+				};
 				slideTrack.addEventListener('transitionend', handleTransitionEnd);
 				snapTimer = window.setTimeout(() => {
-					slideTrack.removeEventListener('transitionend', handleTransitionEnd);
-					snapToRealFirstSlide();
+					transitionCleanup?.();
+					transitionCleanup = undefined;
+					snapToRealSlide(activeIndex);
 				}, 1200);
 			}
 		}
@@ -176,6 +221,8 @@ const firstSlide = slides[0];
 		});
 
 		carousel.addEventListener('pointerdown', (event) => {
+			if (isWrapping) return;
+
 			startX = event.clientX;
 			startY = event.clientY;
 			isDragging = true;
@@ -201,9 +248,10 @@ const firstSlide = slides[0];
 			isDragging = false;
 			carousel.classList.remove('is-dragging');
 
-			// Ainult edasi – tagasi-swipe ignoreeritakse
 			if (deltaX < -swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)) {
 				setActiveSlide(activeIndex + 1);
+			} else if (deltaX > swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)) {
+				setActiveSlide(activeIndex - 1);
 			} else {
 				setDragOffset();
 			}
@@ -218,16 +266,21 @@ const firstSlide = slides[0];
 			startTimer();
 		});
 		carousel.addEventListener('wheel', (event) => {
-			if (Math.abs(event.deltaX) <= Math.abs(event.deltaY) || wheelLocked) {
+			if (Math.abs(event.deltaX) <= Math.abs(event.deltaY) || wheelLocked || isWrapping) {
 				return;
 			}
 
 			event.preventDefault();
 			stopTimer();
 
-			// Ainult edasi (deltaX > 0 = keri paremale = järgmine pilt)
 			if (event.deltaX > wheelThreshold) {
 				setActiveSlide(activeIndex + 1);
+				wheelLocked = true;
+				window.setTimeout(() => {
+					wheelLocked = false;
+				}, 450);
+			} else if (event.deltaX < -wheelThreshold) {
+				setActiveSlide(activeIndex - 1);
 				wheelLocked = true;
 				window.setTimeout(() => {
 					wheelLocked = false;
