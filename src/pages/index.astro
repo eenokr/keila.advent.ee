@@ -10,6 +10,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import InfoCard from '../components/InfoCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import SabbathSchoolWidget from '../components/SabbathSchoolWidget.astro';
 import { ADVENT_AUDIO_SOURCES, getAdventAudioItems } from '../lib/adventAudio';
 import { getServiceScheduleItems } from '../lib/serviceSchedule';
 
@@ -43,7 +44,6 @@ const about = homepage.about;
 const facebook = homepage.facebook;
 const audio = homepage.audio;
 const course = homepage.course;
-const app = homepage.app;
 const contactInfo = contact.data;
 const serviceScheduleActivities = services.scheduleActivities ?? [
 	{
@@ -323,18 +323,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 					)}
 
 					{entry.id === 'app' && (
-						<section class="app-section" id="oppetykk">
-							<div class="section-inner app-card">
-								<div>
-									<p class="eyebrow">{app.eyebrow}</p>
-									<h2>{app.title}</h2>
-									<p class="section-description">{app.description}</p>
-								</div>
-								{app.buttons?.map((button) => (
-									<CtaButton {...button} />
-								))}
-							</div>
-						</section>
+						<SabbathSchoolWidget />
 					)}
 				</>
 			))}
