@@ -201,8 +201,9 @@ const firstSlide = slides[0];
 			isDragging = false;
 			carousel.classList.remove('is-dragging');
 
-			if (Math.abs(deltaX) > swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)) {
-				setActiveSlide(activeIndex + (deltaX < 0 ? 1 : -1));
+			// Ainult edasi – tagasi-swipe ignoreeritakse
+			if (deltaX < -swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)) {
+				setActiveSlide(activeIndex + 1);
 			} else {
 				setDragOffset();
 			}
@@ -224,8 +225,9 @@ const firstSlide = slides[0];
 			event.preventDefault();
 			stopTimer();
 
-			if (Math.abs(event.deltaX) > wheelThreshold) {
-				setActiveSlide(activeIndex + (event.deltaX > 0 ? 1 : -1));
+			// Ainult edasi (deltaX > 0 = keri paremale = järgmine pilt)
+			if (event.deltaX > wheelThreshold) {
+				setActiveSlide(activeIndex + 1);
 				wheelLocked = true;
 				window.setTimeout(() => {
 					wheelLocked = false;
