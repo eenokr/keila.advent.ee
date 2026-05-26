@@ -78,7 +78,7 @@ const imageURL = new URL(image.src, Astro.url);
 			threshold: 0.18,
 		});
 
-		Array.from(doc.querySelectorAll('.hero-copy, .hero-image-card, .section-heading, .about-grid, .social-panel, .resource-group, .course-grid, .app-card, .visit-inner, article'))
+		Array.from(doc.querySelectorAll('.hero-copy, .announcement-carousel, .section-heading, .about-grid, .social-panel, .resource-group, .course-grid, .app-card, .visit-inner, article'))
 			.forEach((element) => {
 				element.classList.add('scroll-reveal');
 				scrollObserver.observe(element);

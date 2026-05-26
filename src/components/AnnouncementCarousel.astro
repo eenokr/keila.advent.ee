@@ -1,0 +1,331 @@
+---
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+type Slide = {
+	image: ImageMetadata;
+	alt: string;
+};
+
+interface Props {
+	slides: Slide[];
+	intervalMs?: number;
+}
+
+const { slides, intervalMs = 4500 } = Astro.props;
+---
+
+{slides.length > 0 && (
+	<div class="announcement-carousel" data-announcement-carousel data-interval-ms={intervalMs}>
+		<div class="announcement-slides" aria-live="polite">
+			{slides.map((slide, index) => (
+				<div class:list={['announcement-slide', index === 0 && 'is-active']} data-announcement-slide>
+					<div class="announcement-image">
+						<Picture
+							src={slide.image}
+							formats={['webp']}
+							widths={[560, 960]}
+							sizes="(max-width: 860px) calc(100vw - 36px), min(42vw, 500px)"
+							alt={slide.alt}
+							loading={index === 0 ? 'eager' : 'lazy'}
+							fetchpriority={index === 0 ? 'high' : 'auto'}
+							draggable="false"
+							decoding={index === 0 ? 'sync' : 'async'}
+							quality={82}
+						/>
+					</div>
+				</div>
+			))}
+		</div>
+
+		<div class="announcement-controls" aria-label="Teadete valik">
+			<div class="announcement-dots">
+				{slides.map((_, index) => (
+					<button
+						class:list={['announcement-dot', index === 0 && 'is-active']}
+						type="button"
+						data-announcement-dot
+						aria-label={`Näita teadet ${index + 1}`}
+						aria-current={index === 0 ? 'true' : 'false'}
+					/>
+				))}
+			</div>
+		</div>
+	</div>
+)}
+
+<script>
+	const carousels = document.querySelectorAll('[data-announcement-carousel]');
+
+	carousels.forEach((carousel) => {
+		if (!(carousel instanceof HTMLElement)) return;
+
+		const slides = Array.from(carousel.querySelectorAll('[data-announcement-slide]'));
+		const dots = Array.from(carousel.querySelectorAll('[data-announcement-dot]'));
+		const intervalMs = Number(carousel.dataset.intervalMs) || 4500;
+		const swipeThreshold = 40;
+		const wheelThreshold = 35;
+		const slideTrack = carousel.querySelector('.announcement-slides');
+		let activeIndex = 0;
+		let startX = 0;
+		let startY = 0;
+		let isDragging = false;
+		let wheelLocked = false;
+		let timer;
+
+		if (!(slideTrack instanceof HTMLElement)) return;
+
+		function updateSlidePosition() {
+			slideTrack.style.setProperty('--active-index', String(activeIndex));
+		}
+
+		function setDragOffset(offset = 0) {
+			slideTrack.style.setProperty('--drag-offset', `${offset}px`);
+		}
+
+		function setActiveSlide(nextIndex) {
+			if (slides.length === 0) return;
+
+			const normalizedIndex = (nextIndex + slides.length) % slides.length;
+
+			if (normalizedIndex === activeIndex) {
+				setDragOffset();
+				return;
+			}
+
+			activeIndex = normalizedIndex;
+			updateSlidePosition();
+			setDragOffset();
+			slides.forEach((slide, index) => {
+				slide.classList.toggle('is-active', index === activeIndex);
+			});
+
+			dots.forEach((dot, index) => {
+				const isActive = index === activeIndex;
+				dot.classList.toggle('is-active', isActive);
+				dot.setAttribute('aria-current', String(isActive));
+			});
+		}
+
+		function stopTimer() {
+			window.clearInterval(timer);
+		}
+
+		function startTimer() {
+			stopTimer();
+			if (slides.length > 1) {
+				timer = window.setInterval(() => setActiveSlide(activeIndex + 1), intervalMs);
+			}
+		}
+
+		dots.forEach((dot, index) => {
+			dot.addEventListener('pointerdown', (event) => {
+				event.stopPropagation();
+			});
+
+			dot.addEventListener('click', (event) => {
+				event.stopPropagation();
+				setActiveSlide(index);
+				startTimer();
+			});
+		});
+
+		carousel.addEventListener('pointerdown', (event) => {
+			startX = event.clientX;
+			startY = event.clientY;
+			isDragging = true;
+			carousel.classList.add('is-dragging');
+			carousel.setPointerCapture?.(event.pointerId);
+			stopTimer();
+		});
+
+		carousel.addEventListener('pointermove', (event) => {
+			if (!isDragging) return;
+
+			const deltaX = event.clientX - startX;
+			const deltaY = event.clientY - startY;
+
+			if (Math.abs(deltaX) > Math.abs(deltaY)) {
+				setDragOffset(deltaX);
+			}
+		});
+
+		carousel.addEventListener('pointerup', (event) => {
+			const deltaX = event.clientX - startX;
+			const deltaY = event.clientY - startY;
+			isDragging = false;
+			carousel.classList.remove('is-dragging');
+
+			if (Math.abs(deltaX) > swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)) {
+				setActiveSlide(activeIndex + (deltaX < 0 ? 1 : -1));
+			} else {
+				setDragOffset();
+			}
+
+			startTimer();
+		});
+
+		carousel.addEventListener('pointercancel', () => {
+			isDragging = false;
+			carousel.classList.remove('is-dragging');
+			setDragOffset();
+			startTimer();
+		});
+		carousel.addEventListener('wheel', (event) => {
+			if (Math.abs(event.deltaX) <= Math.abs(event.deltaY) || wheelLocked) {
+				return;
+			}
+
+			event.preventDefault();
+			stopTimer();
+
+			if (Math.abs(event.deltaX) > wheelThreshold) {
+				setActiveSlide(activeIndex + (event.deltaX > 0 ? 1 : -1));
+				wheelLocked = true;
+				window.setTimeout(() => {
+					wheelLocked = false;
+				}, 450);
+			}
+
+			startTimer();
+		}, { passive: false });
+		carousel.addEventListener('mouseenter', stopTimer);
+		carousel.addEventListener('mouseleave', startTimer);
+		carousel.addEventListener('focusin', stopTimer);
+		carousel.addEventListener('focusout', startTimer);
+
+		updateSlidePosition();
+		startTimer();
+	});
+</script>
+
+<style>
+	.announcement-carousel {
+		aspect-ratio: 4 / 5;
+		background: transparent;
+		border-radius: 8px;
+		box-shadow: var(--shadow-warm);
+		overflow: hidden;
+		position: relative;
+		touch-action: pan-y;
+		user-select: none;
+	}
+
+	.announcement-slides,
+	.announcement-image,
+	.announcement-image :global(picture),
+	.announcement-slide :global(picture),
+	.announcement-slide :global(img) {
+		height: 100%;
+		width: 100%;
+	}
+
+	.announcement-slides {
+		--active-index: 0;
+		--drag-offset: 0px;
+		display: flex;
+		transform: translateX(calc(var(--active-index) * -100% + var(--drag-offset)));
+		transition: transform 0.95s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+
+	.announcement-carousel.is-dragging .announcement-slides {
+		transition: none;
+	}
+
+	.announcement-slide {
+		flex: 0 0 100%;
+		height: 100%;
+		min-width: 100%;
+		opacity: 1;
+		position: relative;
+		width: 100%;
+	}
+
+	.announcement-slide.is-active {
+		z-index: 1;
+	}
+
+	.announcement-slide :global(picture) {
+		display: block;
+	}
+
+	.announcement-image {
+		inset: 0;
+		position: absolute;
+	}
+
+	.announcement-image {
+		z-index: 1;
+	}
+
+	.announcement-slide :global(img) {
+		-webkit-user-drag: none;
+		pointer-events: none;
+		user-select: none;
+	}
+
+	.announcement-image :global(img) {
+		object-fit: contain;
+	}
+
+	.announcement-controls {
+		align-items: center;
+		display: flex;
+		gap: 10px;
+		bottom: 16px;
+		left: 50%;
+		position: absolute;
+		transform: translateX(-50%);
+		z-index: 3;
+	}
+
+	.announcement-dots {
+		align-items: center;
+		display: flex;
+		gap: 10px;
+	}
+
+	.announcement-dot {
+		background: rgba(255, 255, 255, 0.72);
+		border: 1px solid rgba(48, 35, 28, 0.38);
+		border-radius: 999px;
+		box-shadow: 0 1px 3px rgba(32, 24, 20, 0.16);
+		cursor: pointer;
+		height: 10px;
+		padding: 0;
+		transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, height 0.2s ease, width 0.2s ease;
+		width: 10px;
+	}
+
+	.announcement-dot.is-active {
+		background: var(--color-accent);
+		border-color: rgba(255, 255, 255, 0.82);
+		box-shadow: 0 1px 4px rgba(32, 24, 20, 0.22);
+		height: 15px;
+		width: 15px;
+	}
+
+	.announcement-dot:hover,
+	.announcement-dot:focus-visible {
+		border-color: var(--color-accent);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.announcement-slides,
+		.announcement-dot {
+			transition: none;
+		}
+	}
+
+	@media (max-width: 860px) {
+		.announcement-carousel {
+			aspect-ratio: 16 / 11;
+		}
+	}
+
+	@media (max-width: 520px) {
+		.announcement-controls {
+			bottom: 12px;
+		}
+	}
+</style>

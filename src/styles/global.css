@@ -17,21 +17,21 @@
 :root {
 	--font-body: 'Atkinson Hyperlegible', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 	--font-heading: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-	--color-page: #fff3e4;
+	--color-page: #fffaf4;
 	--color-surface: #ffffff;
-	--color-surface-warm: #fff3e4;
+	--color-surface-warm: #fff1df;
 	--color-surface-soft: #fff7ee;
-	--color-border: #efd8bd;
-	--color-border-strong: #dfb27d;
-	--color-text: #312b25;
+	--color-border: #ebc9a1;
+	--color-border-strong: #cf8e50;
+	--color-text: #302821;
 	--color-text-soft: #66594e;
-	--color-heading: #251f1a;
-	--color-primary: #b85b16;
-	--color-primary-dark: #8f3f0d;
-	--color-primary-soft: #f08a24;
-	--color-secondary: #d99a2b;
-	--color-accent: #b76518;
-	--shadow-warm: 0 24px 70px rgba(117, 62, 19, 0.16);
+	--color-heading: #221c17;
+	--color-primary: #c7661a;
+	--color-primary-dark: #9e470f;
+	--color-primary-soft: #ea8122;
+	--color-secondary: #d8902b;
+	--color-accent: #c05a12;
+	--shadow-warm: 0 24px 70px rgba(117, 62, 19, 0.13);
 }
 
 * {

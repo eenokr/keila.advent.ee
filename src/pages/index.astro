@@ -2,6 +2,7 @@
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
+import AnnouncementCarousel from '../components/AnnouncementCarousel.astro';
 import BaseHead from '../components/BaseHead.astro';
 import CtaButton from '../components/CtaButton.astro';
 import FacebookFeed from '../components/FacebookFeed.astro';
@@ -16,6 +17,10 @@ const SERVICE_SCHEDULE_CSV_URL =
 	'https://docs.google.com/spreadsheets/d/e/2PACX-1vTOmThNzJymlMrI5PiXxN5jcQTAotZvXrbYCZwDWQ8s2fqvbOckV6-XjCFkyUulLYUUl0HOqpyYIxrO/pub?gid=1165865253&single=true&output=csv';
 
 const imageModules = import.meta.glob<ImageMetadata>('../assets/images/*', {
+	eager: true,
+	import: 'default',
+});
+const announcementImageModules = import.meta.glob<ImageMetadata>('../assets/announcements/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', {
 	eager: true,
 	import: 'default',
 });
@@ -91,8 +96,26 @@ function getIcon(filename?: string) {
 	return iconModules[`../assets/icons/${filename.replace(/^\/?(images\/icons\/)?/, '')}`];
 }
 
+function getAnnouncementAlt(path: string) {
+	const filename = path.split('/').pop()?.replace(/\.[^.]+$/, '') ?? 'teade';
+	const title = filename.replace(/[-_]+/g, ' ').trim();
+
+	return title ? `Koguduse teade: ${title}` : 'Koguduse teade';
+}
+
 const heroAsset = getImage(hero.image);
 const aboutAsset = getImage(about.image);
+const announcementSlides = Object.entries(announcementImageModules)
+	.sort(([pathA], [pathB]) => pathA.localeCompare(pathB, 'et'))
+	.map(([path, image]) => ({
+		image,
+		alt: getAnnouncementAlt(path),
+	}));
+const heroSlides = announcementSlides.length > 0
+	? announcementSlides
+	: heroAsset
+		? [{ image: heroAsset, alt: hero.imageAlt ?? 'Keila adventkoguduse teade' }]
+		: [];
 const facebookPageUrl = facebook.pageUrl ?? facebook.buttons?.find((button) => button.link.includes('facebook.com'))?.link;
 const [serviceScheduleItems, uheskoosAudioItems, sermonAudioItems] = await Promise.all([
 	getServiceScheduleItems(SERVICE_SCHEDULE_CSV_URL, 4),
@@ -133,20 +156,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 										))}
 									</div>
 								</div>
-								{heroAsset && (
-									<div class="hero-image-card">
-										<Picture
-											src={heroAsset}
-											formats={['webp']}
-											widths={[640, 960, 1200]}
-											sizes="(max-width: 860px) calc(100vw - 36px), min(42vw, 500px)"
-											alt={hero.imageAlt ?? ''}
-											loading="eager"
-											fetchpriority="high"
-											quality={85}
-										/>
-									</div>
-								)}
+								<AnnouncementCarousel slides={heroSlides} intervalMs={6000} />
 							</div>
 						</section>
 					)}
@@ -378,7 +388,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.hero-section {
-		background: linear-gradient(180deg, var(--color-page) 0%, var(--color-surface) 100%);
+		background: linear-gradient(180deg, var(--color-surface-soft) 0%, var(--color-surface) 100%);
 		padding: 82px 20px 72px;
 	}
 
@@ -442,25 +452,18 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		margin-top: 34px;
 	}
 
-	.hero-image-card,
 	.about-image {
 		border-radius: 8px;
 		overflow: hidden;
 		box-shadow: var(--shadow-warm);
 	}
 
-	.hero-image-card {
-		aspect-ratio: 4 / 5;
-	}
-
-	.hero-image-card picture,
 	.about-image picture {
 		display: block;
 		height: 100%;
 		width: 100%;
 	}
 
-	.hero-image-card img,
 	.about-image img {
 		height: 100%;
 		object-fit: cover;
@@ -539,7 +542,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.service-schedule-card {
-		background: var(--color-page);
+		background: var(--color-surface-warm);
 		border: 1px solid var(--color-border);
 		border-radius: 8px;
 		min-height: 240px;
@@ -622,7 +625,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.about-section {
-		background: var(--color-page);
+		background: var(--color-surface-warm);
 	}
 
 	.about-grid {
@@ -645,7 +648,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.facebook-section {
-		background: var(--color-page);
+		background: var(--color-surface-warm);
 	}
 
 	.facebook-section .social-panel {
@@ -840,7 +843,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.course-section {
-		background: var(--color-page);
+		background: var(--color-surface-warm);
 	}
 
 	.course-grid {
@@ -866,7 +869,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.app-card {
-		background: var(--color-page);
+		background: var(--color-surface-warm);
 		border: 1px solid var(--color-border);
 		border-radius: 8px;
 		padding: 34px;
@@ -969,10 +972,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 		.contact-map iframe {
 			height: 240px;
-		}
-
-		.hero-image-card {
-			aspect-ratio: 16 / 11;
 		}
 
 		.info-section,
