@@ -9,7 +9,12 @@ const { eyebrow, title, description } = Astro.props;
 ---
 
 <div class="section-heading">
-	{eyebrow && <p class="eyebrow">{eyebrow}</p>}
+	{eyebrow && (
+		<p class="eyebrow">
+			<span class="eyebrow-line" aria-hidden="true"></span>
+			{eyebrow}
+		</p>
+	)}
 	<h2>{title}</h2>
 	{description && <p class="section-description">{description}</p>}
 </div>
@@ -20,13 +25,25 @@ const { eyebrow, title, description } = Astro.props;
 	}
 
 	.eyebrow {
+		align-items: center;
 		color: var(--color-accent);
+		display: flex;
 		font-family: var(--font-heading);
-		font-size: 0.9rem;
-		font-weight: 600;
-		letter-spacing: 0.08em;
-		margin: 0 0 16px;
+		font-size: 0.85rem;
+		font-weight: 700;
+		gap: 10px;
+		letter-spacing: 0.1em;
+		margin: 0 0 18px;
 		text-transform: uppercase;
+	}
+
+	.eyebrow-line {
+		background: linear-gradient(90deg, var(--color-primary), var(--color-primary-soft));
+		border-radius: 2px;
+		display: inline-block;
+		flex-shrink: 0;
+		height: 2px;
+		width: 26px;
 	}
 
 	h2 {
@@ -34,16 +51,16 @@ const { eyebrow, title, description } = Astro.props;
 		font-family: var(--font-heading);
 		font-size: clamp(2rem, 4vw, 3.25rem);
 		font-weight: 600;
-		letter-spacing: 0;
-		line-height: 1.12;
+		letter-spacing: -0.01em;
+		line-height: 1.1;
 		margin: 0;
 	}
 
 	.section-description {
 		color: var(--color-text-soft);
-		font-size: 1.05rem;
-		line-height: 1.75;
-		margin: 22px 0 0;
+		font-size: 1.08rem;
+		line-height: 1.78;
+		margin: 20px 0 0;
 		max-width: 680px;
 	}
 </style>

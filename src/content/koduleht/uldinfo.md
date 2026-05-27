@@ -15,10 +15,18 @@ footerCopyright: "Kõik õigused reserveeritud."
 nav:
   - label: "Avaleht"
     href: "#home"
-  - label: "Meist"
-    href: "#about"
   - label: "Jumalateenistus"
     href: "#services"
+  - label: "Meist"
+    href: "#about"
+  - label: "Lisad"
+    children:
+      - label: "Jutlused ja kuulamiseks mõeldud mõtted"
+        href: "#audio"
+      - label: '"Usk ja elu" veebikoolitus'
+        href: "#kursus"
+      - label: "Selle nädala õppetükk"
+        href: "#oppetykk"
   - label: "Kontakt"
     href: "#contact"
 socials:

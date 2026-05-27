@@ -142,7 +142,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 					{entry.id === 'avaleht' && (
 						<section class="hero-section" id="home">
 							<div class="hero-content">
-								<div class="hero-copy">
+								<div class="hero-copy scroll-reveal">
 									<h1>{hero.title}</h1>
 									<p class="hero-intro">{hero.description}</p>
 									<div class="hero-actions">
@@ -151,7 +151,9 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 										))}
 									</div>
 								</div>
-								<GaleriiKarussell slides={heroSlides} intervalMs={6000} />
+								<div class="scroll-reveal hero-carousel-wrap" style="--reveal-delay: 120ms">
+									<GaleriiKarussell slides={heroSlides} intervalMs={6000} />
+								</div>
 							</div>
 						</section>
 					)}
@@ -159,17 +161,21 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 					{entry.id === 'kogunemised' && (
 						<section class="info-section" id="services">
 							<div class="section-inner">
-								<SektsiooniPealkiri eyebrow={services.eyebrow} title={services.title} description={services.description} />
+								<div class="scroll-reveal">
+									<SektsiooniPealkiri eyebrow={services.eyebrow} title={services.title} description={services.description} />
+								</div>
 								{services.cards && services.cards.length > 0 && (
-									<div class="info-grid">
+									<div class="info-grid stagger">
 										{services.cards.map((card) => (
-											<Infokaart {...card} />
+											<div class="scroll-reveal">
+												<Infokaart {...card} />
+											</div>
 										))}
 									</div>
 								)}
 								{serviceScheduleItems.length > 0 && (
-									<div class="service-schedule">
-										<div class="service-schedule-grid">
+									<div class="service-schedule scroll-reveal" style="--reveal-delay: 80ms">
+										<div class="service-schedule-grid stagger">
 											{serviceScheduleItems.map((item) => (
 												<article
 													class:list={[
@@ -211,7 +217,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 						<section class="about-section" id="about">
 							<div class="about-grid">
 								{aboutAsset && (
-									<div class="about-image">
+									<div class="about-image scroll-reveal">
 										<Picture
 											src={aboutAsset}
 											formats={['webp']}
@@ -223,7 +229,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 										/>
 									</div>
 								)}
-								<div class="about-copy">
+								<div class="about-copy scroll-reveal" style="--reveal-delay: 100ms">
 									<p class="eyebrow">{about.eyebrow}</p>
 									<h2>{about.title}</h2>
 									{about.description?.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
@@ -235,7 +241,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 					{entry.id === 'facebooki-uudised' && (
 						<section class="facebook-section" id="facebook">
 							<div class="section-inner social-panel">
-								<div class="social-copy">
+								<div class="social-copy scroll-reveal">
 									<p class="eyebrow">{facebook.eyebrow}</p>
 									<h2>{facebook.title}</h2>
 									{facebook.description && <p>{facebook.description}</p>}
@@ -253,7 +259,9 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 					{entry.id === 'jutlused-ja-raadiosaated' && (
 						<section class="resources-section" id="audio">
 							<div class="section-inner">
-								<SektsiooniPealkiri eyebrow={audio.eyebrow} title={audio.title} description={audio.description} />
+								<div class="scroll-reveal">
+									<SektsiooniPealkiri eyebrow={audio.eyebrow} title={audio.title} description={audio.description} />
+								</div>
 
 								<div class="resource-groups">
 									<article class="resource-group">
@@ -270,9 +278,9 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 															ariaLabel={`${block.buttonText}: ${block.title}`}
 														/>
 													</div>
-													<div class="advent-audio-grid">
+													<div class="advent-audio-grid stagger">
 														{block.items.map((item) => (
-															<a class="advent-audio-card" href={item.url} target="_blank" rel="noopener noreferrer">
+															<a class="advent-audio-card scroll-reveal" href={item.url} target="_blank" rel="noopener noreferrer">
 																<div class="advent-audio-image" aria-hidden="true">
 																	{block.imageUrl || item.imageUrl ? (
 																		<img src={block.imageUrl ?? item.imageUrl} alt="" loading="lazy" />
@@ -300,7 +308,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 					{entry.id === 'veebikoolitus' && (
 						<section class="course-section" id="kursus">
 							<div class="course-grid">
-								<div class="course-copy-wrap">
+								<div class="course-copy-wrap scroll-reveal">
 									<p class="eyebrow">{course.eyebrow}</p>
 									<h2>{course.title}</h2>
 									<p class="section-description">{course.description}</p>
@@ -309,12 +317,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 											<TegevusNupp {...button} />
 										))}
 									</div>
-								</div>
-								<div class="course-themes-card">
-									{course.themesLabel && <p class="course-themes-label">{course.themesLabel}</p>}
-									<ul class="theme-list" aria-label={course.themesLabel}>
-										{course.themes?.map((theme) => <li>{theme}</li>)}
-									</ul>
 								</div>
 							</div>
 						</section>
@@ -375,8 +377,31 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.hero-section {
-		background: linear-gradient(180deg, var(--color-surface-soft) 0%, var(--color-surface) 100%);
-		padding: 82px 20px 72px;
+		background: linear-gradient(160deg, var(--color-surface-soft) 0%, #fdf3e6 55%, var(--color-surface) 100%);
+		padding: 96px 20px 84px;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.hero-section::before {
+		content: '';
+		position: absolute;
+		top: -100px;
+		right: -60px;
+		width: 560px;
+		height: 560px;
+		background: radial-gradient(circle, rgba(199, 102, 26, 0.07) 0%, transparent 68%);
+		pointer-events: none;
+	}
+
+	.hero-section::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image: radial-gradient(circle, rgba(199, 102, 26, 0.055) 1px, transparent 1px);
+		background-size: 30px 30px;
+		pointer-events: none;
+		opacity: 0.6;
 	}
 
 	.hero-content,
@@ -389,13 +414,25 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.hero-content {
 		max-width: 1500px;
-	}
-
-	.hero-content {
 		display: grid;
 		grid-template-columns: minmax(0, 0.9fr) minmax(520px, 1.15fr);
 		gap: clamp(48px, 5vw, 86px);
 		align-items: center;
+		position: relative;
+	}
+
+	.hero-carousel-wrap {
+		position: relative;
+	}
+
+	.hero-carousel-wrap::after {
+		content: '';
+		position: absolute;
+		inset: -12px -14px;
+		background: linear-gradient(135deg, rgba(199, 102, 26, 0.06) 0%, transparent 60%);
+		border-radius: 20px;
+		pointer-events: none;
+		z-index: -1;
 	}
 
 	.hero-copy {
@@ -424,16 +461,17 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.hero-copy h1 {
 		font-size: clamp(2.7rem, 6vw, 5rem);
+		letter-spacing: -0.02em;
 		line-height: 1.04;
 		margin: 0;
 	}
 
 	.hero-intro {
 		color: var(--color-text-soft);
-		font-size: 1.15rem;
-		line-height: 1.75;
-		margin: 28px 0 0;
-		max-width: 610px;
+		font-size: 1.18rem;
+		line-height: 1.78;
+		margin: 30px 0 0;
+		max-width: 580px;
 	}
 
 	.hero-actions {
@@ -444,9 +482,20 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.about-image {
-		border-radius: 8px;
+		border-radius: 16px;
 		overflow: hidden;
-		box-shadow: var(--shadow-warm);
+		box-shadow: 0 20px 60px rgba(117, 62, 19, 0.18),
+		            0 4px 14px rgba(117, 62, 19, 0.1);
+		outline: 1px solid var(--color-border);
+		outline-offset: -1px;
+		transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+		            box-shadow 0.4s ease;
+	}
+
+	.about-image:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 28px 72px rgba(117, 62, 19, 0.2),
+		            0 6px 18px rgba(117, 62, 19, 0.12);
 	}
 
 	.about-image picture {
@@ -468,7 +517,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.course-section,
 	.app-section,
 	.visit-section {
-		padding: 78px 20px;
+		padding: 86px 20px;
 	}
 
 	.info-section,
@@ -483,7 +532,8 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.app-card h2,
 	.visit-inner h2 {
 		font-size: clamp(2rem, 4vw, 3.25rem);
-		line-height: 1.12;
+		letter-spacing: -0.01em;
+		line-height: 1.1;
 		margin: 0;
 	}
 
@@ -498,8 +548,17 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.info-grid {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 18px;
-		margin-top: 38px;
+		gap: 20px;
+		margin-top: 42px;
+	}
+
+	.info-grid > .scroll-reveal {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.info-grid > .scroll-reveal :global(.info-card) {
+		flex: 1;
 	}
 
 	.service-schedule {
@@ -535,17 +594,24 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.service-schedule-card {
 		background: var(--color-surface-warm);
 		border: 1px solid var(--color-border);
-		border-radius: 8px;
+		border-radius: 12px;
 		min-height: 240px;
-		padding: 24px;
+		padding: 22px 20px 20px;
+		transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+	}
+
+	.service-schedule-card:hover {
+		border-color: var(--color-border-strong);
+		box-shadow: 0 6px 22px rgba(117, 62, 19, 0.1);
+		transform: translateY(-3px);
 	}
 
 	.service-schedule-card h4 {
 		color: var(--color-heading);
 		font-family: var(--font-heading);
-		font-size: 1.55rem;
-		line-height: 1.25;
-		margin: 0 0 12px;
+		font-size: 1.5rem;
+		line-height: 1.2;
+		margin: 0 0 14px;
 	}
 
 	.service-schedule-list {
@@ -617,13 +683,27 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.about-section {
 		background: var(--color-surface-warm);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.about-section::before {
+		content: '';
+		position: absolute;
+		bottom: -80px;
+		left: -80px;
+		width: 400px;
+		height: 400px;
+		background: radial-gradient(circle, rgba(199, 102, 26, 0.055) 0%, transparent 70%);
+		pointer-events: none;
 	}
 
 	.about-grid {
 		display: grid;
 		grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1fr);
-		gap: 58px;
+		gap: 64px;
 		align-items: center;
+		position: relative;
 	}
 
 	.about-image {
@@ -640,6 +720,19 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.facebook-section {
 		background: var(--color-surface-warm);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.facebook-section::before {
+		content: '';
+		position: absolute;
+		top: -60px;
+		right: -60px;
+		width: 350px;
+		height: 350px;
+		background: radial-gradient(circle, rgba(199, 102, 26, 0.06) 0%, transparent 70%);
+		pointer-events: none;
 	}
 
 	.facebook-section .social-panel {
@@ -769,22 +862,25 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.advent-audio-card {
 		background: var(--color-surface-warm);
 		border: 1px solid var(--color-border);
-		border-radius: 8px;
+		border-radius: 12px;
 		color: inherit;
 		display: block;
 		overflow: hidden;
 		text-decoration: none;
-		transition: border-color 0.2s ease, transform 0.2s ease;
+		transition: border-color 0.28s ease,
+		            transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+		            box-shadow 0.28s ease;
 	}
 
 	.advent-audio-card:hover {
 		border-color: var(--color-border-strong);
-		transform: translateY(-2px);
+		box-shadow: 0 6px 24px rgba(117, 62, 19, 0.12);
+		transform: translateY(-4px);
 	}
 
 	.advent-audio-image {
-		aspect-ratio: 16 / 4;
-		background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-warm) 100%);
+		aspect-ratio: 16 / 5;
+		background: linear-gradient(135deg, var(--color-surface-soft) 0%, var(--color-surface-warm) 100%);
 		display: grid;
 		place-items: center;
 	}
@@ -848,12 +944,8 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.course-grid {
-		max-width: 1180px;
+		max-width: 860px;
 		margin: 0 auto;
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
-		gap: 64px;
-		align-items: center;
 		position: relative;
 	}
 
@@ -887,34 +979,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		transform: translateY(-2px) scale(1.02);
 	}
 
-	.course-themes-card {
-		background: rgba(255, 255, 255, 0.1);
-		border: 1px solid rgba(255, 255, 255, 0.22);
-		border-radius: 16px;
-		padding: 30px 32px;
-	}
-
-	.course-themes-label {
-		color: rgba(255, 255, 255, 0.62);
-		font-family: var(--font-heading);
-		font-size: 0.8rem;
-		font-weight: 600;
-		letter-spacing: 0.1em;
-		margin: 0 0 18px;
-		text-transform: uppercase;
-	}
-
-	.theme-list {
-		align-content: start;
-		margin: 0;
-		padding: 0;
-	}
-
-	.course-themes-card .theme-list li {
-		background: rgba(255, 255, 255, 0.13);
-		border-color: rgba(255, 255, 255, 0.28);
-		color: #ffffff;
-	}
 
 	.app-card {
 		background: var(--color-surface-warm);
@@ -942,12 +1006,12 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.contact-card {
 		align-self: stretch;
-		background: rgba(255, 255, 255, 0.08);
-		border: 1px solid rgba(255, 255, 255, 0.18);
-		border-radius: 24px;
+		background: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 20px;
 		display: grid;
 		gap: 18px;
-		padding: 18px;
+		padding: 20px;
 	}
 
 	.contact-map {
@@ -974,11 +1038,11 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.visit-details {
-		background: rgba(255, 255, 255, 0.16);
-		border: 1px solid rgba(255, 255, 255, 0.22);
-		border-radius: 16px;
-		box-shadow: 0 24px 48px rgba(0, 0, 0, 0.14);
-		padding: 34px;
+		background: rgba(255, 255, 255, 0.14);
+		border: 1px solid rgba(255, 255, 255, 0.24);
+		border-radius: 18px;
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
+		padding: 32px;
 	}
 
 	.visit-details h3 {
@@ -1098,14 +1162,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 			flex-direction: column;
 		}
 
-		.course-grid {
-			grid-template-columns: 1fr;
-			gap: 36px;
-		}
-
-		.course-themes-card {
-			padding: 24px;
-		}
 
 		.app-card {
 			padding: 28px;

@@ -124,17 +124,16 @@ img, picture,
 
 html.animations-supported .scroll-reveal {
 	opacity: 0;
-	transform: translateY(16px);
+	transform: translateY(24px);
 	will-change: transform, opacity;
+	transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+	            transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+	transition-delay: var(--reveal-delay, 0ms);
 }
 
 html.animations-supported .scroll-reveal.visible {
 	opacity: 1;
 	transform: translateY(0);
-}
-
-html.animations-supported .scroll-reveal {
-	transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 button,
@@ -205,6 +204,15 @@ hr {
 	clip-path: inset(50%);
 	white-space: nowrap;
 }
+
+/* Stagger animation delays for grid children */
+.stagger > *:nth-child(1) { --reveal-delay: 0ms; }
+.stagger > *:nth-child(2) { --reveal-delay: 65ms; }
+.stagger > *:nth-child(3) { --reveal-delay: 130ms; }
+.stagger > *:nth-child(4) { --reveal-delay: 195ms; }
+.stagger > *:nth-child(5) { --reveal-delay: 260ms; }
+.stagger > *:nth-child(6) { --reveal-delay: 325ms; }
+.stagger > *:nth-child(7) { --reveal-delay: 390ms; }
 
 @media (max-width: 768px) {
 	body {

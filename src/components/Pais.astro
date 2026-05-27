@@ -51,7 +51,23 @@ function withBase(href: string) {
 
 		<ul class="nav-menu">
 			{navItems.map((item) => (
-				<li><a href={withBase(item.href)} class="nav-link">{item.label}</a></li>
+				item.children ? (
+					<li class="nav-item has-dropdown">
+						<button class="nav-link nav-dropdown-toggle" type="button" aria-expanded="false">
+							{item.label}
+							<svg class="dropdown-chevron" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true" fill="none">
+								<path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</button>
+						<div class="dropdown-menu" role="menu">
+							{item.children.map((child) => (
+								<a href={withBase(child.href)} class="dropdown-link" role="menuitem">{child.label}</a>
+							))}
+						</div>
+					</li>
+				) : (
+					<li class="nav-item"><a href={withBase(item.href!)} class="nav-link">{item.label}</a></li>
+				)
 			))}
 		</ul>
 
@@ -67,7 +83,23 @@ function withBase(href: string) {
 	<div class="mobile-menu" id="mobile-menu" hidden>
 		<ul>
 			{navItems.map((item) => (
-				<li><a href={withBase(item.href)} class="mobile-nav-link">{item.label}</a></li>
+				item.children ? (
+					<li class="mobile-nav-accordion">
+						<button class="mobile-accordion-toggle" type="button" aria-expanded="false">
+							{item.label}
+							<svg class="mobile-accordion-chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" fill="none">
+								<path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</button>
+						<ul class="mobile-accordion-children" hidden>
+							{item.children.map((child) => (
+								<li><a href={withBase(child.href)} class="mobile-nav-link mobile-nav-child">{child.label}</a></li>
+							))}
+						</ul>
+					</li>
+				) : (
+					<li><a href={withBase(item.href!)} class="mobile-nav-link">{item.label}</a></li>
+				)
 			))}
 		</ul>
 	</div>
@@ -80,6 +112,15 @@ function withBase(href: string) {
 		position: sticky;
 		top: 0;
 		z-index: 100;
+		transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+	}
+
+	.header-main.is-scrolled {
+		background: rgba(255, 250, 244, 0.88);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
+		border-bottom-color: rgba(235, 201, 161, 0.45);
+		box-shadow: 0 2px 24px rgba(117, 62, 19, 0.09);
 	}
 
 	.header-nav {
@@ -157,6 +198,7 @@ function withBase(href: string) {
 
 	.nav-menu {
 		display: flex;
+		align-items: center;
 		list-style: none;
 		margin: 0;
 		padding: 0;
@@ -164,6 +206,87 @@ function withBase(href: string) {
 		justify-content: center;
 		justify-self: center;
 		min-width: 0;
+	}
+
+	.nav-item {
+		position: relative;
+	}
+
+	.nav-dropdown-toggle {
+		align-items: center;
+		background: none;
+		border: none;
+		color: var(--color-text);
+		cursor: pointer;
+		display: inline-flex;
+		font-family: var(--font-body);
+		font-size: 0.95rem;
+		font-weight: 400;
+		gap: 4px;
+		line-height: 1;
+		margin: 0;
+		padding: 8px 0;
+		position: relative;
+		text-transform: uppercase;
+		vertical-align: middle;
+		white-space: nowrap;
+	}
+
+	.nav-dropdown-toggle:hover {
+		color: var(--color-primary);
+	}
+
+	.dropdown-chevron {
+		flex-shrink: 0;
+		transition: transform 0.22s ease;
+	}
+
+	.nav-dropdown-toggle[aria-expanded='true'] .dropdown-chevron {
+		transform: rotate(180deg);
+	}
+
+	.dropdown-menu {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 12px;
+		box-shadow: 0 8px 36px rgba(117, 62, 19, 0.13), 0 2px 8px rgba(117, 62, 19, 0.07);
+		left: 50%;
+		min-width: 270px;
+		opacity: 0;
+		padding: 6px;
+		pointer-events: none;
+		position: absolute;
+		top: calc(100% + 10px);
+		transform: translateX(-50%) translateY(-6px);
+		transition: opacity 0.2s ease, transform 0.2s ease;
+		z-index: 200;
+	}
+
+	.nav-dropdown-toggle[aria-expanded='true'] + .dropdown-menu {
+		opacity: 1;
+		pointer-events: auto;
+		transform: translateX(-50%) translateY(0);
+	}
+
+	.dropdown-link {
+		border-radius: 8px;
+		color: var(--color-text);
+		display: block;
+		font-size: 0.88rem;
+		line-height: 1.35;
+		padding: 10px 14px;
+		text-decoration: none;
+		transition: background 0.15s ease, color 0.15s ease;
+		white-space: normal;
+	}
+
+	.dropdown-link:hover {
+		background: var(--color-surface-warm);
+		color: var(--color-primary);
+	}
+
+	.dropdown-link + .dropdown-link {
+		margin-top: 2px;
 	}
 
 	.nav-link {
@@ -264,7 +387,7 @@ function withBase(href: string) {
 		display: none;
 	}
 
-	.mobile-menu ul {
+	.mobile-menu > ul {
 		display: grid;
 		gap: 2px;
 		list-style: none;
@@ -284,6 +407,51 @@ function withBase(href: string) {
 
 	.mobile-nav-link:hover {
 		color: var(--color-primary);
+	}
+
+	.mobile-accordion-toggle {
+		align-items: center;
+		background: none;
+		border: none;
+		border-radius: 5px;
+		color: var(--color-text);
+		cursor: pointer;
+		display: flex;
+		font-family: var(--font-body);
+		font-size: 0.92rem;
+		justify-content: space-between;
+		padding: 12px 4px;
+		text-decoration: none;
+		width: 100%;
+	}
+
+	.mobile-accordion-toggle:hover {
+		color: var(--color-primary);
+	}
+
+	.mobile-accordion-chevron {
+		flex-shrink: 0;
+		transition: transform 0.22s ease;
+	}
+
+	.mobile-accordion-toggle[aria-expanded='true'] .mobile-accordion-chevron {
+		transform: rotate(180deg);
+	}
+
+	.mobile-accordion-children {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.mobile-accordion-children[hidden] {
+		display: none;
+	}
+
+	.mobile-nav-child {
+		color: var(--color-text-soft);
+		font-size: 0.9rem;
+		padding-left: 18px;
 	}
 
 	@media (max-width: 900px) {
@@ -377,6 +545,7 @@ function withBase(href: string) {
 </style>
 
 <script>
+	// Mobile menu
 	const menuButton = document.querySelector<HTMLButtonElement>('.mobile-menu-toggle');
 	const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu');
 	const mobileLinks = document.querySelectorAll<HTMLAnchorElement>('.mobile-nav-link');
@@ -384,7 +553,6 @@ function withBase(href: string) {
 	if (menuButton && mobileMenu) {
 		menuButton.addEventListener('click', () => {
 			const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
-
 			menuButton.setAttribute('aria-expanded', String(!isOpen));
 			mobileMenu.hidden = isOpen;
 		});
@@ -395,5 +563,58 @@ function withBase(href: string) {
 				mobileMenu.hidden = true;
 			});
 		});
+	}
+
+	// Mobile accordion toggles
+	const accordionToggles = document.querySelectorAll<HTMLButtonElement>('.mobile-accordion-toggle');
+	accordionToggles.forEach((toggle) => {
+		toggle.addEventListener('click', () => {
+			const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+			const children = toggle.nextElementSibling as HTMLElement | null;
+			toggle.setAttribute('aria-expanded', String(!isOpen));
+			if (children) children.hidden = isOpen;
+		});
+	});
+
+	// Dropdown menus
+	const dropdownToggles = document.querySelectorAll<HTMLButtonElement>('.nav-dropdown-toggle');
+	dropdownToggles.forEach((toggle) => {
+		toggle.addEventListener('click', (e) => {
+			e.stopPropagation();
+			const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+			dropdownToggles.forEach((t) => t.setAttribute('aria-expanded', 'false'));
+			toggle.setAttribute('aria-expanded', String(!isOpen));
+		});
+	});
+	document.addEventListener('click', () => {
+		dropdownToggles.forEach((t) => t.setAttribute('aria-expanded', 'false'));
+	});
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') dropdownToggles.forEach((t) => t.setAttribute('aria-expanded', 'false'));
+	});
+
+	// Header glassmorphism on scroll
+	const header = document.querySelector<HTMLElement>('.header-main');
+	const handleScroll = () => {
+		header?.classList.toggle('is-scrolled', window.scrollY > 24);
+	};
+	window.addEventListener('scroll', handleScroll, { passive: true });
+	handleScroll();
+
+	// Scroll-reveal animations via IntersectionObserver
+	if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		document.documentElement.classList.add('animations-supported');
+		const revealObserver = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('visible');
+						revealObserver.unobserve(entry.target);
+					}
+				});
+			},
+			{ threshold: 0.06, rootMargin: '0px 0px -28px 0px' }
+		);
+		document.querySelectorAll('.scroll-reveal').forEach((el) => revealObserver.observe(el));
 	}
 </script>

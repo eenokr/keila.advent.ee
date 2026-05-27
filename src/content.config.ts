@@ -104,7 +104,11 @@ const site = defineCollection({
 		footerText: z.string(),
 		footerContact: z.string(),
 		footerCopyright: z.string(),
-		nav: z.array(z.object({ label: z.string(), href: z.string() })),
+		nav: z.array(z.object({
+			label: z.string(),
+			href: z.string().optional(),
+			children: z.array(z.object({ label: z.string(), href: z.string() })).optional(),
+		})),
 		socials: z.array(z.object({ label: z.string(), href: z.string(), type: z.enum(['facebook', 'instagram', 'youtube']) })).default([]),
 	}),
 });
