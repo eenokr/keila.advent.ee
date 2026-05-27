@@ -301,7 +301,7 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 <style>
 	.gallery-carousel {
 		background: transparent;
-		border-radius: 8px;
+		border-radius: var(--gallery-border-radius);
 		box-shadow: var(--shadow-warm);
 		height: var(--gallery-panel-height);
 		overflow: hidden;
@@ -375,9 +375,9 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 	.gallery-controls {
 		align-items: center;
 		display: flex;
-		gap: 10px;
-		right: 22px;
-		top: 22px;
+		gap: var(--gallery-dot-gap);
+		right: var(--gallery-controls-offset);
+		top: var(--gallery-controls-offset);
 		position: absolute;
 		z-index: 3;
 	}
@@ -385,7 +385,7 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 	.gallery-dots {
 		align-items: center;
 		display: flex;
-		gap: 10px;
+		gap: var(--gallery-dot-gap);
 	}
 
 	.gallery-dot {
@@ -394,10 +394,10 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 		border-radius: 999px;
 		box-shadow: 0 1px 8px rgba(32, 24, 20, 0.14);
 		cursor: pointer;
-		height: 13px;
+		height: var(--gallery-dot-size);
 		padding: 0;
 		transition: background-color 0.2s ease, transform 0.2s ease, height 0.2s ease, width 0.2s ease;
-		width: 13px;
+		width: var(--gallery-dot-size);
 	}
 
 	.gallery-dot.is-active {
@@ -420,15 +420,15 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 
 	@media (max-width: 860px) {
 		.gallery-carousel {
-			aspect-ratio: 16 / 11;
+			aspect-ratio: var(--gallery-mobile-aspect-ratio);
 			height: auto;
 		}
 	}
 
 	@media (max-width: 520px) {
 		.gallery-controls {
-			right: 14px;
-			top: 14px;
+			right: var(--gallery-controls-offset);
+			top: var(--gallery-controls-offset);
 		}
 	}
 </style>

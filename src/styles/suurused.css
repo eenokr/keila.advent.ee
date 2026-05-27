@@ -7,6 +7,13 @@
 	--facebook-feed-width: 640px;
 	--facebook-feed-height: 580px;
 	--facebook-feed-scale: 1.28;
+	--facebook-plugin-native-width: 500px;
+	--facebook-feed-radius: 8px;
+	--facebook-feed-fallback-font-size: 0.92rem;
+	--facebook-feed-fallback-line-height: 1.45;
+	--facebook-feed-fallback-padding: 12px 16px;
+	--facebook-section-orb-size: 350px;
+	--facebook-layout-gap: 58px;
 
 	/* Üldine tekst */
 	--body-font-size: 16px;
@@ -27,6 +34,13 @@
 	--hero-text-width: 680px;
 	--hero-intro-width: 580px;
 	--hero-column-gap: clamp(48px, 5vw, 86px);
+	--hero-background-orb-size: 560px;
+	--hero-background-dot-size: 30px;
+	--hero-eyebrow-margin-bottom: 16px;
+	--hero-intro-margin-top: 30px;
+	--hero-buttons-gap: 14px;
+	--hero-buttons-margin-top: 34px;
+	--hero-gallery-min-width: 520px;
 
 	/* Sektsioonid */
 	--section-padding-y: 86px;
@@ -35,6 +49,14 @@
 	--section-title-line-height: 1.1;
 	--section-grid-gap: 64px;
 	--section-heading-width: 720px;
+	--section-description-margin-top: 22px;
+	--section-actions-gap: 14px;
+	--section-actions-margin-top: 30px;
+	--section-background-orb-size: 400px;
+	--two-column-content-gap: 40px;
+	--pill-list-gap: 10px;
+	--pill-list-margin-top: 34px;
+	--pill-padding: 12px 16px;
 
 	/* Nupud */
 	--button-font-size: 1.05rem;
@@ -53,33 +75,103 @@
 	--info-grid-gap: 20px;
 	--gallery-panel-width: 740px;
 	--gallery-panel-height: 460px;
+	--gallery-border-radius: 8px;
+	--gallery-mobile-aspect-ratio: 16 / 11;
+	--gallery-dot-size: 13px;
+	--gallery-dot-gap: 10px;
+	--gallery-controls-offset: 22px;
+	--about-image-aspect-ratio: 5 / 4;
+	--info-card-min-height: 0px;
 	--info-card-padding: 32px 26px 28px;
+	--info-card-mobile-padding: 26px 22px 24px;
+	--info-card-radius: 14px;
+	--info-card-top-line-height: 3px;
+	--info-card-icon-margin-bottom: 22px;
 	--info-card-title-size: 1.35rem;
+	--info-card-title-margin-bottom: 12px;
 	--info-card-text-size: 1.05rem;
 	--info-card-icon-box-size: 60px;
 	--info-card-icon-size: 32px;
+	--info-card-icon-box-size-mobile: 52px;
+	--info-card-icon-size-mobile: 28px;
 	--schedule-card-min-height: 240px;
+	--schedule-empty-card-min-height: 154px;
 	--schedule-card-padding: 22px 20px 20px;
 	--schedule-date-font-size: 1.5rem;
+	--schedule-heading-size: clamp(1.35rem, 2.4vw, 1.8rem);
 	--schedule-text-font-size: 1.2rem;
 	--schedule-icon-size: 32px;
 	--schedule-lock-size: 124px;
+	--info-grid-margin-top: 42px;
+	--schedule-margin-top: 38px;
+	--schedule-grid-gap: 36px;
+	--schedule-grid-gap-mobile: 10px;
+	--schedule-grid-margin-top: 22px;
+	--schedule-card-radius: 12px;
+	--schedule-card-min-height-mobile: 210px;
+	--schedule-card-padding-mobile: 16px;
+	--schedule-item-gap: 14px;
+	--schedule-item-gap-y: 7px;
 
 	/* Audio kaardid */
-	--audio-grid-gap: 10px;
-	--audio-heading-font-size: 1.2rem;
-	--audio-date-font-size: 0.72rem;
+	--audio-grid-gap: 36px;
+	--audio-grid-gap-mobile: 8px;
+	--audio-card-min-width: 0px;
+	--audio-card-min-height: 0px;
+	--audio-card-text-column-width: 1fr;
+	--audio-card-image-column-width: 1fr;
+	--audio-image-height: 180px;
+	--audio-card-padding-mobile: 9px;
+	--audio-heading-font-size: 1.4rem;
+	--audio-date-font-size: 0.8rem;
 	--audio-title-font-size: 0.9rem;
 	--audio-card-padding: 10px;
+	--resource-group-title-size: clamp(1.5rem, 3vw, 2rem);
+	--audio-section-margin-top: 44px;
+	--audio-section-gap: 38px;
+	--audio-block-gap: 20px;
+	--audio-inner-gap: 10px;
+	--audio-heading-gap: 16px;
+	--audio-card-radius: 12px;
+	--audio-image-placeholder-size: 22px;
+	--audio-date-margin-bottom: 7px;
+	--audio-link-font-size: 0.82rem;
+	--audio-date-font-size-mobile: 0.64rem;
+	--audio-title-font-size-mobile: 0.78rem;
+	--audio-link-font-size-mobile: 0.72rem;
+	--audio-link-margin-top: 9px;
 
 	/* Kontakt */
 	--contact-padding-y: 58px;
 	--contact-card-padding: 20px;
 	--contact-map-height: 280px;
+	--contact-card-min-width: 280px;
 	--contact-title-size: 1.7rem;
 	--contact-text-size: 1.1rem;
+	--contact-text-line-height: 1.65;
 	--contact-details-padding: 32px;
+	--contact-layout-gap: 48px;
+	--contact-card-radius: 20px;
+	--contact-details-radius: 18px;
+	--contact-map-radius: 16px;
+	--contact-map-margin-top: 28px;
+	--contact-field-gap: 12px;
 	--app-card-padding: 34px;
+
+	/* Veebikoolitus */
+	--course-container-gap: 32px;
+	--course-layout-gap: 40px;
+	--course-layout-gap-tablet: 28px;
+	--course-copy-column-width: 280px;
+	--course-copy-column-width-tablet: 240px;
+	--course-actions-margin-top: 28px;
+	--course-chapters-margin-top: 28px;
+	--course-chapters-gap: 6px;
+	--course-chapter-radius: 8px;
+	--course-chapter-gap: 10px;
+	--course-chapter-padding: 10px 12px;
+	--course-video-aspect-ratio: 16 / 9;
+	--course-video-radius: 14px;
 
 	/* Jutluse alamlehed */
 	--sermon-page-padding-y: 78px;
@@ -104,6 +196,7 @@
 		--hero-padding-bottom: 54px;
 		--section-grid-gap: 34px;
 		--contact-map-height: 240px;
+		--gallery-controls-offset: 14px;
 	}
 }
 

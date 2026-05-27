@@ -35,7 +35,8 @@ const iconSrc = icon
 	.info-card {
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
-		border-radius: 14px;
+		border-radius: var(--info-card-radius);
+		min-height: var(--info-card-min-height);
 		padding: var(--info-card-padding);
 		position: relative;
 		overflow: hidden;
@@ -50,9 +51,9 @@ const iconSrc = icon
 		top: 0;
 		left: 0;
 		right: 0;
-		height: 3px;
+		height: var(--info-card-top-line-height);
 		background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-soft) 100%);
-		border-radius: 14px 14px 0 0;
+		border-radius: var(--info-card-radius) var(--info-card-radius) 0 0;
 		opacity: 0.6;
 		transition: opacity 0.3s ease;
 	}
@@ -72,11 +73,11 @@ const iconSrc = icon
 		align-items: center;
 		background: linear-gradient(135deg, var(--color-surface-warm) 0%, var(--color-surface-soft) 100%);
 		border: 1px solid var(--color-border);
-		border-radius: 12px;
+		border-radius: var(--schedule-card-radius);
 		display: inline-flex;
 		height: var(--info-card-icon-box-size);
 		justify-content: center;
-		margin-bottom: 22px;
+		margin-bottom: var(--info-card-icon-margin-bottom);
 		width: var(--info-card-icon-box-size);
 	}
 
@@ -93,7 +94,7 @@ const iconSrc = icon
 		font-size: var(--info-card-title-size);
 		font-weight: 600;
 		line-height: 1.25;
-		margin: 0 0 12px;
+		margin: 0 0 var(--info-card-title-margin-bottom);
 	}
 
 	p {
@@ -105,17 +106,17 @@ const iconSrc = icon
 
 	@media (max-width: 860px) {
 		.info-card {
-			padding: 26px 22px 24px;
+			padding: var(--info-card-mobile-padding);
 		}
 
 		.info-card-icon-wrap {
-			height: 52px;
-			width: 52px;
+			height: var(--info-card-icon-box-size-mobile);
+			width: var(--info-card-icon-box-size-mobile);
 		}
 
 		.info-card-icon {
-			height: 28px;
-			width: 28px;
+			height: var(--info-card-icon-size-mobile);
+			width: var(--info-card-icon-size-mobile);
 		}
 	}
 </style>

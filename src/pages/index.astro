@@ -44,6 +44,7 @@ const facebook = koduleht['facebooki-uudised'];
 const audio = koduleht['jutlused-ja-raadiosaated'];
 const course = koduleht.veebikoolitus;
 const contactInfo = contact.data;
+const visibleContactItems = contactInfo.contactItems.filter((item) => item.value.trim().length > 0);
 const serviceScheduleActivities = services.scheduleActivities ?? [
 	{
 		key: 'jutlus',
@@ -425,15 +426,16 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 					<div class="contact-card">
 						<div class="visit-details">
 							<h3>{contactInfo.cardTitle}</h3>
-							<p><strong>{contactInfo.fields.serviceTime}:</strong> {contactInfo.serviceTime}</p>
-							<p><strong>{contactInfo.fields.bibleStudyTime}:</strong> {contactInfo.bibleStudyTime}</p>
-							<p><strong>{contactInfo.fields.address}:</strong> {contactInfo.address}</p>
-							<p><strong>{contactInfo.fields.pastor}:</strong> {contactInfo.pastor}</p>
-							<p><strong>{contactInfo.fields.phone}:</strong> <a href={`tel:${contactInfo.phoneHref}`}>{contactInfo.phone}</a></p>
-							<p>
-								<strong>{contactInfo.fields.email}:</strong>
-								<a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
-							</p>
+							{visibleContactItems.map((item) => (
+								<p>
+									<strong>{item.label}:</strong>{' '}
+									{item.href ? (
+										<a href={item.href}>{item.value}</a>
+									) : (
+										item.value
+									)}
+								</p>
+							))}
 						</div>
 					</div>
 				</div>
@@ -467,8 +469,8 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		position: absolute;
 		top: -100px;
 		right: -60px;
-		width: 560px;
-		height: 560px;
+		width: var(--hero-background-orb-size);
+		height: var(--hero-background-orb-size);
 		background: radial-gradient(circle, rgba(199, 102, 26, 0.07) 0%, transparent 68%);
 		pointer-events: none;
 	}
@@ -478,7 +480,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		position: absolute;
 		inset: 0;
 		background-image: radial-gradient(circle, rgba(199, 102, 26, 0.055) 1px, transparent 1px);
-		background-size: 30px 30px;
+		background-size: var(--hero-background-dot-size) var(--hero-background-dot-size);
 		pointer-events: none;
 		opacity: 0.6;
 	}
@@ -493,7 +495,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.hero-content {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(520px, var(--gallery-panel-width));
+		grid-template-columns: minmax(0, 1fr) minmax(var(--hero-gallery-min-width), var(--gallery-panel-width));
 		gap: var(--hero-column-gap);
 		align-items: center;
 		position: relative;
@@ -501,16 +503,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.hero-carousel-wrap {
 		position: relative;
-	}
-
-	.hero-carousel-wrap::after {
-		content: '';
-		position: absolute;
-		inset: -12px -14px;
-		background: linear-gradient(135deg, rgba(199, 102, 26, 0.06) 0%, transparent 60%);
-		border-radius: 20px;
-		pointer-events: none;
-		z-index: -1;
 	}
 
 	.hero-copy {
@@ -523,7 +515,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		font-size: var(--eyebrow-font-size);
 		font-weight: 600;
 		letter-spacing: 0.08em;
-		margin: 0 0 16px;
+		margin: 0 0 var(--hero-eyebrow-margin-bottom);
 		text-transform: uppercase;
 	}
 
@@ -548,20 +540,20 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		color: var(--color-text-soft);
 		font-size: var(--hero-intro-font-size);
 		line-height: var(--hero-intro-line-height);
-		margin: 30px 0 0;
+		margin: var(--hero-intro-margin-top) 0 0;
 		max-width: var(--hero-intro-width);
 	}
 
 	.hero-actions {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 14px;
-		margin-top: 34px;
+		gap: var(--hero-buttons-gap);
+		margin-top: var(--hero-buttons-margin-top);
 	}
 
 	/* Meist: src/content/koduleht/meist.md */
 	.about-image {
-		border-radius: 16px;
+		border-radius: var(--contact-map-radius);
 		overflow: hidden;
 		box-shadow: 0 20px 60px rgba(117, 62, 19, 0.18),
 		            0 4px 14px rgba(117, 62, 19, 0.1);
@@ -634,7 +626,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		color: var(--color-text-soft);
 		font-size: var(--section-description-font-size);
 		line-height: var(--section-description-line-height);
-		margin: 22px 0 0;
+		margin: var(--section-description-margin-top) 0 0;
 		max-width: var(--text-column-width);
 	}
 
@@ -643,7 +635,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: var(--info-grid-gap);
-		margin-top: 42px;
+		margin-top: var(--info-grid-margin-top);
 	}
 
 	.info-grid > .scroll-reveal {
@@ -656,7 +648,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.service-schedule {
-		margin-top: 38px;
+		margin-top: var(--schedule-margin-top);
 	}
 
 	.service-schedule-heading {
@@ -666,7 +658,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.service-schedule-heading h3 {
 		color: var(--color-heading);
 		font-family: var(--font-heading);
-		font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+		font-size: var(--schedule-heading-size);
 		line-height: 1.2;
 		margin: 0;
 	}
@@ -681,14 +673,14 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.service-schedule-grid {
 		display: grid;
 		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 18px;
-		margin-top: 22px;
+		gap: var(--schedule-grid-gap);
+		margin-top: var(--schedule-grid-margin-top);
 	}
 
 	.service-schedule-card {
 		background: var(--color-surface-warm);
 		border: 1px solid var(--color-border);
-		border-radius: 12px;
+		border-radius: var(--schedule-card-radius);
 		min-height: var(--schedule-card-min-height);
 		padding: var(--schedule-card-padding);
 		transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
@@ -705,7 +697,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		font-family: var(--font-heading);
 		font-size: var(--schedule-date-font-size);
 		line-height: 1.2;
-		margin: 0 0 14px;
+		margin: 0 0 var(--schedule-item-gap);
 	}
 
 	.service-schedule-list {
@@ -720,7 +712,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.service-schedule-list li {
 		align-items: center;
 		display: flex;
-		gap: 14px;
+		gap: var(--schedule-item-gap);
 		list-style: none;
 	}
 
@@ -729,7 +721,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.service-schedule-list li + li {
-		margin-top: 7px;
+		margin-top: var(--schedule-item-gap-y);
 	}
 
 	.service-schedule-list img {
@@ -744,7 +736,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		border-color: transparent;
 		display: flex;
 		flex-direction: column;
-		min-height: 154px;
+		min-height: var(--schedule-empty-card-min-height);
 	}
 
 	.service-schedule-card.is-empty h4 {
@@ -778,8 +770,8 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.about-actions {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 14px;
-		margin-top: 30px;
+		gap: var(--section-actions-gap);
+		margin-top: var(--section-actions-margin-top);
 	}
 
 	.about-section {
@@ -793,30 +785,30 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		position: absolute;
 		bottom: -80px;
 		left: -80px;
-		width: 400px;
-		height: 400px;
+		width: var(--section-background-orb-size);
+		height: var(--section-background-orb-size);
 		background: radial-gradient(circle, rgba(199, 102, 26, 0.055) 0%, transparent 70%);
 		pointer-events: none;
 	}
 
 	.about-grid {
 		display: grid;
-		grid-template-columns: minmax(520px, var(--gallery-panel-width)) minmax(0, 1fr);
+		grid-template-columns: minmax(var(--hero-gallery-min-width), var(--gallery-panel-width)) minmax(0, 1fr);
 		gap: var(--section-grid-gap);
 		align-items: center;
 		position: relative;
 	}
 
 	.about-image {
-		aspect-ratio: 5 / 4;
+		aspect-ratio: var(--about-image-aspect-ratio);
 	}
 
 	.about-copy p {
-		margin-top: 22px;
+		margin-top: var(--section-description-margin-top);
 	}
 
 	.facebook-section .social-copy p:not(.eyebrow) {
-		margin-top: 22px;
+		margin-top: var(--section-description-margin-top);
 	}
 
 	/* Facebook: src/content/koduleht/facebooki-uudised.md */
@@ -831,8 +823,8 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		position: absolute;
 		top: -60px;
 		right: -60px;
-		width: 350px;
-		height: 350px;
+		width: var(--facebook-section-orb-size);
+		height: var(--facebook-section-orb-size);
 		background: radial-gradient(circle, rgba(199, 102, 26, 0.06) 0%, transparent 70%);
 		pointer-events: none;
 	}
@@ -841,7 +833,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		display: grid;
 		grid-template-columns: minmax(0, 1fr) minmax(0, var(--facebook-feed-width));
 		align-items: center;
-		gap: 58px;
+		gap: var(--facebook-layout-gap);
 	}
 
 	.facebook-section .social-panel :global(.facebook-card),
@@ -865,14 +857,14 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 40px;
+		gap: var(--two-column-content-gap);
 	}
 
 	.social-actions {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 14px;
-		margin-top: 30px;
+		gap: var(--section-actions-gap);
+		margin-top: var(--section-actions-margin-top);
 	}
 
 	/* Jutlused ja raadiosaated: src/content/koduleht/jutlused-ja-raadiosaated.md */
@@ -880,9 +872,9 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.theme-list {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 10px;
+		gap: var(--pill-list-gap);
 		list-style: none;
-		margin: 34px 0 0;
+		margin: var(--pill-list-margin-top) 0 0;
 		padding: 0;
 	}
 
@@ -895,13 +887,13 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		font-size: var(--paragraph-font-size);
 		font-weight: 600;
 		line-height: 1;
-		padding: 12px 16px;
+		padding: var(--pill-padding);
 	}
 
 	.resource-groups {
 		display: grid;
-		gap: 38px;
-		margin-top: 44px;
+		gap: var(--audio-section-gap);
+		margin-top: var(--audio-section-margin-top);
 	}
 
 	.resource-group {
@@ -916,7 +908,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.resource-group-heading h3 {
 		color: var(--color-heading);
 		font-family: var(--font-heading);
-		font-size: clamp(1.5rem, 3vw, 2rem);
+		font-size: var(--resource-group-title-size);
 		margin: 0;
 	}
 
@@ -924,24 +916,24 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.format-grid {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 18px;
+		gap: var(--schedule-grid-gap);
 	}
 
 	.advent-audio-blocks {
 		display: grid;
-		gap: 20px;
+		gap: var(--audio-block-gap);
 	}
 
 	.advent-audio-block {
 		display: grid;
-		gap: 10px;
+		gap: var(--audio-inner-gap);
 	}
 
 	.advent-audio-heading {
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
-		gap: 16px;
+		gap: var(--audio-heading-gap);
 	}
 
 	.advent-audio-heading h4 {
@@ -954,16 +946,18 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.advent-audio-grid {
 		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-template-columns: repeat(4, minmax(var(--audio-card-min-width), 1fr));
 		gap: var(--audio-grid-gap);
 	}
 
 	.advent-audio-card {
 		background: var(--color-surface-warm);
 		border: 1px solid var(--color-border);
-		border-radius: 12px;
+		border-radius: var(--audio-card-radius);
 		color: inherit;
-		display: block;
+		display: grid;
+		grid-template-columns: minmax(0, var(--audio-card-text-column-width)) minmax(0, var(--audio-card-image-column-width));
+		min-height: var(--audio-card-min-height);
 		overflow: hidden;
 		text-decoration: none;
 		transition: border-color 0.28s ease,
@@ -978,28 +972,35 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.advent-audio-image {
-		aspect-ratio: 16 / 5;
 		background: linear-gradient(135deg, var(--color-surface-soft) 0%, var(--color-surface-warm) 100%);
 		display: grid;
+		height: 100%;
+		min-height: var(--audio-image-height);
+		order: 2;
 		place-items: center;
 	}
 
 	.advent-audio-image img {
 		height: 100%;
-		object-fit: cover;
+		object-fit: contain;
 		width: 100%;
 	}
 
 	.advent-audio-image span {
 		background: var(--color-primary);
 		border-radius: 999px;
-		height: 22px;
+		height: var(--audio-image-placeholder-size);
 		opacity: 0.18;
-		width: 22px;
+		width: var(--audio-image-placeholder-size);
 	}
 
 	.advent-audio-card-copy {
+		align-self: center;
+		justify-self: center;
+		min-width: 0;
+		order: 1;
 		padding: var(--audio-card-padding);
+		text-align: center;
 	}
 
 	.advent-audio-card span {
@@ -1008,7 +1009,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		font-size: var(--audio-date-font-size);
 		font-weight: 700;
 		letter-spacing: 0.06em;
-		margin-bottom: 7px;
+		margin-bottom: var(--audio-date-margin-bottom);
 		text-transform: uppercase;
 	}
 
@@ -1023,9 +1024,9 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.advent-audio-card p {
 		color: var(--color-primary);
-		font-size: 0.82rem;
+		font-size: var(--audio-link-font-size);
 		font-weight: 600;
-		margin: 9px 0 0;
+		margin: var(--audio-link-margin-top) 0 0;
 	}
 
 	/* Veebikoolitus: src/content/koduleht/veebikoolitus.md */
@@ -1047,7 +1048,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.course-container {
 		display: flex;
 		flex-direction: column;
-		gap: 32px;
+		gap: var(--course-container-gap);
 		max-width: var(--site-max-width);
 		margin: 0 auto;
 		position: relative;
@@ -1056,8 +1057,8 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.course-top-row {
 		align-items: center;
 		display: grid;
-		gap: 40px;
-		grid-template-columns: 280px 1fr;
+		gap: var(--course-layout-gap);
+		grid-template-columns: var(--course-copy-column-width) 1fr;
 	}
 
 	.course-section .eyebrow {
@@ -1074,7 +1075,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.course-actions {
-		margin-top: 28px;
+		margin-top: var(--course-actions-margin-top);
 	}
 
 	.course-section :global(.button.primary) {
@@ -1092,7 +1093,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.course-chapters {
-		margin-top: 28px;
+		margin-top: var(--course-chapters-margin-top);
 	}
 
 	.course-chapters-label {
@@ -1106,7 +1107,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.course-chapters-list {
 		display: grid;
-		gap: 6px;
+		gap: var(--course-chapters-gap);
 		grid-template-columns: repeat(4, minmax(0, 1fr));
 	}
 
@@ -1114,11 +1115,11 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		align-items: center;
 		background: rgba(255, 255, 255, 0.07);
 		border: 1px solid rgba(255, 255, 255, 0.1);
-		border-radius: 8px;
+		border-radius: var(--course-chapter-radius);
 		color: rgba(255, 255, 255, 0.82);
 		display: flex;
-		gap: 10px;
-		padding: 10px 12px;
+		gap: var(--course-chapter-gap);
+		padding: var(--course-chapter-padding);
 		text-decoration: none;
 		transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 	}
@@ -1171,8 +1172,8 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.course-panel-right { min-width: 0; }
 
 	.course-video-wrap {
-		aspect-ratio: 16 / 9;
-		border-radius: 14px;
+		aspect-ratio: var(--course-video-aspect-ratio);
+		border-radius: var(--course-video-radius);
 		box-shadow: 0 24px 70px rgba(0,0,0,0.5), 0 6px 20px rgba(0,0,0,0.3);
 		overflow: hidden;
 		width: 100%;
@@ -1186,7 +1187,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	@media (max-width: 1024px) {
-		.course-top-row { grid-template-columns: 240px 1fr; gap: 28px; }
+		.course-top-row { grid-template-columns: var(--course-copy-column-width-tablet) 1fr; gap: var(--course-layout-gap-tablet); }
 		.course-chapters-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 	}
 
@@ -1217,8 +1218,8 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.visit-inner {
 		display: grid;
-		grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.65fr);
-		gap: 48px;
+		grid-template-columns: minmax(0, 1.15fr) minmax(var(--contact-card-min-width), 0.65fr);
+		gap: var(--contact-layout-gap);
 		align-items: start;
 	}
 
@@ -1230,18 +1231,18 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		align-self: stretch;
 		background: rgba(255, 255, 255, 0.1);
 		border: 1px solid rgba(255, 255, 255, 0.2);
-		border-radius: 20px;
+		border-radius: var(--contact-card-radius);
 		display: grid;
-		gap: 18px;
+		gap: var(--schedule-grid-gap);
 		padding: var(--contact-card-padding);
 	}
 
 	.contact-map {
 		background: rgba(255, 255, 255, 0.16);
 		border: 1px solid rgba(255, 255, 255, 0.22);
-		border-radius: 16px;
+		border-radius: var(--contact-map-radius);
 		box-shadow: var(--shadow-warm);
-		margin-top: 28px;
+		margin-top: var(--contact-map-margin-top);
 		overflow: hidden;
 	}
 
@@ -1262,7 +1263,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.visit-details {
 		background: rgba(255, 255, 255, 0.14);
 		border: 1px solid rgba(255, 255, 255, 0.24);
-		border-radius: 18px;
+		border-radius: var(--contact-details-radius);
 		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
 		padding: var(--contact-details-padding);
 	}
@@ -1270,12 +1271,12 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.visit-details h3 {
 		font-family: var(--font-heading);
 		font-size: var(--contact-title-size);
-		margin: 0 0 18px;
+		margin: 0 0 var(--schedule-grid-gap);
 	}
 
 	.visit-details p {
 		font-size: var(--contact-text-size);
-		line-height: 1.65;
+		line-height: var(--contact-text-line-height);
 	}
 
 	.visit-details a {
@@ -1289,7 +1290,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.visit-details p + p {
-		margin-top: 12px;
+		margin-top: var(--contact-field-gap);
 	}
 
 	@media (max-width: 860px) {
@@ -1330,25 +1331,26 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 		.service-schedule-grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
-			gap: 10px;
+			gap: var(--schedule-grid-gap-mobile);
 		}
 
 		.service-schedule-card {
-			min-height: 210px;
-			padding: 16px;
+			min-height: var(--schedule-card-min-height-mobile);
+			padding: var(--schedule-card-padding-mobile);
 		}
 
 		.advent-audio-grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
-			gap: 8px;
+			gap: var(--audio-grid-gap-mobile);
 		}
 
 		.advent-audio-card {
+			grid-template-columns: minmax(0, var(--audio-card-text-column-width)) minmax(0, var(--audio-card-image-column-width));
 			min-width: 0;
 		}
 
 		.advent-audio-card-copy {
-			padding: 9px;
+			padding: var(--audio-card-padding-mobile);
 		}
 
 		.advent-audio-heading {
@@ -1405,16 +1407,16 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		}
 
 		.advent-audio-card span {
-			font-size: 0.64rem;
+			font-size: var(--audio-date-font-size-mobile);
 		}
 
 		.advent-audio-card h5 {
-			font-size: 0.78rem;
+			font-size: var(--audio-title-font-size-mobile);
 			overflow-wrap: anywhere;
 		}
 
 		.advent-audio-card p {
-			font-size: 0.72rem;
+			font-size: var(--audio-link-font-size-mobile);
 		}
 	}
 </style>

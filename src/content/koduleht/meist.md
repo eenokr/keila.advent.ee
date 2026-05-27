@@ -8,7 +8,7 @@ description: |
 image: "ulistus.jpg"
 imageAlt: "Koguduse ülistus ja laulmine teenistusel"
 buttons:
-  - text: "Film adventkogudeuse ajaloost"
+  - text: "Film adventkoguduse ajaloost"
     link: "https://www.youtube.com/watch?v=nH2r0J5VbL4&cc_load_policy=1&cc_lang_pref=et"
     variant: "primary"
     external: true

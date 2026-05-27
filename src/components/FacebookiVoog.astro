@@ -51,7 +51,7 @@ const facebookPluginUrl = normalizedPageUrl
 	.facebook-feed-empty {
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
-		border-radius: 8px;
+		border-radius: var(--facebook-feed-radius);
 		box-shadow: var(--shadow-warm);
 		box-sizing: border-box;
 		margin-left: auto;
@@ -76,16 +76,16 @@ const facebookPluginUrl = normalizedPageUrl
 		margin: 0 auto;
 		transform: scale(var(--facebook-feed-scale));
 		transform-origin: top center;
-		width: 500px;
+		width: var(--facebook-plugin-native-width);
 	}
 
 	.facebook-feed-fallback {
 		border-top: 1px solid var(--color-border);
 		color: var(--color-text-muted);
-		font-size: 0.92rem;
-		line-height: 1.45;
+		font-size: var(--facebook-feed-fallback-font-size);
+		line-height: var(--facebook-feed-fallback-line-height);
 		margin: 0;
-		padding: 12px 16px;
+		padding: var(--facebook-feed-fallback-padding);
 		text-align: center;
 	}
 
