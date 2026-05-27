@@ -129,7 +129,7 @@ const normalizedPageUrl = pageUrl
 		border: 1px solid var(--color-border);
 		border-radius: 8px;
 		box-shadow: var(--shadow-warm);
-		width: min(100%, 500px);
+		width: min(100%, var(--facebook-feed-width));
 		box-sizing: border-box;
 		margin-left: auto;
 		margin-right: auto;
@@ -143,7 +143,7 @@ const normalizedPageUrl = pageUrl
 	.facebook-feed-frame {
 		display: block;
 		width: 100%;
-		height: 600px;
+		height: var(--facebook-feed-height);
 		border: 0;
 		margin: 0 auto;
 	}

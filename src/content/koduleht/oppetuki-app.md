@@ -1,6 +1,6 @@
 ---
-eyebrow: "Äpp"
-title: "Hingamispäevakooli õppetüki äpp"
+eyebrow: ""
+title: ""
 description: "Soovitame kasutada õppetüki äppi, et lugeda nädala materjali mugavalt telefonis või arvutis."
 buttons:
   - text: "Ava õppetükk"

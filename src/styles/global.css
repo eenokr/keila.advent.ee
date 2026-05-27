@@ -53,8 +53,8 @@ body {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: var(--color-text);
-	font-size: 16px;
-	line-height: 1.6;
+	font-size: var(--body-font-size);
+	line-height: var(--body-line-height);
 }
 
 main {
@@ -216,7 +216,7 @@ hr {
 
 @media (max-width: 768px) {
 	body {
-		font-size: 15px;
+		font-size: var(--body-font-size);
 	}
 
 	h1 {

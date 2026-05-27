@@ -20,6 +20,7 @@ const koduleht = defineCollection({
 		description: z.string().optional(),
 		image: z.string().optional(),
 		imageAlt: z.string().optional(),
+		pageUrl: z.string().optional(),
 		scheduleTitle: z.string().optional(),
 		scheduleDescription: z.string().optional(),
 		scheduleActivities: z

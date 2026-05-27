@@ -1,0 +1,112 @@
+:root {
+	/* Lehe üldlaiused */
+	--site-max-width: 1500px;
+	--content-narrow-width: 720px;
+	--article-content-width: 760px;
+	--text-column-width: 680px;
+	--facebook-feed-width: 500px;
+	--facebook-feed-height: 600px;
+
+	/* Üldine tekst */
+	--body-font-size: 16px;
+	--body-line-height: 1.6;
+	--paragraph-font-size: 1.4rem;
+	--paragraph-line-height: 1.75;
+	--eyebrow-font-size: 0.9rem;
+	--section-description-font-size: 1.4rem;
+	--section-description-line-height: 1.75;
+
+	/* Avalehe ülemine hero */
+	--hero-padding-top: 96px;
+	--hero-padding-bottom: 84px;
+	--hero-title-size: clamp(2.7rem, 6vw, 5rem);
+	--hero-title-line-height: 1.04;
+	--hero-intro-font-size: 1.18rem;
+	--hero-intro-line-height: 1.78;
+	--hero-text-width: 680px;
+	--hero-intro-width: 580px;
+	--hero-column-gap: clamp(48px, 5vw, 86px);
+
+	/* Sektsioonid */
+	--section-padding-y: 86px;
+	--section-padding-x: 20px;
+	--section-title-size: clamp(2rem, 4vw, 3.25rem);
+	--section-title-line-height: 1.1;
+	--section-grid-gap: 64px;
+	--section-heading-width: 720px;
+
+	/* Nupud */
+	--button-font-size: 1.05rem;
+	--button-height: 50px;
+	--button-padding-x: 28px;
+
+	/* Päis */
+	--header-max-width: var(--site-max-width);
+	--header-height: 88px;
+	--header-logo-height: 64px;
+	--header-title-font-size: 0.68rem;
+	--header-nav-font-size: 0.95rem;
+	--header-cta-font-size: 0.88rem;
+
+	/* Kaardid ja gridid */
+	--info-grid-gap: 20px;
+	--info-card-padding: 32px 26px 28px;
+	--info-card-title-size: 1.35rem;
+	--info-card-text-size: 1.05rem;
+	--info-card-icon-box-size: 60px;
+	--info-card-icon-size: 32px;
+	--schedule-card-min-height: 240px;
+	--schedule-card-padding: 22px 20px 20px;
+	--schedule-date-font-size: 1.5rem;
+	--schedule-text-font-size: 1.2rem;
+	--schedule-icon-size: 32px;
+	--schedule-lock-size: 124px;
+
+	/* Audio kaardid */
+	--audio-grid-gap: 10px;
+	--audio-heading-font-size: 1.2rem;
+	--audio-date-font-size: 0.72rem;
+	--audio-title-font-size: 0.9rem;
+	--audio-card-padding: 10px;
+
+	/* Kontakt */
+	--contact-padding-y: 58px;
+	--contact-card-padding: 20px;
+	--contact-map-height: 280px;
+	--contact-title-size: 1.7rem;
+	--contact-text-size: 1.1rem;
+	--contact-details-padding: 32px;
+	--app-card-padding: 34px;
+
+	/* Jutluse alamlehed */
+	--sermon-page-padding-y: 78px;
+	--sermon-title-size: clamp(2.3rem, 5vw, 4rem);
+	--sermon-text-size: 1.08rem;
+
+	/* Jalus */
+	--footer-padding-top: 60px;
+	--footer-padding-bottom: 40px;
+	--footer-text-size: 0.95rem;
+
+	/* Hingamispäevakooli vidin */
+	--lesson-widget-height: 92vh;
+	--lesson-widget-min-height: 600px;
+	--lesson-widget-max-height: 1200px;
+}
+
+@media (max-width: 860px) {
+	:root {
+		--section-padding-y: 56px;
+		--hero-padding-top: 52px;
+		--hero-padding-bottom: 54px;
+		--section-grid-gap: 34px;
+		--contact-map-height: 240px;
+	}
+}
+
+@media (max-width: 520px) {
+	:root {
+		--hero-title-size: 2.35rem;
+		--body-font-size: 15px;
+	}
+}

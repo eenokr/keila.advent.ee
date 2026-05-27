@@ -28,6 +28,16 @@ Fail `public/CNAME` hoiab custom domaini deploy järel alles.
 
 Muudetav sisu on Markdown-failides kaustas `src/content/koduleht/`. Kujundust ja komponente ei pea tavaliselt muutma.
 
+## Lehe ja tekstide suurused
+
+Lehe osade laiused, vahed, kaartide mõõdud ja tähtsamad tekstisuurused on koondatud ühte faili:
+
+```text
+src/styles/suurused.css
+```
+
+Seal saad muuta näiteks hero pealkirja suurust, sektsioonide vahekaugusi, nuppude suurust, päise logo suurust, kaartide suurust, Facebooki voo laiust, kontaktkaardi ja Google Mapsi kõrgust ning audio kaartide tekstisuurusi. Muuda eelkõige selle faili `:root` väärtusi ja jäta komponendid ise võimalusel puutumata.
+
 ### Üldinfo, päis ja jalus
 
 Muuda faili:

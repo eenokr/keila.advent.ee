@@ -1,7 +1,7 @@
 ---
-eyebrow: "Audio"
-title: "Jutlused ja kuulamiseks mõeldud mõtted"
-description: "Kuula värskemaid raadiosaateid ja jutlusi Advent.ee audioarhiivist."
+eyebrow: ""
+title: ""
+description: ""
 audioSources:
   - key: "uheskoos"
     title: "Üheskoos raadiosaated"
