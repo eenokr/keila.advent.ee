@@ -955,8 +955,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		border: 1px solid var(--color-border);
 		border-radius: var(--audio-card-radius);
 		color: inherit;
-		display: grid;
-		grid-template-columns: minmax(0, var(--audio-card-text-column-width)) minmax(0, var(--audio-card-image-column-width));
+		display: block;
 		min-height: var(--audio-card-min-height);
 		overflow: hidden;
 		text-decoration: none;
@@ -974,15 +973,13 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.advent-audio-image {
 		background: linear-gradient(135deg, var(--color-surface-soft) 0%, var(--color-surface-warm) 100%);
 		display: grid;
-		height: 100%;
-		min-height: var(--audio-image-height);
-		order: 2;
+		height: var(--audio-image-height);
 		place-items: center;
 	}
 
 	.advent-audio-image img {
 		height: 100%;
-		object-fit: contain;
+		object-fit: cover;
 		width: 100%;
 	}
 
@@ -995,12 +992,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.advent-audio-card-copy {
-		align-self: center;
-		justify-self: center;
-		min-width: 0;
-		order: 1;
 		padding: var(--audio-card-padding);
-		text-align: center;
 	}
 
 	.advent-audio-card span {
@@ -1345,7 +1337,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		}
 
 		.advent-audio-card {
-			grid-template-columns: minmax(0, var(--audio-card-text-column-width)) minmax(0, var(--audio-card-image-column-width));
 			min-width: 0;
 		}
 
