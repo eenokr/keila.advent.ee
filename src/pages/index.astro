@@ -300,7 +300,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 					{entry.id === 'veebikoolitus' && (
 						<section class="course-section" id="kursus">
 							<div class="course-grid">
-								<div>
+								<div class="course-copy-wrap">
 									<p class="eyebrow">{course.eyebrow}</p>
 									<h2>{course.title}</h2>
 									<p class="section-description">{course.description}</p>
@@ -310,9 +310,12 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 										))}
 									</div>
 								</div>
-								<ul class="theme-list" aria-label={course.themesLabel}>
-									{course.themes?.map((theme) => <li>{theme}</li>)}
-								</ul>
+								<div class="course-themes-card">
+									{course.themesLabel && <p class="course-themes-label">{course.themesLabel}</p>}
+									<ul class="theme-list" aria-label={course.themesLabel}>
+										{course.themes?.map((theme) => <li>{theme}</li>)}
+									</ul>
+								</div>
 							</div>
 						</section>
 					)}
@@ -831,29 +834,86 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.course-section {
-		background: var(--color-surface-warm);
+		background: linear-gradient(135deg, #7b2c06 0%, var(--color-primary-dark) 32%, var(--color-primary) 68%, #d97f2a 100%);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.course-section::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(ellipse 70% 90% at 75% 50%, rgba(255, 210, 130, 0.14) 0%, transparent 65%);
+		pointer-events: none;
 	}
 
 	.course-grid {
 		max-width: 1180px;
 		margin: 0 auto;
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
-		gap: 58px;
+		grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+		gap: 64px;
 		align-items: center;
+		position: relative;
+	}
+
+	.course-section .eyebrow {
+		color: rgba(255, 255, 255, 0.72);
+	}
+
+	.course-copy-wrap h2 {
+		color: #ffffff;
+	}
+
+	.course-section .section-description {
+		color: rgba(255, 255, 255, 0.84);
 	}
 
 	.course-actions {
-		margin-top: 32px;
+		margin-top: 36px;
+	}
+
+	.course-section :global(.button.primary) {
+		background: #ffffff;
+		border-color: #ffffff;
+		color: var(--color-primary-dark);
+		font-weight: 700;
+	}
+
+	.course-section :global(.button.primary:hover) {
+		background: var(--color-surface-warm);
+		border-color: var(--color-surface-warm);
+		color: var(--color-primary-dark);
+		transform: translateY(-2px) scale(1.02);
+	}
+
+	.course-themes-card {
+		background: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.22);
+		border-radius: 16px;
+		padding: 30px 32px;
+	}
+
+	.course-themes-label {
+		color: rgba(255, 255, 255, 0.62);
+		font-family: var(--font-heading);
+		font-size: 0.8rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		margin: 0 0 18px;
+		text-transform: uppercase;
 	}
 
 	.theme-list {
 		align-content: start;
-		background: var(--color-surface);
-		border: 1px solid var(--color-border);
-		border-radius: 8px;
 		margin: 0;
-		padding: 28px;
+		padding: 0;
+	}
+
+	.course-themes-card .theme-list li {
+		background: rgba(255, 255, 255, 0.13);
+		border-color: rgba(255, 255, 255, 0.28);
+		color: #ffffff;
 	}
 
 	.app-card {
@@ -1040,7 +1100,11 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 		.course-grid {
 			grid-template-columns: 1fr;
-			gap: 32px;
+			gap: 36px;
+		}
+
+		.course-themes-card {
+			padding: 24px;
 		}
 
 		.app-card {
