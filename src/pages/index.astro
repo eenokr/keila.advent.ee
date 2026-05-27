@@ -495,7 +495,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.hero-content {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(var(--hero-gallery-min-width), var(--gallery-panel-width));
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 		gap: var(--hero-column-gap);
 		align-items: center;
 		position: relative;
@@ -793,7 +793,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.about-grid {
 		display: grid;
-		grid-template-columns: minmax(var(--hero-gallery-min-width), var(--gallery-panel-width)) minmax(0, 1fr);
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 		gap: var(--section-grid-gap);
 		align-items: center;
 		position: relative;
@@ -973,7 +973,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.advent-audio-image {
 		background: linear-gradient(135deg, var(--color-surface-soft) 0%, var(--color-surface-warm) 100%);
 		display: grid;
-		height: var(--audio-image-height);
+		aspect-ratio: 1 / 1;
 		place-items: center;
 	}
 
@@ -1181,6 +1181,34 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	@media (max-width: 1024px) {
 		.course-top-row { grid-template-columns: var(--course-copy-column-width-tablet) 1fr; gap: var(--course-layout-gap-tablet); }
 		.course-chapters-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+		.hero-content,
+		.about-grid {
+			grid-template-columns: 1fr;
+			gap: var(--section-grid-gap);
+		}
+	}
+
+	@media (max-width: 1100px) {
+		.facebook-section .social-panel {
+			grid-template-columns: 1fr;
+		}
+
+		.facebook-section .social-panel :global(.facebook-card),
+		.facebook-section .social-panel :global(.facebook-feed),
+		.facebook-section .social-panel :global(.facebook-feed-empty) {
+			justify-self: center;
+			width: min(100%, var(--facebook-feed-width));
+		}
+
+		.facebook-section .social-copy {
+			text-align: center;
+			justify-self: center;
+		}
+
+		.social-actions {
+			justify-content: center;
+		}
 	}
 
 	@media (max-width: 820px) {
@@ -1290,8 +1318,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 			padding: var(--hero-padding-top) var(--section-padding-x) var(--hero-padding-bottom);
 		}
 
-		.hero-content,
-		.about-grid,
 		.visit-inner {
 			grid-template-columns: 1fr;
 			gap: var(--section-grid-gap);
@@ -1361,23 +1387,11 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 			order: 1;
 		}
 
-		.facebook-section .social-panel {
-			grid-template-columns: 1fr;
-		}
-
-		.facebook-section .social-panel :global(.facebook-card),
-		.facebook-section .social-panel :global(.facebook-feed),
-		.facebook-section .social-panel :global(.facebook-feed-empty) {
-			justify-self: center;
-			width: min(100%, var(--facebook-feed-width));
-		}
-
 		.social-panel,
 		.app-card {
 			align-items: stretch;
 			flex-direction: column;
 		}
-
 
 		.app-card {
 			padding: var(--app-card-padding, 28px);
@@ -1391,10 +1405,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 		.hero-actions {
 			width: 100%;
-		}
-
-		.advent-audio-grid {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 
 		.advent-audio-card span {

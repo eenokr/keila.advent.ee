@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(ls \"C:/Users/d3vk3v/AppData/Local/npm-cache/_npx/5e2e484947874241/node_modules/\" 2>&1 | head -5)",
-      "Read(//c/Users/d3vk3v/AppData/Local/npm-cache/_npx/5e2e484947874241/node_modules/**)"
+      "Read(//c/Users/d3vk3v/AppData/Local/npm-cache/_npx/5e2e484947874241/node_modules/**)",
+      "Bash(npm run *)"
     ]
   }
 }
