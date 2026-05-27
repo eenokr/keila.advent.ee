@@ -1,5 +1,5 @@
 ---
-eyebrow: ""
+eyebrow: "AUDIO"
 title: ""
 description: ""
 audioSources:

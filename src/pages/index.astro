@@ -233,6 +233,13 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 									<p class="eyebrow">{about.eyebrow}</p>
 									<h2>{about.title}</h2>
 									{about.description?.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
+									{about.buttons && about.buttons.length > 0 && (
+										<div class="about-actions">
+											{about.buttons.map((button) => (
+												<TegevusNupp {...button} />
+											))}
+										</div>
+									)}
 								</div>
 							</div>
 						</section>
@@ -716,6 +723,13 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		font-size: var(--paragraph-font-size);
 		line-height: var(--paragraph-line-height);
 		margin: 0;
+	}
+
+	.about-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px;
+		margin-top: 30px;
 	}
 
 	.about-section {
