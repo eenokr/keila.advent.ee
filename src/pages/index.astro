@@ -1364,6 +1364,14 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 			videoIframe.src = `https://www.youtube.com/embed/${youtubeId}?rel=0`;
 			chapterLinks.forEach((l) => l.classList.remove('is-active'));
 			link.classList.add('is-active');
+			if (window.innerWidth <= 820) {
+				const section = document.getElementById('kursus');
+				if (section) {
+					const headerHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 88;
+					const y = section.getBoundingClientRect().top + window.scrollY - headerHeight + 160;
+					window.scrollTo({ top: y, behavior: 'smooth' });
+				}
+			}
 		});
 	});
 </script>
