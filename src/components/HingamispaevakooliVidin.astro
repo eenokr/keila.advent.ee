@@ -36,33 +36,50 @@
 
 <script>
 (function () {
-	// Referentspunkt: Q2 2026 algab 28. märtsil 2026 (laupäev, kinnitatud)
-	// Iga Adventech kvartal = täpselt 13 nädalat = 91 päeva
-	const REF = new Date(2026, 2, 28); // märts on index 2
-	const Q_DAYS = 91;
-	const BASE_YEAR = 2026;
-	const BASE_Q = 2;
+	// Adventech URL: /et/{year}-{q}/{lesson}/{day}
+	// Päevad: 01=Laupäev, 02=Pühapäev, 03=Esmaspäev, 04=Teisipäev,
+	//         05=Kolmapäev, 06=Neljapäev, 07=Reede
+
+	// Kvartalite alguskuupäevad (laupäev). Lisa uued kvartalid siia.
+	const QUARTERS: { id: string; start: Date }[] = [
+		{ id: '2026-01', start: new Date(2026, 0, 3)  },  // 3. jaanuar 2026
+		{ id: '2026-02', start: new Date(2026, 2, 28) },  // 28. märts 2026 (kinnitatud)
+		{ id: '2026-03', start: new Date(2026, 5, 27) },  // 27. juuni 2026
+		{ id: '2026-04', start: new Date(2026, 8, 26) },  // 26. september 2026
+		{ id: '2027-01', start: new Date(2026, 11, 26) }, // 26. detsember 2026
+		{ id: '2027-02', start: new Date(2027, 2, 27) },  // 27. märts 2027
+	];
 
 	function pad(n: number): string { return String(n).padStart(2, '0'); }
 
 	function computeUrl(): string {
 		const now = new Date();
-		now.setHours(0, 0, 0, 0);
 
-		const diff = Math.floor((now.getTime() - REF.getTime()) / 86400000);
-		const qOffset = Math.floor(diff / Q_DAYS);
-		const diq = diff - qOffset * Q_DAYS; // päevad kvartalisiseselt (0–90)
+		// Adventech päevanumber (01=Laupäev ... 07=Reede)
+		// getDay(): 0=Pühapäev, 1=Esm, 2=Teis, 3=Kolm, 4=Nelj, 5=Reede, 6=Laup
+		const adventDay = (now.getDay() + 1) % 7 + 1;
 
-		let qYear = BASE_YEAR;
-		let qNum = BASE_Q + qOffset;
-		while (qNum > 4) { qNum -= 4; qYear++; }
-		while (qNum < 1) { qNum += 4; qYear--; }
+		// Leia selle nädala alguslaupäev
+		const daysSinceSat = (now.getDay() + 1) % 7;
+		const thisSat = new Date(now);
+		thisSat.setDate(now.getDate() - daysSinceSat);
+		thisSat.setHours(12, 0, 0, 0); // lõunaaeg, et vältida suveaja probleeme
 
-		const quarterId = qYear + '-' + pad(qNum);
-		const lessonNum = Math.max(1, Math.min(13, Math.floor(diq / 7) + 1));
-		const dayNum = Math.max(1, Math.min(7, diq - (lessonNum - 1) * 7 + 1));
+		// Leia aktiivne kvartal
+		let active = QUARTERS[0];
+		for (const q of QUARTERS) {
+			const qStart = new Date(q.start);
+			qStart.setHours(12, 0, 0, 0);
+			if (thisSat >= qStart) active = q;
+		}
 
-		return 'https://sabbath-school.adventech.io/et/' + quarterId + '/' + pad(lessonNum) + '/' + pad(dayNum);
+		// Nädalate arv kvartali algusest (lõunaaeg mõlemal, et DST ei mõjutaks)
+		const qRef = new Date(active.start);
+		qRef.setHours(12, 0, 0, 0);
+		const weeks = Math.round((thisSat.getTime() - qRef.getTime()) / (7 * 86400000));
+		const lessonNum = Math.max(1, Math.min(13, weeks + 1));
+
+		return 'https://sabbath-school.adventech.io/et/' + active.id + '/' + pad(lessonNum) + '/' + pad(adventDay);
 	}
 
 	const url = computeUrl();
