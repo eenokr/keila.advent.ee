@@ -7,7 +7,7 @@ description: |
   Jeesus pole lihtsalt üks tee, viis Jumalani jõudmiseks ega ka vastus elule. Ta on "...tee ja tõde ja elu. ” (Jh 14:6)
   Lihtsalt... Jeesus Kristus on kõige olulisem isik siin elus. Läbi Tema tunneme ja mõistame Jumalat ja Isa armastust. Ta andestab meie patud ja igatseb meiega isiklikku suhet täna ja igaveseks. Tema elu, surm ristil ja surmast ülestõusmine defineerivad selle, mis on elus tõeliselt tähtis. Sellepärast Jeesus!
 buttons:
-  - text: "Film Jeesusest"
+  - text: "Film Jeesuses elust"
     link: "https://www.jesusfilm.org/watch/jesus.html/estonian.html"
     variant: "primary"
     external: true

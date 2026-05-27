@@ -1,5 +1,4 @@
 ---
-import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
 import GaleriiKarussell from '../components/GaleriiKarussell.astro';
@@ -17,11 +16,11 @@ import { getServiceScheduleItems } from '../lib/serviceSchedule';
 const SERVICE_SCHEDULE_CSV_URL =
 	'https://docs.google.com/spreadsheets/d/e/2PACX-1vTOmThNzJymlMrI5PiXxN5jcQTAotZvXrbYCZwDWQ8s2fqvbOckV6-XjCFkyUulLYUUl0HOqpyYIxrO/pub?gid=1165865253&single=true&output=csv';
 
-const imageModules = import.meta.glob<ImageMetadata>('../assets/images/*', {
+const imageModules = import.meta.glob<ImageMetadata>('../assets/pildid/*', {
 	eager: true,
 	import: 'default',
 });
-const galleryImageModules = import.meta.glob<ImageMetadata>('../assets/galerii/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', {
+const galleryImageModules = import.meta.glob<ImageMetadata>('../assets/teated/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', {
 	eager: true,
 	import: 'default',
 });
@@ -81,7 +80,7 @@ const serviceScheduleActivities = services.scheduleActivities ?? [
 function getImage(filename?: string) {
 	if (!filename) return undefined;
 
-	return imageModules[`../assets/images/${filename}`];
+	return imageModules[`../assets/pildid/${filename}`];
 }
 
 function getIcon(filename?: string) {
@@ -98,13 +97,36 @@ function getGalleryAlt(path: string) {
 	return title ? `Koguduse teade: ${title}` : 'Koguduse teade';
 }
 
+function getCommunityAlt(path: string) {
+	const filename = path.split('/').pop() ?? '';
+
+	if (filename === about.image) return about.imageAlt ?? 'Koguduse pilt';
+	if (filename === hero.image) return hero.imageAlt ?? 'Koguduse pilt';
+	if (filename === 'stuudio.jpeg') return 'Koguduse stuudio ja salvestusruum';
+
+	const title = filename.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ').trim();
+
+	return title ? `Koguduse pilt: ${title}` : 'Koguduse pilt';
+}
+
 const heroAsset = getImage(hero.image);
-const aboutAsset = getImage(about.image);
 const gallerySlides = Object.entries(galleryImageModules)
 	.sort(([pathA], [pathB]) => pathA.localeCompare(pathB, 'et'))
 	.map(([path, image]) => ({
 		image,
 		alt: getGalleryAlt(path),
+	}));
+const communitySlides = Object.entries(imageModules)
+	.sort(([pathA], [pathB]) => {
+		const aboutPath = `../assets/pildid/${about.image}`;
+		if (pathA === aboutPath) return -1;
+		if (pathB === aboutPath) return 1;
+
+		return pathA.localeCompare(pathB, 'et');
+	})
+	.map(([path, image]) => ({
+		image,
+		alt: getCommunityAlt(path),
 	}));
 const heroSlides = gallerySlides.length > 0
 	? gallerySlides
@@ -139,6 +161,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		<main class="page-wrapper">
 			{orderedKoduleheEntries.map((entry) => (
 				<>
+					<!-- Sisu: src/content/koduleht/avaleht.md -->
 					{entry.id === 'avaleht' && (
 						<section class="hero-section" id="home">
 							<div class="hero-content">
@@ -152,12 +175,18 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 									</div>
 								</div>
 								<div class="scroll-reveal hero-carousel-wrap" style="--reveal-delay: 120ms">
-									<GaleriiKarussell slides={heroSlides} intervalMs={6000} />
+									<GaleriiKarussell
+										slides={heroSlides}
+										intervalMs={6000}
+										controlsLabel="Teadete valik"
+										dotLabel="Näita teadet"
+									/>
 								</div>
 							</div>
 						</section>
 					)}
 
+					<!-- Sisu: src/content/koduleht/kogunemised.md -->
 					{entry.id === 'kogunemised' && (
 						<section class="info-section" id="services">
 							<div class="section-inner">
@@ -213,19 +242,17 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 						</section>
 					)}
 
+					<!-- Sisu: src/content/koduleht/meist.md -->
 					{entry.id === 'meist' && (
 						<section class="about-section" id="about">
 							<div class="about-grid">
-								{aboutAsset && (
-									<div class="about-image scroll-reveal">
-										<Picture
-											src={aboutAsset}
-											formats={['webp']}
-											widths={[640, 960, 1200]}
-											sizes="(max-width: 860px) calc(100vw - 36px), min(43vw, 530px)"
-											alt={about.imageAlt ?? ''}
-											loading="lazy"
-											quality={85}
+								{communitySlides.length > 0 && (
+									<div class="about-image about-carousel-wrap scroll-reveal">
+										<GaleriiKarussell
+											slides={communitySlides}
+											intervalMs={7000}
+											controlsLabel="Koguduse piltide valik"
+											dotLabel="Näita koguduse pilti"
 										/>
 									</div>
 								)}
@@ -245,6 +272,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 						</section>
 					)}
 
+					<!-- Sisu: src/content/koduleht/facebooki-uudised.md -->
 					{entry.id === 'facebooki-uudised' && (
 						<section class="facebook-section" id="facebook">
 							<div class="section-inner social-panel">
@@ -263,6 +291,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 						</section>
 					)}
 
+					<!-- Sisu: src/content/koduleht/jutlused-ja-raadiosaated.md -->
 					{entry.id === 'jutlused-ja-raadiosaated' && (
 						<section class="resources-section" id="audio">
 							<div class="section-inner">
@@ -311,6 +340,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 						</section>
 					)}
 
+					<!-- Sisu: src/content/koduleht/veebikoolitus.md -->
 					{entry.id === 'veebikoolitus' && (
 						<section class="course-section" id="kursus">
 							<div class="course-container">
@@ -367,12 +397,14 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 						</section>
 					)}
 
+					<!-- Sisu ja komponent: src/content/koduleht/oppetuki-app.md, src/components/HingamispaevakooliVidin.astro -->
 					{entry.id === 'oppetuki-app' && (
 						<HingamispaevakooliVidin />
 					)}
 				</>
 			))}
 
+			<!-- Sisu: src/content/koduleht/kontakt.md -->
 			<section class="visit-section" id="contact">
 				<div class="visit-inner">
 					<div class="visit-copy">
@@ -412,6 +444,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 </html>
 
 <style>
+	/* Üldine avalehe raam ja ühised elemendid */
 	:global(body) {
 		background: var(--color-page);
 		color: var(--color-text);
@@ -421,6 +454,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		width: 100%;
 	}
 
+	/* Avaleht: src/content/koduleht/avaleht.md */
 	.hero-section {
 		background: linear-gradient(160deg, var(--color-surface-soft) 0%, #fdf3e6 55%, var(--color-surface) 100%);
 		padding: var(--hero-padding-top) var(--section-padding-x) var(--hero-padding-bottom);
@@ -459,7 +493,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.hero-content {
 		display: grid;
-		grid-template-columns: minmax(0, 0.9fr) minmax(520px, 1.15fr);
+		grid-template-columns: minmax(0, 1fr) minmax(520px, var(--gallery-panel-width));
 		gap: var(--hero-column-gap);
 		align-items: center;
 		position: relative;
@@ -525,6 +559,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		margin-top: 34px;
 	}
 
+	/* Meist: src/content/koduleht/meist.md */
 	.about-image {
 		border-radius: 16px;
 		overflow: hidden;
@@ -542,6 +577,13 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		            0 6px 18px rgba(117, 62, 19, 0.12);
 	}
 
+	.about-carousel-wrap,
+	.about-carousel-wrap:hover {
+		box-shadow: none;
+		outline: 0;
+		transform: none;
+	}
+
 	.about-image picture {
 		display: block;
 		height: 100%;
@@ -552,6 +594,12 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		height: 100%;
 		object-fit: cover;
 		width: 100%;
+	}
+
+	.hero-carousel-wrap,
+	.about-carousel-wrap {
+		justify-self: center;
+		width: min(100%, var(--gallery-panel-width));
 	}
 
 	.info-section,
@@ -570,6 +618,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		background: var(--color-surface);
 	}
 
+	/* Ühised pealkirjad ja kirjeldused */
 	.about-copy h2,
 	.facebook-section .social-copy h2,
 	.course-grid h2,
@@ -589,6 +638,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		max-width: var(--text-column-width);
 	}
 
+	/* Kogunemised: src/content/koduleht/kogunemised.md */
 	.info-grid {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -751,7 +801,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.about-grid {
 		display: grid;
-		grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1fr);
+		grid-template-columns: minmax(520px, var(--gallery-panel-width)) minmax(0, 1fr);
 		gap: var(--section-grid-gap);
 		align-items: center;
 		position: relative;
@@ -769,6 +819,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		margin-top: 22px;
 	}
 
+	/* Facebook: src/content/koduleht/facebooki-uudised.md */
 	.facebook-section {
 		background: var(--color-surface-warm);
 		position: relative;
@@ -824,6 +875,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		margin-top: 30px;
 	}
 
+	/* Jutlused ja raadiosaated: src/content/koduleht/jutlused-ja-raadiosaated.md */
 	.category-list,
 	.theme-list {
 		display: flex;
@@ -853,8 +905,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.resource-group {
-		border-top: 1px solid var(--color-border);
-		padding-top: 34px;
+		padding-top: 0;
 	}
 
 	.resource-group-heading {
@@ -977,6 +1028,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		margin: 9px 0 0;
 	}
 
+	/* Veebikoolitus: src/content/koduleht/veebikoolitus.md */
 	.course-section {
 		background: linear-gradient(150deg, #6b2204 0%, var(--color-primary-dark) 35%, var(--color-primary) 70%, #d17828 100%);
 		padding: var(--section-padding-y) var(--section-padding-x);
@@ -1148,6 +1200,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 
+	/* Õppetüki app: src/content/koduleht/oppetuki-app.md */
 	.app-card {
 		background: var(--color-surface-warm);
 		border: 1px solid var(--color-border);
@@ -1155,6 +1208,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		padding: var(--app-card-padding, 34px);
 	}
 
+	/* Kontakt: src/content/koduleht/kontakt.md */
 	.visit-section {
 		background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 62%, #d9791f 100%);
 		color: var(--color-surface);

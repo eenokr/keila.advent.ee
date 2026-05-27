@@ -11,11 +11,11 @@ const navItems = site.nav;
 const titleLineOne = site.titleLine1;
 const titleLineTwo = site.titleLine2;
 const currentPath = Astro.url.pathname;
-const imageModules = import.meta.glob<ImageMetadata>('../assets/images/*', {
+const imageModules = import.meta.glob<ImageMetadata>('../assets/pildid/*', {
 	eager: true,
 	import: 'default',
 });
-const logoAsset = site.logoImage === 'advent-logo.png' ? adventLogo : imageModules[`../assets/images/${site.logoImage}`];
+const logoAsset = site.logoImage === 'advent-logo.png' ? adventLogo : imageModules[`../assets/pildid/${site.logoImage}`];
 
 function withBase(href: string) {
 	if (href.startsWith('http')) return href;

@@ -10,9 +10,11 @@ type Slide = {
 interface Props {
 	slides: Slide[];
 	intervalMs?: number;
+	controlsLabel?: string;
+	dotLabel?: string;
 }
 
-const { slides, intervalMs = 4500 } = Astro.props;
+const { slides, intervalMs = 4500, controlsLabel = 'Piltide valik', dotLabel = 'Näita pilti' } = Astro.props;
 const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 ---
 
@@ -72,14 +74,14 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 			))}
 		</div>
 
-		<div class="gallery-controls" aria-label="Teadete valik">
+		<div class="gallery-controls" aria-label={controlsLabel}>
 			<div class="gallery-dots">
 				{slides.map((_, index) => (
 					<button
 						class:list={['gallery-dot', index === 0 && 'is-active']}
 						type="button"
 						data-gallery-dot
-						aria-label={`Näita teadet ${index + 1}`}
+						aria-label={`${dotLabel} ${index + 1}`}
 						aria-current={index === 0 ? 'true' : 'false'}
 					/>
 				))}
@@ -298,14 +300,15 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 
 <style>
 	.gallery-carousel {
-		aspect-ratio: 16 / 10;
 		background: transparent;
 		border-radius: 8px;
 		box-shadow: var(--shadow-warm);
+		height: var(--gallery-panel-height);
 		overflow: hidden;
 		position: relative;
 		touch-action: pan-y;
 		user-select: none;
+		width: min(100%, var(--gallery-panel-width));
 	}
 
 	.gallery-slides,
@@ -418,6 +421,7 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 	@media (max-width: 860px) {
 		.gallery-carousel {
 			aspect-ratio: 16 / 11;
+			height: auto;
 		}
 	}
 
