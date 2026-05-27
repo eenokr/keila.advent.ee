@@ -374,7 +374,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 								{course.chapters && course.chapters.length > 0 && (
 									<nav class="course-chapters scroll-reveal" style="--reveal-delay: 150ms" aria-label="Kursuse peatükid">
-										<p class="course-chapters-label">Kursuse peatükid</p>
+										<p class="course-chapters-label">Video peatükid</p>
 										<div class="course-chapters-list">
 											{course.chapters.map((chapter, i) => (
 												<a
@@ -407,22 +407,22 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 			<!-- Sisu: src/content/koduleht/kontakt.md -->
 			<section class="visit-section" id="contact">
+				<div class="visit-header">
+					<p class="eyebrow">{contactInfo.eyebrow}</p>
+					<h2>{contactInfo.title}</h2>
+				</div>
 				<div class="visit-inner">
-					<div class="visit-copy">
-						<p class="eyebrow">{contactInfo.eyebrow}</p>
-						<h2>{contactInfo.title}</h2>
-						{contactInfo.mapEmbedUrl && (
-							<div class="contact-map">
-								<iframe
-									title={contactInfo.mapTitle ?? contactInfo.address}
-									src={contactInfo.mapEmbedUrl}
-									loading="eager"
-									referrerpolicy="no-referrer-when-downgrade"
-									allowfullscreen
-								></iframe>
-							</div>
-						)}
-					</div>
+					{contactInfo.mapEmbedUrl && (
+						<div class="contact-map">
+							<iframe
+								title={contactInfo.mapTitle ?? contactInfo.address}
+								src={contactInfo.mapEmbedUrl}
+								loading="eager"
+								referrerpolicy="no-referrer-when-downgrade"
+								allowfullscreen
+							></iframe>
+						</div>
+					)}
 					<div class="contact-card">
 						<div class="visit-details">
 							<h3>{contactInfo.cardTitle}</h3>
@@ -488,6 +488,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.hero-content,
 	.section-inner,
 	.about-grid,
+	.visit-header,
 	.visit-inner {
 		max-width: var(--site-max-width);
 		margin: 0 auto;
@@ -797,6 +798,10 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		gap: var(--section-grid-gap);
 		align-items: center;
 		position: relative;
+	}
+
+	.about-copy {
+		max-width: var(--text-column-width);
 	}
 
 	.about-image {
@@ -1236,19 +1241,18 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		padding: var(--contact-padding-y) var(--section-padding-x);
 	}
 
+	.visit-header {
+		margin-bottom: var(--contact-map-margin-top);
+	}
+
 	.visit-inner {
 		display: grid;
 		grid-template-columns: minmax(0, 1.15fr) minmax(var(--contact-card-min-width), 0.65fr);
 		gap: var(--contact-layout-gap);
-		align-items: start;
-	}
-
-	.visit-copy {
-		max-width: none;
+		align-items: stretch;
 	}
 
 	.contact-card {
-		align-self: stretch;
 		background: rgba(255, 255, 255, 0.1);
 		border: 1px solid rgba(255, 255, 255, 0.2);
 		border-radius: var(--contact-card-radius);
@@ -1262,19 +1266,18 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		border: 1px solid rgba(255, 255, 255, 0.22);
 		border-radius: var(--contact-map-radius);
 		box-shadow: var(--shadow-warm);
-		margin-top: var(--contact-map-margin-top);
 		overflow: hidden;
 	}
 
 	.contact-map iframe {
 		border: 0;
 		display: block;
-		height: var(--contact-map-height);
+		height: 100%;
 		width: 100%;
 	}
 
 	.visit-section .eyebrow,
-	.visit-inner h2,
+	.visit-header h2,
 	.visit-details h3,
 	.visit-details p {
 		color: var(--color-surface);
@@ -1323,8 +1326,12 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 			gap: var(--section-grid-gap);
 		}
 
-		.contact-map iframe {
+		.contact-map {
 			height: var(--contact-map-height);
+		}
+
+		.contact-map iframe {
+			height: 100%;
 		}
 
 		.info-section,

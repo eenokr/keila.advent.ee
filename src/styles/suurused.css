@@ -18,11 +18,11 @@
 	/* Üldine tekst */
 	--body-font-size: 16px;
 	--body-line-height: 1.6;
-	--paragraph-font-size: 1.4rem;
-	--paragraph-line-height: 1.75;
+	--paragraph-font-size: 1rem;
+	--paragraph-line-height: 1.7;
 	--eyebrow-font-size: 0.9rem;
-	--section-description-font-size: 1.4rem;
-	--section-description-line-height: 1.75;
+	--section-description-font-size: 1rem;
+	--section-description-line-height: 1.7;
 
 	/* Avalehe ülemine hero */
 	--hero-padding-top: 96px;
@@ -44,7 +44,7 @@
 
 	/* Sektsioonid */
 	--section-padding-y: 86px;
-	--section-padding-x: 20px;
+	--section-padding-x: clamp(20px, 5vw, 80px);
 	--section-title-size: clamp(2rem, 4vw, 3.25rem);
 	--section-title-line-height: 1.1;
 	--section-grid-gap: 64px;
