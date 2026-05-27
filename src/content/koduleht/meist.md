@@ -1,6 +1,6 @@
 ---
 eyebrow: "Meist"
-title: "Väike kogudus, suur süda."
+title: "Väike ja tubli kogudus"
 description: |
   2010. aasta jaanuarist oleme Seitsmenda Päeva Adventistide Keila Kogudus. Enne tegutsesime SPA koguduseliikmetest ja selle sõpradest koosneva grupina. Aktiivsemalt oleme väikese kogukonnana toiminud aastast 2005. Tahame olla heaks vaimulikuks koduks Keilas ja selle lähiümbruses elavatele inimestele. 
   

@@ -9,118 +9,42 @@ const { pageUrl, title = 'Keila Adventkoguduse Facebooki postitused' } = Astro.p
 const normalizedPageUrl = pageUrl
 	? pageUrl.trim().replace(/\/+$/u, '') + '/'
 	: undefined;
----
 
-{normalizedPageUrl ? (
-	<div
-		class="facebook-feed"
-		data-facebook-page-url={normalizedPageUrl}
-		data-facebook-title={title}
-	>
-		<iframe
-			class="facebook-feed-frame"
-			title={title}
-			style="border:none;overflow:hidden"
-			scrolling="no"
-			frameborder="0"
-			allowfullscreen={true}
-			allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-			loading="lazy"
-		></iframe>
-	</div>
-) : (
-	<div class="facebook-feed-empty">Facebooki voo URL puudub või on vale.</div>
-)}
-
-<script>
-	const MIN_FACEBOOK_WIDTH = 180;
-	const MAX_FACEBOOK_WIDTH = 500;
-	const FACEBOOK_HEIGHT = 700;
-	const RESIZE_DEBOUNCE_MS = 250;
-	const LOAD_ROOT_MARGIN = '500px 0px';
-
-	function clampFacebookWidth(width) {
-		return Math.max(MIN_FACEBOOK_WIDTH, Math.min(MAX_FACEBOOK_WIDTH, Math.floor(width)));
-	}
-
-	function buildFacebookPluginUrl(pageUrl, width) {
-		const params = new URLSearchParams({
-			href: pageUrl,
+const facebookPluginUrl = normalizedPageUrl
+	? `https://www.facebook.com/plugins/page.php?${new URLSearchParams({
+			href: normalizedPageUrl,
 			tabs: 'timeline',
-			width: String(width),
-			height: String(FACEBOOK_HEIGHT),
+			width: '500',
+			height: '700',
 			small_header: 'true',
 			adapt_container_width: 'true',
 			hide_cover: 'false',
 			show_facepile: 'false',
-		});
+		}).toString()}`
+	: undefined;
+---
 
-		return `https://www.facebook.com/plugins/page.php?${params.toString()}`;
-	}
-
-	function updateFacebookFeed(feed) {
-		const iframe = feed.querySelector('.facebook-feed-frame');
-		const pageUrl = feed.dataset.facebookPageUrl;
-
-		if (!(iframe instanceof HTMLIFrameElement) || !pageUrl) {
-			return;
-		}
-
-		const pluginWidth = clampFacebookWidth(feed.clientWidth);
-		const previousWidth = Number(feed.dataset.facebookPluginWidth);
-
-		if (previousWidth === pluginWidth && iframe.src) {
-			return;
-		}
-
-		feed.dataset.facebookPluginWidth = String(pluginWidth);
-		iframe.src = buildFacebookPluginUrl(pageUrl, pluginWidth);
-	}
-
-	function prepareFacebookFeed(feed) {
-		let resizeTimeout;
-		let resizeObserver;
-
-		updateFacebookFeed(feed);
-
-		resizeObserver = new ResizeObserver(() => {
-			window.clearTimeout(resizeTimeout);
-
-			resizeTimeout = window.setTimeout(() => {
-				updateFacebookFeed(feed);
-			}, RESIZE_DEBOUNCE_MS);
-		});
-
-		resizeObserver.observe(feed);
-	}
-
-	const feeds = document.querySelectorAll('.facebook-feed');
-
-	if ('IntersectionObserver' in window) {
-		const feedObserver = new IntersectionObserver((entries, observer) => {
-			entries.forEach((entry) => {
-				if (entry.isIntersecting && entry.target instanceof HTMLElement) {
-					prepareFacebookFeed(entry.target);
-					observer.unobserve(entry.target);
-				}
-			});
-		}, {
-			rootMargin: LOAD_ROOT_MARGIN,
-		});
-
-		feeds.forEach((feed) => {
-			if (feed instanceof HTMLElement) {
-				feedObserver.observe(feed);
-			}
-		});
-	} else {
-		feeds.forEach((feed) => {
-			if (feed instanceof HTMLElement) {
-				prepareFacebookFeed(feed);
-			}
-		});
-	}
-</script>
+{normalizedPageUrl && facebookPluginUrl ? (
+	<div class="facebook-feed">
+		<div class="facebook-feed-frame-wrap">
+			<iframe
+				class="facebook-feed-frame"
+				title={title}
+				src={facebookPluginUrl}
+				scrolling="no"
+				frameborder="0"
+				allowfullscreen={true}
+				allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+				referrerpolicy="origin-when-cross-origin"
+			></iframe>
+		</div>
+		<p class="facebook-feed-fallback">
+			Kui Facebooki voog ei ilmu, <a href={normalizedPageUrl} target="_blank" rel="noopener noreferrer">ava postitused Facebookis</a>.
+		</p>
+	</div>
+) : (
+	<div class="facebook-feed-empty">Facebooki voo URL puudub või on vale.</div>
+)}
 
 <style>
 	.facebook-feed,
@@ -129,10 +53,10 @@ const normalizedPageUrl = pageUrl
 		border: 1px solid var(--color-border);
 		border-radius: 8px;
 		box-shadow: var(--shadow-warm);
-		width: min(100%, 500px);
 		box-sizing: border-box;
 		margin-left: auto;
 		margin-right: auto;
+		width: min(100%, var(--facebook-feed-width));
 	}
 
 	.facebook-feed {
@@ -140,29 +64,58 @@ const normalizedPageUrl = pageUrl
 		padding: 0;
 	}
 
+	.facebook-feed-frame-wrap {
+		height: calc(var(--facebook-feed-height) * var(--facebook-feed-scale));
+		overflow: hidden;
+	}
+
 	.facebook-feed-frame {
-		display: block;
-		width: 100%;
-		height: 600px;
 		border: 0;
+		display: block;
+		height: var(--facebook-feed-height);
 		margin: 0 auto;
+		transform: scale(var(--facebook-feed-scale));
+		transform-origin: top center;
+		width: 500px;
+	}
+
+	.facebook-feed-fallback {
+		border-top: 1px solid var(--color-border);
+		color: var(--color-text-muted);
+		font-size: 0.92rem;
+		line-height: 1.45;
+		margin: 0;
+		padding: 12px 16px;
+		text-align: center;
+	}
+
+	.facebook-feed-fallback a {
+		color: var(--color-primary);
+		font-weight: 700;
+		text-decoration: underline;
+		text-underline-offset: 3px;
 	}
 
 	.facebook-feed-empty {
+		color: var(--color-text-muted);
 		padding: 1rem;
 		text-align: center;
-		color: var(--color-text-muted);
 	}
 
 	@media (max-width: 500px) {
 		.facebook-feed,
 		.facebook-feed-empty {
-			width: 100%;
 			max-width: 100%;
+			width: 100%;
 		}
 
-		.facebook-feed {
-			padding: 0;
+		.facebook-feed-frame-wrap {
+			height: var(--facebook-feed-height);
+		}
+
+		.facebook-feed-frame {
+			transform: none;
+			width: 100%;
 		}
 	}
 </style>

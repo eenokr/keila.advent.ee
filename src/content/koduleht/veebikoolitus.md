@@ -1,5 +1,5 @@
 ---
-eyebrow: "Veebikoolitus"
+eyebrow: ""
 title: "“Usk ja elu” veebikoolitus"
 description: "Sõbralik piiblikursus kõigile, kes tahavad rahulikus tempos uurida kristliku usu põhitõdesid ja küsida ausaid küsimusi elu, Jumala ja usu kohta."
 buttons:

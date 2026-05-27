@@ -51,18 +51,18 @@ const site = siteEntry.data;
 <style>
 	.sermon-page {
 		background: var(--color-page);
-		padding: 78px 20px;
+		padding: var(--sermon-page-padding-y) var(--section-padding-x);
 	}
 
 	.sermon-wrapper {
-		max-width: 760px;
+		max-width: var(--article-content-width);
 		margin: 0 auto;
 	}
 
 	.eyebrow {
 		color: var(--color-accent);
 		font-family: var(--font-heading);
-		font-size: 0.9rem;
+		font-size: var(--eyebrow-font-size);
 		font-weight: 600;
 		letter-spacing: 0.08em;
 		margin: 0 0 16px;
@@ -72,7 +72,7 @@ const site = siteEntry.data;
 	h1 {
 		color: var(--color-heading);
 		font-family: var(--font-heading);
-		font-size: clamp(2.3rem, 5vw, 4rem);
+		font-size: var(--sermon-title-size);
 		line-height: 1.08;
 		margin: 0;
 	}
@@ -85,8 +85,8 @@ const site = siteEntry.data;
 	.sermon-description,
 	.sermon-content {
 		color: var(--color-text-soft);
-		font-size: 1.08rem;
-		line-height: 1.8;
+		font-size: var(--sermon-text-size);
+		line-height: var(--paragraph-line-height);
 	}
 
 	.sermon-description {

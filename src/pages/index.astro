@@ -111,7 +111,7 @@ const heroSlides = gallerySlides.length > 0
 	: heroAsset
 		? [{ image: heroAsset, alt: hero.imageAlt ?? 'Keila adventkoguduse teade' }]
 		: [];
-const facebookPageUrl = facebook.pageUrl ?? facebook.buttons?.find((button) => button.link.includes('facebook.com'))?.link;
+const facebookPageUrl = facebook.pageUrl;
 const [serviceScheduleItems, uheskoosAudioItems, sermonAudioItems] = await Promise.all([
 	getServiceScheduleItems(SERVICE_SCHEDULE_CSV_URL, 4),
 	getAdventAudioItems(ADVENT_AUDIO_SOURCES.uheskoos, 4),
@@ -291,7 +291,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 																<div class="advent-audio-card-copy">
 																	{item.date && <span>{item.date}</span>}
 																	<h5>{item.title}</h5>
-																	<p>Kuula advent.ee lehel</p>
 																</div>
 															</a>
 														))}
@@ -378,7 +377,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.hero-section {
 		background: linear-gradient(160deg, var(--color-surface-soft) 0%, #fdf3e6 55%, var(--color-surface) 100%);
-		padding: 96px 20px 84px;
+		padding: var(--hero-padding-top) var(--section-padding-x) var(--hero-padding-bottom);
 		position: relative;
 		overflow: hidden;
 	}
@@ -408,15 +407,14 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.section-inner,
 	.about-grid,
 	.visit-inner {
-		max-width: 1180px;
+		max-width: var(--site-max-width);
 		margin: 0 auto;
 	}
 
 	.hero-content {
-		max-width: 1500px;
 		display: grid;
 		grid-template-columns: minmax(0, 0.9fr) minmax(520px, 1.15fr);
-		gap: clamp(48px, 5vw, 86px);
+		gap: var(--hero-column-gap);
 		align-items: center;
 		position: relative;
 	}
@@ -436,13 +434,13 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.hero-copy {
-		max-width: 680px;
+		max-width: var(--hero-text-width);
 	}
 
 	.eyebrow {
 		color: var(--color-accent);
 		font-family: var(--font-heading);
-		font-size: 0.9rem;
+		font-size: var(--eyebrow-font-size);
 		font-weight: 600;
 		letter-spacing: 0.08em;
 		margin: 0 0 16px;
@@ -460,18 +458,18 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.hero-copy h1 {
-		font-size: clamp(2.7rem, 6vw, 5rem);
+		font-size: var(--hero-title-size);
 		letter-spacing: -0.02em;
-		line-height: 1.04;
+		line-height: var(--hero-title-line-height);
 		margin: 0;
 	}
 
 	.hero-intro {
 		color: var(--color-text-soft);
-		font-size: 1.18rem;
-		line-height: 1.78;
+		font-size: var(--hero-intro-font-size);
+		line-height: var(--hero-intro-line-height);
 		margin: 30px 0 0;
-		max-width: 580px;
+		max-width: var(--hero-intro-width);
 	}
 
 	.hero-actions {
@@ -517,7 +515,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.course-section,
 	.app-section,
 	.visit-section {
-		padding: 86px 20px;
+		padding: var(--section-padding-y) var(--section-padding-x);
 	}
 
 	.info-section,
@@ -531,24 +529,24 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.course-grid h2,
 	.app-card h2,
 	.visit-inner h2 {
-		font-size: clamp(2rem, 4vw, 3.25rem);
+		font-size: var(--section-title-size);
 		letter-spacing: -0.01em;
-		line-height: 1.1;
+		line-height: var(--section-title-line-height);
 		margin: 0;
 	}
 
 	.section-description {
 		color: var(--color-text-soft);
-		font-size: 1.05rem;
-		line-height: 1.75;
+		font-size: var(--section-description-font-size);
+		line-height: var(--section-description-line-height);
 		margin: 22px 0 0;
-		max-width: 680px;
+		max-width: var(--text-column-width);
 	}
 
 	.info-grid {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 20px;
+		gap: var(--info-grid-gap);
 		margin-top: 42px;
 	}
 
@@ -566,7 +564,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.service-schedule-heading {
-		max-width: 680px;
+		max-width: var(--text-column-width);
 	}
 
 	.service-schedule-heading h3 {
@@ -595,8 +593,8 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		background: var(--color-surface-warm);
 		border: 1px solid var(--color-border);
 		border-radius: 12px;
-		min-height: 240px;
-		padding: 22px 20px 20px;
+		min-height: var(--schedule-card-min-height);
+		padding: var(--schedule-card-padding);
 		transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 	}
 
@@ -609,14 +607,14 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.service-schedule-card h4 {
 		color: var(--color-heading);
 		font-family: var(--font-heading);
-		font-size: 1.5rem;
+		font-size: var(--schedule-date-font-size);
 		line-height: 1.2;
 		margin: 0 0 14px;
 	}
 
 	.service-schedule-list {
 		color: var(--color-text-soft);
-		font-size: 1.2rem;
+		font-size: var(--schedule-text-font-size);
 		line-height: 1.55;
 		list-style: none;
 		margin: 0;
@@ -640,9 +638,9 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.service-schedule-list img {
 		flex: 0 0 auto;
-		height: 32px;
+		height: var(--schedule-icon-size);
 		object-fit: contain;
-		width: 32px;
+		width: var(--schedule-icon-size);
 	}
 
 	.service-schedule-card.is-empty {
@@ -666,18 +664,18 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.schedule-lock {
-		height: 124px;
+		height: var(--schedule-lock-size);
 		opacity: 0.55;
 		object-fit: contain;
-		width: 124px;
+		width: var(--schedule-lock-size);
 	}
 
 	.about-copy p,
 	.facebook-section .social-copy p:not(.eyebrow),
 	.visit-details p {
 		color: var(--color-text-soft);
-		font-size: 1rem;
-		line-height: 1.75;
+		font-size: var(--paragraph-font-size);
+		line-height: var(--paragraph-line-height);
 		margin: 0;
 	}
 
@@ -701,7 +699,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.about-grid {
 		display: grid;
 		grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1fr);
-		gap: 64px;
+		gap: var(--section-grid-gap);
 		align-items: center;
 		position: relative;
 	}
@@ -737,15 +735,16 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.facebook-section .social-panel {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(0, 500px);
+		grid-template-columns: minmax(0, 1fr) minmax(0, var(--facebook-feed-width));
 		align-items: center;
 		gap: 58px;
 	}
 
+	.facebook-section .social-panel :global(.facebook-card),
 	.facebook-section .social-panel :global(.facebook-feed),
 	.facebook-section .social-panel :global(.facebook-feed-empty) {
 		justify-self: end;
-		width: min(100%, 500px);
+		width: min(100%, var(--facebook-feed-width));
 	}
 
 	.facebook-section .social-copy {
@@ -754,7 +753,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.social-copy {
-		max-width: 420px;
+		max-width: var(--text-column-width);
 	}
 
 	.social-panel,
@@ -763,10 +762,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		align-items: center;
 		justify-content: space-between;
 		gap: 40px;
-	}
-
-	.social-copy {
-		max-width: 800px;
 	}
 
 	.social-actions {
@@ -792,7 +787,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		border: 1px solid var(--color-border);
 		border-radius: 999px;
 		color: var(--color-heading);
-		font-size: 0.95rem;
+		font-size: var(--paragraph-font-size);
 		font-weight: 600;
 		line-height: 1;
 		padding: 12px 16px;
@@ -811,7 +806,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.resource-group-heading {
 		margin-bottom: 22px;
-		max-width: 720px;
+		max-width: var(--section-heading-width);
 	}
 
 	.resource-group-heading h3 {
@@ -848,7 +843,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.advent-audio-heading h4 {
 		color: var(--color-heading);
 		font-family: var(--font-heading);
-		font-size: 1.2rem;
+		font-size: var(--audio-heading-font-size);
 		line-height: 1.25;
 		margin: 0;
 	}
@@ -856,7 +851,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.advent-audio-grid {
 		display: grid;
 		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 10px;
+		gap: var(--audio-grid-gap);
 	}
 
 	.advent-audio-card {
@@ -900,13 +895,13 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.advent-audio-card-copy {
-		padding: 10px;
+		padding: var(--audio-card-padding);
 	}
 
 	.advent-audio-card span {
 		color: var(--color-accent);
 		display: block;
-		font-size: 0.72rem;
+		font-size: var(--audio-date-font-size);
 		font-weight: 700;
 		letter-spacing: 0.06em;
 		margin-bottom: 7px;
@@ -916,7 +911,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.advent-audio-card h5 {
 		color: var(--color-heading);
 		font-family: var(--font-heading);
-		font-size: 0.9rem;
+		font-size: var(--audio-title-font-size);
 		font-weight: 600;
 		line-height: 1.35;
 		margin: 0;
@@ -944,7 +939,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.course-grid {
-		max-width: 860px;
+		max-width: var(--site-max-width);
 		margin: 0 auto;
 		position: relative;
 	}
@@ -984,13 +979,13 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		background: var(--color-surface-warm);
 		border: 1px solid var(--color-border);
 		border-radius: 8px;
-		padding: 34px;
+		padding: var(--app-card-padding, 34px);
 	}
 
 	.visit-section {
 		background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 62%, #d9791f 100%);
 		color: var(--color-surface);
-		padding: 58px 20px;
+		padding: var(--contact-padding-y) var(--section-padding-x);
 	}
 
 	.visit-inner {
@@ -1011,7 +1006,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		border-radius: 20px;
 		display: grid;
 		gap: 18px;
-		padding: 20px;
+		padding: var(--contact-card-padding);
 	}
 
 	.contact-map {
@@ -1026,7 +1021,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.contact-map iframe {
 		border: 0;
 		display: block;
-		height: 280px;
+		height: var(--contact-map-height);
 		width: 100%;
 	}
 
@@ -1042,17 +1037,17 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		border: 1px solid rgba(255, 255, 255, 0.24);
 		border-radius: 18px;
 		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
-		padding: 32px;
+		padding: var(--contact-details-padding);
 	}
 
 	.visit-details h3 {
 		font-family: var(--font-heading);
-		font-size: 1.7rem;
+		font-size: var(--contact-title-size);
 		margin: 0 0 18px;
 	}
 
 	.visit-details p {
-		font-size: 1.1rem;
+		font-size: var(--contact-text-size);
 		line-height: 1.65;
 	}
 
@@ -1072,18 +1067,18 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	@media (max-width: 860px) {
 		.hero-section {
-			padding: 52px 18px 54px;
+			padding: var(--hero-padding-top) var(--section-padding-x) var(--hero-padding-bottom);
 		}
 
 		.hero-content,
 		.about-grid,
 		.visit-inner {
 			grid-template-columns: 1fr;
-			gap: 34px;
+			gap: var(--section-grid-gap);
 		}
 
 		.contact-map iframe {
-			height: 240px;
+			height: var(--contact-map-height);
 		}
 
 		.info-section,
@@ -1093,11 +1088,11 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		.course-section,
 		.app-section,
 		.visit-section {
-			padding: 56px 18px;
+			padding: var(--section-padding-y) var(--section-padding-x);
 		}
 
 		.visit-section {
-			padding: 44px 18px;
+			padding: var(--contact-padding-y) var(--section-padding-x);
 		}
 
 		.info-grid,
@@ -1150,10 +1145,11 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 			grid-template-columns: 1fr;
 		}
 
+		.facebook-section .social-panel :global(.facebook-card),
 		.facebook-section .social-panel :global(.facebook-feed),
 		.facebook-section .social-panel :global(.facebook-feed-empty) {
 			justify-self: center;
-			width: min(100%, 500px);
+			width: min(100%, var(--facebook-feed-width));
 		}
 
 		.social-panel,
@@ -1164,13 +1160,13 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 
 		.app-card {
-			padding: 28px;
+			padding: var(--app-card-padding, 28px);
 		}
 	}
 
 	@media (max-width: 520px) {
 		.hero-copy h1 {
-			font-size: 2.35rem;
+			font-size: var(--hero-title-size);
 		}
 
 		.hero-actions {

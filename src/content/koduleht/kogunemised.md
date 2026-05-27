@@ -1,7 +1,7 @@
 ---
-eyebrow: "Kohtume laupäeviti"
-title: "Järgmised kogunemised"
-description: "Teenistused algavad kell 11.00. Piiblitund ja lastetund toimuvad pärast seda kui see just esimene asi pole"
+eyebrow: ""
+title: "Kohtume laupäeviti kell 11"
+description: ""
 scheduleActivities:
   - key: "jutlus"
     positiveText: "Jutlus"

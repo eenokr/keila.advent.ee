@@ -124,13 +124,13 @@ function withBase(href: string) {
 	}
 
 	.header-nav {
-		max-width: 1200px;
+		max-width: var(--header-max-width);
 		margin: 0 auto;
 		padding: 0 20px;
 		display: grid;
 		grid-template-columns: minmax(220px, 1fr) auto minmax(160px, 1fr);
 		align-items: center;
-		min-height: 88px;
+		min-height: var(--header-height);
 		font-family: var(--font-body);
 		column-gap: 16px;
 	}
@@ -152,7 +152,7 @@ function withBase(href: string) {
 
 	.brand-logo {
 		height: auto;
-		max-height: 64px;
+		max-height: var(--header-logo-height);
 		width: auto;
 		display: block;
 		transform-origin: center;
@@ -172,7 +172,7 @@ function withBase(href: string) {
 		display: flex;
 		flex-direction: column;
 		font-family: var(--font-body);
-		font-size: 0.68rem;
+		font-size: var(--header-title-font-size);
 		font-weight: 400;
 		letter-spacing: 0.01em;
 		line-height: 1.18;
@@ -220,7 +220,7 @@ function withBase(href: string) {
 		cursor: pointer;
 		display: inline-flex;
 		font-family: var(--font-body);
-		font-size: 0.95rem;
+		font-size: var(--header-nav-font-size);
 		font-weight: 400;
 		gap: 4px;
 		line-height: 1;
@@ -293,7 +293,7 @@ function withBase(href: string) {
 		position: relative;
 		text-decoration: none;
 		color: var(--color-text);
-		font-size: 0.95rem;
+		font-size: var(--header-nav-font-size);
 		font-weight: 400;
 		text-transform: uppercase;
 		transition: color 0.3s ease;
@@ -366,7 +366,7 @@ function withBase(href: string) {
 		text-decoration: none;
 		font-family: var(--font-body);
 		font-weight: 400;
-		font-size: 0.82rem;
+		font-size: var(--header-cta-font-size);
 		transition: all 0.3s ease;
 		white-space: nowrap;
 	}
@@ -392,7 +392,7 @@ function withBase(href: string) {
 		gap: 2px;
 		list-style: none;
 		margin: 0 auto;
-		max-width: 1200px;
+		max-width: var(--header-max-width);
 		padding: 0;
 	}
 

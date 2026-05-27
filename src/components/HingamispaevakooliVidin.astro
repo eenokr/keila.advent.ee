@@ -97,7 +97,7 @@
 	}
 
 	.ss-inner {
-		max-width: 1400px;
+		max-width: var(--site-max-width);
 		margin: 0 auto;
 	}
 
@@ -109,7 +109,7 @@
 	.ss-eyebrow {
 		color: var(--color-accent);
 		font-family: var(--font-heading);
-		font-size: 0.85rem;
+		font-size: var(--eyebrow-font-size);
 		font-weight: 600;
 		letter-spacing: 0.08em;
 		margin: 0 0 12px;
@@ -119,7 +119,7 @@
 	.ss-heading {
 		color: var(--color-heading);
 		font-family: var(--font-heading);
-		font-size: clamp(2rem, 4vw, 3rem);
+		font-size: var(--section-title-size);
 		font-weight: 600;
 		line-height: 1.1;
 		margin: 0;
@@ -135,9 +135,9 @@
 		border: none;
 		display: block;
 		width: 100%;
-		height: 92vh;
-		min-height: 600px;
-		max-height: 1200px;
+		height: var(--lesson-widget-height);
+		min-height: var(--lesson-widget-min-height);
+		max-height: var(--lesson-widget-max-height);
 	}
 
 	.ss-footer {

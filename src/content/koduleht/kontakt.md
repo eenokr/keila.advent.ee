@@ -1,5 +1,5 @@
 ---
-eyebrow: "Ootame sind laupäeviti"
+eyebrow: ""
 title: "Tule jumalateenistusele ja piiblitundi."
 cardTitle: "Kontakt"
 fields:

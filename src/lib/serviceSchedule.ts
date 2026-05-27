@@ -162,8 +162,11 @@ function selectRelevantItems(items: ParsedScheduleItem[], limit: number) {
 }
 
 export async function getServiceScheduleItems(csvUrl: string, limit = 4): Promise<ServiceScheduleItem[]> {
+	const controller = new AbortController();
+	const timeout = setTimeout(() => controller.abort(), 8000);
+
 	try {
-		const response = await fetch(csvUrl);
+		const response = await fetch(csvUrl, { signal: controller.signal });
 		if (!response.ok) return [];
 
 		const csv = await response.text();
@@ -200,5 +203,7 @@ export async function getServiceScheduleItems(csvUrl: string, limit = 4): Promis
 		return selectRelevantItems(items, limit).map(({ dateValue, ...item }) => item);
 	} catch {
 		return [];
+	} finally {
+		clearTimeout(timeout);
 	}
 }
