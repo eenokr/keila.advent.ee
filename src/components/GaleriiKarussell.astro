@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
+import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
 type Slide = {
@@ -22,11 +22,10 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 			{slides.length > 1 && slides.map((slide) => (
 				<div class="gallery-slide" aria-hidden="true">
 					<div class="gallery-image">
-						<Picture
+						<Image
 							src={slide.image}
-							formats={['webp']}
-							widths={[720, 1200]}
-							sizes="(max-width: 860px) calc(100vw - 36px), min(54vw, 820px)"
+							width={1200}
+							format="webp"
 							alt=""
 							loading="lazy"
 							fetchpriority="auto"
@@ -40,11 +39,10 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 			{slides.map((slide, index) => (
 				<div class:list={['gallery-slide', index === 0 && 'is-active']} data-gallery-slide>
 					<div class="gallery-image">
-						<Picture
+						<Image
 							src={slide.image}
-							formats={['webp']}
-							widths={[720, 1200]}
-							sizes="(max-width: 860px) calc(100vw - 36px), min(54vw, 820px)"
+							width={1200}
+							format="webp"
 							alt={slide.alt}
 							loading={index === 0 ? 'eager' : 'lazy'}
 							fetchpriority={index === 0 ? 'high' : 'auto'}
@@ -58,11 +56,10 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 			{slides.length > 1 && slides.map((slide) => (
 				<div class="gallery-slide" aria-hidden="true">
 					<div class="gallery-image">
-						<Picture
+						<Image
 							src={slide.image}
-							formats={['webp']}
-							widths={[720, 1200]}
-							sizes="(max-width: 860px) calc(100vw - 36px), min(54vw, 820px)"
+							width={1200}
+							format="webp"
 							alt=""
 							loading="lazy"
 							fetchpriority="auto"

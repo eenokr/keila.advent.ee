@@ -1,5 +1,5 @@
 ---
-title: "Oled oodatud meiega Jumalat teenima"
+title: "Oled oodatud meiega liituma"
 description: "Tule laupäeval kogudusse, et kuulata Jumala sõna, palvetada ja olla koos inimestega, kes soovivad kasvada usus ja armastuses."
 image: "kiriku-pilt.jpg"
 imageAlt: "Keila adventkoguduse hoone väljast"

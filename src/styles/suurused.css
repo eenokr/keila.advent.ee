@@ -4,8 +4,9 @@
 	--content-narrow-width: 720px;
 	--article-content-width: 760px;
 	--text-column-width: 680px;
-	--facebook-feed-width: 500px;
-	--facebook-feed-height: 600px;
+	--facebook-feed-width: 640px;
+	--facebook-feed-height: 580px;
+	--facebook-feed-scale: 1.28;
 
 	/* Üldine tekst */
 	--body-font-size: 16px;
