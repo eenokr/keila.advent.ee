@@ -60,12 +60,13 @@ const facebookPluginUrl = normalizedPageUrl
 	}
 
 	.facebook-feed {
+		--facebook-current-scale: min(var(--facebook-feed-scale), calc(100vw / var(--facebook-plugin-native-width)));
 		overflow: hidden;
 		padding: 0;
 	}
 
 	.facebook-feed-frame-wrap {
-		height: calc(var(--facebook-feed-height) * var(--facebook-feed-scale));
+		height: calc(var(--facebook-feed-height) * var(--facebook-current-scale));
 		overflow: hidden;
 	}
 
@@ -74,7 +75,7 @@ const facebookPluginUrl = normalizedPageUrl
 		display: block;
 		height: var(--facebook-feed-height);
 		margin: 0 auto;
-		transform: scale(var(--facebook-feed-scale));
+		transform: scale(var(--facebook-current-scale));
 		transform-origin: top center;
 		width: var(--facebook-plugin-native-width);
 	}
@@ -106,15 +107,6 @@ const facebookPluginUrl = normalizedPageUrl
 		.facebook-feed,
 		.facebook-feed-empty {
 			max-width: 100%;
-			width: 100%;
-		}
-
-		.facebook-feed-frame-wrap {
-			height: var(--facebook-feed-height);
-		}
-
-		.facebook-feed-frame {
-			transform: none;
 			width: 100%;
 		}
 	}
