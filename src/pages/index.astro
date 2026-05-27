@@ -346,31 +346,16 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 								</div>
 
 								<div class="course-panel-right scroll-reveal" style="--reveal-delay: 150ms">
-									<a
-										id="course-video-link"
-										class="course-video-thumb-link"
-										href={course.chapters?.[0]?.link ?? 'https://www.youtube.com'}
-										target="_blank"
-										rel="noopener noreferrer"
-										aria-label={`Vaata videot: ${course.chapters?.[0]?.title ?? ''}`}
-									>
-										<img
-											id="course-video-thumb"
-											class="course-video-thumb-img"
-											src={`https://img.youtube.com/vi/${course.chapters?.[0]?.youtubeId ?? 'Dw_o0Fb3Pis'}/maxresdefault.jpg`}
-											alt=""
-											loading="lazy"
-										/>
-										<div class="course-video-overlay">
-											<span class="course-video-play-btn" aria-hidden="true">
-												<svg width="72" height="72" viewBox="0 0 72 72" fill="none">
-													<circle cx="36" cy="36" r="36" fill="rgba(0,0,0,0.55)"/>
-													<path d="M29 22l26 14-26 14V22z" fill="white"/>
-												</svg>
-											</span>
-											<span class="course-video-watch-label">Vaata YouTube'is</span>
-										</div>
-									</a>
+									<div class="course-video-wrap">
+										<iframe
+											id="course-video-iframe"
+											class="course-video-iframe"
+											src={`https://www.youtube.com/embed/${course.chapters?.[0]?.youtubeId ?? 'Dw_o0Fb3Pis'}?rel=0`}
+											title="Usk ja elu veebikoolitus"
+											allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+											allowfullscreen
+										></iframe>
+									</div>
 								</div>
 
 							</div>
@@ -1125,66 +1110,22 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		transform: translateX(2px);
 	}
 
-	/* Right panel — video thumbnail */
+	/* Right panel — video player */
 	.course-panel-right { min-width: 0; }
 
-	.course-video-thumb-link {
+	.course-video-wrap {
 		aspect-ratio: 16 / 9;
 		border-radius: 14px;
 		box-shadow: 0 24px 70px rgba(0,0,0,0.5), 0 6px 20px rgba(0,0,0,0.3);
-		display: block;
 		overflow: hidden;
-		position: relative;
 		width: 100%;
 	}
 
-	.course-video-thumb-img {
+	.course-video-iframe {
+		border: none;
 		display: block;
 		height: 100%;
-		object-fit: cover;
-		transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 		width: 100%;
-	}
-
-	.course-video-thumb-link:hover .course-video-thumb-img {
-		transform: scale(1.03);
-	}
-
-	.course-video-overlay {
-		align-items: center;
-		background: rgba(0,0,0,0.18);
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-		inset: 0;
-		justify-content: center;
-		position: absolute;
-		transition: background 0.25s ease;
-	}
-
-	.course-video-thumb-link:hover .course-video-overlay {
-		background: rgba(0,0,0,0.32);
-	}
-
-	.course-video-play-btn {
-		display: block;
-		filter: drop-shadow(0 4px 14px rgba(0,0,0,0.5));
-		transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-	}
-
-	.course-video-thumb-link:hover .course-video-play-btn {
-		transform: scale(1.12);
-	}
-
-	.course-video-watch-label {
-		background: rgba(0,0,0,0.55);
-		border: 1px solid rgba(255,255,255,0.22);
-		border-radius: 999px;
-		color: #fff;
-		font-size: 0.8rem;
-		font-weight: 600;
-		letter-spacing: 0.04em;
-		padding: 6px 16px;
 	}
 
 	@media (max-width: 1024px) {
@@ -1422,17 +1363,14 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 <script>
 	// Course — chapter navigation
 	const chapterLinks = document.querySelectorAll<HTMLAnchorElement>('.course-chapter-card[data-course-url]');
-	const videoThumb = document.getElementById('course-video-thumb') as HTMLImageElement | null;
-	const videoLink = document.getElementById('course-video-link') as HTMLAnchorElement | null;
+	const videoIframe = document.getElementById('course-video-iframe') as HTMLIFrameElement | null;
 
 	chapterLinks.forEach((link) => {
 		link.addEventListener('click', (e) => {
 			const youtubeId = link.dataset.youtubeId;
-			const watchUrl = link.dataset.courseUrl;
-			if (!youtubeId) return;
+			if (!youtubeId || !videoIframe) return;
 			e.preventDefault();
-			if (videoThumb) videoThumb.src = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
-			if (videoLink && watchUrl) videoLink.href = watchUrl;
+			videoIframe.src = `https://www.youtube.com/embed/${youtubeId}?rel=0`;
 			chapterLinks.forEach((l) => l.classList.remove('is-active'));
 			link.classList.add('is-active');
 		});
