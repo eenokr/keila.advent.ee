@@ -350,7 +350,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 									<div class="course-copy-wrap scroll-reveal">
 										{course.eyebrow && <p class="eyebrow">{course.eyebrow}</p>}
 										<h2>{course.title}</h2>
-										<p class="section-description">{course.description}</p>
+										{course.description?.split('\n').filter(Boolean).map((p) => <p class="section-description">{p}</p>)}
 										{course.buttons && course.buttons.length > 0 && (
 											<div class="course-actions">
 												{course.buttons.map((button) => (
