@@ -1,70 +1,99 @@
 ---
 // HingamispaevakooliVidin.astro
-// URL arvutatakse koheselt matemaatiliselt – ühtegi API-päringut pole vaja.
-// Q2 2026 algab 28. märtsil 2026 (referentspunkt). Iga kvartal = 91 päeva (13 nädalat).
 ---
 
 <section class="ss-section" id="oppetykk">
 	<div class="ss-inner">
-		<div class="ss-intro">
+
+		<div class="ss-left">
 			<p class="ss-eyebrow">Hingamispäevakool</p>
-			<h2 class="ss-heading">Selle nädala õppetükk</h2>
+			<h2 class="ss-app-title">Hingamispäevakooli äpp</h2>
+			<p class="ss-app-desc">Sabbath School äpp aitab sul igapäevaselt piiblit õppida, jälgida hingamispäevakooli õppetükke ning osaleda koguduse tegevustes mugavalt oma telefonis või tahvelarvutis.</p>
+			<div class="ss-badges">
+				<a
+					class="ss-badge"
+					href="https://apps.apple.com/us/app/sabbath-school-pm/id895272167"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="Lae alla App Store'ist"
+				>
+					<svg width="22" height="26" viewBox="0 0 22 26" fill="white" aria-hidden="true">
+						<path d="M18.07 13.72c-.03-3.16 2.58-4.69 2.7-4.77-1.47-2.16-3.76-2.45-4.57-2.48-1.95-.2-3.8 1.15-4.79 1.15-.99 0-2.52-1.12-4.14-1.09-2.13.03-4.1 1.24-5.2 3.14-2.22 3.86-.57 9.57 1.59 12.7 1.06 1.53 2.32 3.25 3.98 3.19 1.6-.07 2.2-1.03 4.13-1.03 1.93 0 2.48 1.03 4.17.99 1.72-.03 2.81-1.56 3.86-3.1a14.6 14.6 0 0 0 1.75-3.58c-.04-.01-3.44-1.32-3.48-5.12zM14.87 4.3C15.74 3.24 16.33 1.78 16.17 0c-1.27.05-2.82.85-3.73 1.89-.82.92-1.54 2.4-1.35 3.82 1.42.1 2.87-.72 3.78-1.41z"/>
+					</svg>
+					<span class="ss-badge-text">
+						<small>Lae alla</small>
+						App Store'ist
+					</span>
+				</a>
+				<a
+					class="ss-badge"
+					href="https://play.google.com/store/apps/details?id=com.cryart.sabbathschool&hl=en"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="Lae alla Google Playst"
+				>
+					<svg width="22" height="24" viewBox="0 0 22 24" aria-hidden="true">
+						<path d="M1.22.43C.88.8.68 1.37.68 2.1v19.8c0 .73.2 1.3.54 1.67l.09.08 11.1-11.1v-.26L1.31.35l-.09.08z" fill="#4FC3F7"/>
+						<path d="M15.83 15.97l-3.42-3.42v-.27l3.42-3.42.08.04 4.05 2.3c1.16.66 1.16 1.73 0 2.39l-4.05 2.3-.08.08z" fill="#FFCA28"/>
+						<path d="M15.91 15.89L12.41 12.4 1.22 23.57c.38.4 1.01.45 1.72.05l12.97-7.73" fill="#F44336"/>
+						<path d="M15.91 8.11L2.94.38C2.23-.02 1.6.03 1.22.43L12.41 11.6l3.5-3.5z" fill="#4CAF50"/>
+					</svg>
+					<span class="ss-badge-text">
+						<small>Lae alla</small>
+						Google Playst
+					</span>
+				</a>
+			</div>
 		</div>
 
-		<div class="ss-wrap">
-			<iframe
-				id="ss-frame"
-				class="ss-frame"
-				src="about:blank"
-				title="Tänane hingamispäevakooli õppetükk"
-				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-			></iframe>
+		<div class="ss-right">
+			<div class="ss-intro">
+				<h3 class="ss-heading">Selle nädala õppetükk</h3>
+			</div>
+			<div class="ss-wrap">
+				<iframe
+					id="ss-frame"
+					class="ss-frame"
+					src="about:blank"
+					title="Tänane hingamispäevakooli õppetükk"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+				></iframe>
+			</div>
+			<div class="ss-footer">
+				<a id="ss-link" class="ss-link" href="https://sabbath-school.adventech.io/et" target="_blank" rel="noopener noreferrer">
+					Ava täisvaates
+					<svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+						<path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</a>
+				<span class="ss-credit">sabbath-school.adventech.io</span>
+			</div>
 		</div>
 
-		<div class="ss-footer">
-			<a id="ss-link" class="ss-link" href="https://sabbath-school.adventech.io/et" target="_blank" rel="noopener noreferrer">
-				Ava täisvaates
-				<svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-					<path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-			</a>
-			<span class="ss-credit">sabbath-school.adventech.io</span>
-		</div>
 	</div>
 </section>
 
 <script>
 (function () {
-	// Adventech URL: /et/{year}-{q}/{lesson}/{day}
-	// Päevad: 01=Laupäev, 02=Pühapäev, 03=Esmaspäev, 04=Teisipäev,
-	//         05=Kolmapäev, 06=Neljapäev, 07=Reede
-
-	// Kvartalite alguskuupäevad (laupäev). Lisa uued kvartalid siia.
 	const QUARTERS: { id: string; start: Date }[] = [
-		{ id: '2026-01', start: new Date(2026, 0, 3)  },  // 3. jaanuar 2026
-		{ id: '2026-02', start: new Date(2026, 2, 28) },  // 28. märts 2026 (kinnitatud)
-		{ id: '2026-03', start: new Date(2026, 5, 27) },  // 27. juuni 2026
-		{ id: '2026-04', start: new Date(2026, 8, 26) },  // 26. september 2026
-		{ id: '2027-01', start: new Date(2026, 11, 26) }, // 26. detsember 2026
-		{ id: '2027-02', start: new Date(2027, 2, 27) },  // 27. märts 2027
+		{ id: '2026-01', start: new Date(2026, 0, 3)  },
+		{ id: '2026-02', start: new Date(2026, 2, 28) },
+		{ id: '2026-03', start: new Date(2026, 5, 27) },
+		{ id: '2026-04', start: new Date(2026, 8, 26) },
+		{ id: '2027-01', start: new Date(2026, 11, 26) },
+		{ id: '2027-02', start: new Date(2027, 2, 27) },
 	];
 
 	function pad(n: number): string { return String(n).padStart(2, '0'); }
 
 	function computeUrl(): string {
 		const now = new Date();
-
-		// Adventech päevanumber (01=Laupäev ... 07=Reede)
-		// getDay(): 0=Pühapäev, 1=Esm, 2=Teis, 3=Kolm, 4=Nelj, 5=Reede, 6=Laup
 		const adventDay = (now.getDay() + 1) % 7 + 1;
-
-		// Leia selle nädala alguslaupäev
 		const daysSinceSat = (now.getDay() + 1) % 7;
 		const thisSat = new Date(now);
 		thisSat.setDate(now.getDate() - daysSinceSat);
-		thisSat.setHours(12, 0, 0, 0); // lõunaaeg, et vältida suveaja probleeme
+		thisSat.setHours(12, 0, 0, 0);
 
-		// Leia aktiivne kvartal
 		let active = QUARTERS[0];
 		for (const q of QUARTERS) {
 			const qStart = new Date(q.start);
@@ -72,7 +101,6 @@
 			if (thisSat >= qStart) active = q;
 		}
 
-		// Nädalate arv kvartali algusest (lõunaaeg mõlemal, et DST ei mõjutaks)
 		const qRef = new Date(active.start);
 		qRef.setHours(12, 0, 0, 0);
 		const weeks = Math.round((thisSat.getTime() - qRef.getTime()) / (7 * 86400000));
@@ -96,13 +124,16 @@
 	}
 
 	.ss-inner {
+		display: grid;
+		grid-template-columns: 300px 1fr;
+		gap: 56px;
+		align-items: start;
 		max-width: var(--site-max-width);
 		margin: 0 auto;
 	}
 
-	.ss-intro {
-		max-width: 700px;
-		margin-bottom: 28px;
+	.ss-left {
+		position: static;
 	}
 
 	.ss-eyebrow {
@@ -111,8 +142,79 @@
 		font-size: var(--eyebrow-font-size);
 		font-weight: 600;
 		letter-spacing: 0.08em;
-		margin: 0 0 12px;
+		margin: 0 0 14px;
 		text-transform: uppercase;
+	}
+
+	.ss-app-title {
+		color: var(--color-heading);
+		font-family: var(--font-heading);
+		font-size: clamp(1.8rem, 3vw, 2.4rem);
+		font-weight: 600;
+		line-height: 1.1;
+		margin: 0 0 16px;
+	}
+
+	.ss-app-desc {
+		color: var(--color-text-soft);
+		font-size: 1rem;
+		line-height: 1.7;
+		margin: 0 0 28px;
+	}
+
+	.ss-badges {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+
+	.ss-badge {
+		align-items: center;
+		background: #000;
+		border: 1px solid rgba(255,255,255,0.15);
+		border-radius: 10px;
+		color: #fff;
+		display: flex;
+		gap: 12px;
+		padding: 10px 18px;
+		text-decoration: none;
+		transition: background 0.18s ease, transform 0.18s ease;
+		width: fit-content;
+		min-width: 180px;
+	}
+
+	.ss-badge:hover {
+		background: #1a1a1a;
+		transform: translateY(-1px);
+	}
+
+	.ss-badge-text {
+		display: flex;
+		flex-direction: column;
+		gap: 1px;
+	}
+
+	.ss-badge-text small {
+		font-size: 0.65rem;
+		font-weight: 400;
+		letter-spacing: 0.02em;
+		opacity: 0.85;
+	}
+
+	.ss-badge-text {
+		font-size: 1rem;
+		font-weight: 600;
+		letter-spacing: 0.01em;
+		line-height: 1.2;
+	}
+
+	.ss-right {
+		min-width: 0;
+	}
+
+	.ss-intro {
+		margin-bottom: 20px;
 	}
 
 	.ss-heading {
@@ -171,11 +273,28 @@
 		font-size: 0.78rem;
 	}
 
+	@media (max-width: 860px) {
+		.ss-inner {
+			grid-template-columns: 1fr;
+			gap: 32px;
+		}
+
+		.ss-left {
+			position: static;
+		}
+
+		.ss-badges {
+			flex-direction: row;
+		}
+	}
+
 	@media (max-width: 640px) {
 		.ss-section { padding: 48px 0 0; }
-		.ss-intro { padding: 0 18px; }
+		.ss-left { padding: 0 18px; }
+		.ss-intro { padding: 0; }
 		.ss-wrap { border-radius: 0; }
 		.ss-frame { height: 100svh; min-height: 500px; max-height: none; }
 		.ss-footer { padding: 12px 18px; }
+		.ss-badges { flex-direction: column; }
 	}
 </style>
