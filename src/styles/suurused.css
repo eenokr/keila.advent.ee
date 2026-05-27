@@ -18,7 +18,7 @@
 	/* Üldine tekst */
 	--body-font-size: 16px;
 	--body-line-height: 1.6;
-	--paragraph-font-size: 1rem;
+	--paragraph-font-size: 1.125rem;
 	--paragraph-line-height: 1.7;
 	--eyebrow-font-size: 0.9rem;
 	--section-description-font-size: 1rem;
@@ -59,7 +59,7 @@
 	--pill-padding: 12px 16px;
 
 	/* Nupud */
-	--button-font-size: 1.05rem;
+	--button-font-size: 1.125rem;
 	--button-height: 50px;
 	--button-padding-x: 28px;
 

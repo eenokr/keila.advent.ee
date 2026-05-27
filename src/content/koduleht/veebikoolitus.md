@@ -1,10 +1,13 @@
 ---
 eyebrow: ""
-title: '"Usk ja elu" veebikoolitus'
+title: '"Usk ja elu" veebikursus'
 description: |
-  Mervi Kalmus aitab 12-osalises veebikursuses “Usk ja elu” vaadelda ühte erilist lugu. See on Sinu enda lugu ja see, kuidas sinu lugu on osaks Jumala loost. Et kursusest paremini osa saada, on hea, kui saaksid selle tarbeks võtta ühe märkmiku või kaustiku, kuhu kirjutada kursuselt saadud mõtted, vastata küsimustele ja peegeldada enda lugu. Head avastamist.
+  Teoloog Mervi Cederström kutsub sind 12-osalises veebikursuses „Usk ja elu" avastama enda lugu Jumala suuremas loos.
+  Meeldejäävama kogemuse saamiseks võta abiliseks märkmik, kuhu kirjutada üles kursuse käigus tekkivad küsimused, tähelepanekud ja oma lugu.
+  Head avastamist!
+
 buttons:
-  - text: "Ava veebikoolitus"
+  - text: "Ava veebikursus"
     link: "https://piiblikursus.advent.ee/kursus/246017/usk-ja-elu/246039/minu-lugu"
     variant: "primary"
     external: true
