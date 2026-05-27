@@ -48,6 +48,12 @@ const koduleht = defineCollection({
 			.optional(),
 		themes: z.array(z.string()).optional(),
 		themesLabel: z.string().optional(),
+		chapters: z.array(z.object({
+			number: z.number(),
+			title: z.string(),
+			link: z.string(),
+			youtubeId: z.string().optional(),
+		})).optional(),
 		order: z.number().default(0),
 	}),
 });

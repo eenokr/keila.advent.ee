@@ -306,17 +306,73 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 					{entry.id === 'veebikoolitus' && (
 						<section class="course-section" id="kursus">
-							<div class="course-grid">
-								<div class="course-copy-wrap scroll-reveal">
-									<p class="eyebrow">{course.eyebrow}</p>
-									<h2>{course.title}</h2>
-									<p class="section-description">{course.description}</p>
-									<div class="course-actions">
-										{course.buttons?.map((button) => (
-											<TegevusNupp {...button} />
-										))}
+							<div class="course-container">
+
+								<div class="course-panel-left">
+									<div class="course-copy-wrap scroll-reveal">
+										{course.eyebrow && <p class="eyebrow">{course.eyebrow}</p>}
+										<h2>{course.title}</h2>
+										<p class="section-description">{course.description}</p>
+										{course.buttons && course.buttons.length > 0 && (
+											<div class="course-actions">
+												{course.buttons.map((button) => (
+													<TegevusNupp {...button} />
+												))}
+											</div>
+										)}
 									</div>
+
+									{course.chapters && course.chapters.length > 0 && (
+										<nav class="course-chapters scroll-reveal" style="--reveal-delay: 80ms" aria-label="Kursuse peatükid">
+											<p class="course-chapters-label">Kursuse peatükid</p>
+											<div class="course-chapters-list">
+												{course.chapters.map((chapter, i) => (
+													<a
+														class:list={['course-chapter-card', i === 0 && 'is-active']}
+														href={chapter.link}
+														data-course-url={chapter.link}
+														data-youtube-id={chapter.youtubeId}
+													>
+														<span class="chapter-num">{String(chapter.number).padStart(2, '0')}</span>
+														<span class="chapter-title">{chapter.title}</span>
+														<svg class="chapter-arrow" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+															<path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+														</svg>
+													</a>
+												))}
+											</div>
+										</nav>
+									)}
 								</div>
+
+								<div class="course-panel-right scroll-reveal" style="--reveal-delay: 150ms">
+									<a
+										id="course-video-link"
+										class="course-video-thumb-link"
+										href={course.chapters?.[0]?.link ?? 'https://www.youtube.com'}
+										target="_blank"
+										rel="noopener noreferrer"
+										aria-label={`Vaata videot: ${course.chapters?.[0]?.title ?? ''}`}
+									>
+										<img
+											id="course-video-thumb"
+											class="course-video-thumb-img"
+											src={`https://img.youtube.com/vi/${course.chapters?.[0]?.youtubeId ?? 'Dw_o0Fb3Pis'}/maxresdefault.jpg`}
+											alt=""
+											loading="lazy"
+										/>
+										<div class="course-video-overlay">
+											<span class="course-video-play-btn" aria-hidden="true">
+												<svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+													<circle cx="36" cy="36" r="36" fill="rgba(0,0,0,0.55)"/>
+													<path d="M29 22l26 14-26 14V22z" fill="white"/>
+												</svg>
+											</span>
+											<span class="course-video-watch-label">Vaata YouTube'is</span>
+										</div>
+									</a>
+								</div>
+
 							</div>
 						</section>
 					)}
@@ -925,7 +981,8 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.course-section {
-		background: linear-gradient(135deg, #7b2c06 0%, var(--color-primary-dark) 32%, var(--color-primary) 68%, #d97f2a 100%);
+		background: linear-gradient(150deg, #6b2204 0%, var(--color-primary-dark) 35%, var(--color-primary) 70%, #d17828 100%);
+		padding: var(--section-padding-y) var(--section-padding-x);
 		position: relative;
 		overflow: hidden;
 	}
@@ -934,14 +991,23 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		content: '';
 		position: absolute;
 		inset: 0;
-		background: radial-gradient(ellipse 70% 90% at 75% 50%, rgba(255, 210, 130, 0.14) 0%, transparent 65%);
+		background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(255, 210, 130, 0.12) 0%, transparent 65%);
 		pointer-events: none;
 	}
 
-	.course-grid {
+	.course-container {
+		display: grid;
+		grid-template-columns: 320px 1fr;
+		gap: 32px;
+		align-items: start;
 		max-width: var(--site-max-width);
 		margin: 0 auto;
 		position: relative;
+	}
+
+	.course-panel-left {
+		display: flex;
+		flex-direction: column;
 	}
 
 	.course-section .eyebrow {
@@ -953,11 +1019,12 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.course-section .section-description {
-		color: rgba(255, 255, 255, 0.84);
+		color: rgba(255, 255, 255, 0.82);
+		max-width: none;
 	}
 
 	.course-actions {
-		margin-top: 36px;
+		margin-top: 28px;
 	}
 
 	.course-section :global(.button.primary) {
@@ -972,6 +1039,166 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		border-color: var(--color-surface-warm);
 		color: var(--color-primary-dark);
 		transform: translateY(-2px) scale(1.02);
+	}
+
+	.course-chapters {
+		margin-top: 28px;
+	}
+
+	.course-chapters-label {
+		color: rgba(255, 255, 255, 0.52);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		margin: 0 0 10px;
+		text-transform: uppercase;
+	}
+
+	.course-chapters-list {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		max-height: 420px;
+		overflow-y: auto;
+		scrollbar-width: thin;
+		scrollbar-color: rgba(255,255,255,0.2) transparent;
+	}
+
+	.course-chapters-list::-webkit-scrollbar { width: 4px; }
+	.course-chapters-list::-webkit-scrollbar-track { background: transparent; }
+	.course-chapters-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.22); border-radius: 4px; }
+
+	.course-chapter-card {
+		align-items: center;
+		background: rgba(255, 255, 255, 0.07);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 8px;
+		color: rgba(255, 255, 255, 0.82);
+		display: flex;
+		gap: 10px;
+		padding: 10px 12px;
+		text-decoration: none;
+		transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+	}
+
+	.course-chapter-card:hover {
+		background: rgba(255, 255, 255, 0.15);
+		border-color: rgba(255, 255, 255, 0.25);
+		color: #ffffff;
+	}
+
+	.course-chapter-card.is-active {
+		background: rgba(255, 255, 255, 0.22);
+		border-color: rgba(255, 255, 255, 0.45);
+		color: #ffffff;
+	}
+
+	.chapter-num {
+		color: rgba(255, 255, 255, 0.38);
+		flex-shrink: 0;
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		line-height: 1;
+		min-width: 20px;
+	}
+
+	.course-chapter-card.is-active .chapter-num { color: rgba(255,255,255,0.6); }
+
+	.chapter-title {
+		flex: 1;
+		font-size: 0.85rem;
+		font-weight: 500;
+		line-height: 1.3;
+		min-width: 0;
+	}
+
+	.chapter-arrow {
+		color: rgba(255, 255, 255, 0.3);
+		flex-shrink: 0;
+		transition: transform 0.18s ease, color 0.18s ease;
+	}
+
+	.course-chapter-card:hover .chapter-arrow,
+	.course-chapter-card.is-active .chapter-arrow {
+		color: rgba(255, 255, 255, 0.7);
+		transform: translateX(2px);
+	}
+
+	/* Right panel — video thumbnail */
+	.course-panel-right { min-width: 0; }
+
+	.course-video-thumb-link {
+		aspect-ratio: 16 / 9;
+		border-radius: 14px;
+		box-shadow: 0 24px 70px rgba(0,0,0,0.5), 0 6px 20px rgba(0,0,0,0.3);
+		display: block;
+		overflow: hidden;
+		position: relative;
+		width: 100%;
+	}
+
+	.course-video-thumb-img {
+		display: block;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+		width: 100%;
+	}
+
+	.course-video-thumb-link:hover .course-video-thumb-img {
+		transform: scale(1.03);
+	}
+
+	.course-video-overlay {
+		align-items: center;
+		background: rgba(0,0,0,0.18);
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		inset: 0;
+		justify-content: center;
+		position: absolute;
+		transition: background 0.25s ease;
+	}
+
+	.course-video-thumb-link:hover .course-video-overlay {
+		background: rgba(0,0,0,0.32);
+	}
+
+	.course-video-play-btn {
+		display: block;
+		filter: drop-shadow(0 4px 14px rgba(0,0,0,0.5));
+		transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.course-video-thumb-link:hover .course-video-play-btn {
+		transform: scale(1.12);
+	}
+
+	.course-video-watch-label {
+		background: rgba(0,0,0,0.55);
+		border: 1px solid rgba(255,255,255,0.22);
+		border-radius: 999px;
+		color: #fff;
+		font-size: 0.8rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		padding: 6px 16px;
+	}
+
+	@media (max-width: 1024px) {
+		.course-container { grid-template-columns: 280px 1fr; gap: 24px; }
+	}
+
+	@media (max-width: 820px) {
+		.course-container { grid-template-columns: 1fr; }
+		.course-chapters-list { max-height: none; display: grid; grid-template-columns: repeat(2, 1fr); }
+		.course-video-player { max-width: 100%; }
+	}
+
+	@media (max-width: 480px) {
+		.course-chapters-list { grid-template-columns: 1fr; }
 	}
 
 
@@ -1191,3 +1418,23 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		}
 	}
 </style>
+
+<script>
+	// Course — chapter navigation
+	const chapterLinks = document.querySelectorAll<HTMLAnchorElement>('.course-chapter-card[data-course-url]');
+	const videoThumb = document.getElementById('course-video-thumb') as HTMLImageElement | null;
+	const videoLink = document.getElementById('course-video-link') as HTMLAnchorElement | null;
+
+	chapterLinks.forEach((link) => {
+		link.addEventListener('click', (e) => {
+			const youtubeId = link.dataset.youtubeId;
+			const watchUrl = link.dataset.courseUrl;
+			if (!youtubeId) return;
+			e.preventDefault();
+			if (videoThumb) videoThumb.src = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
+			if (videoLink && watchUrl) videoLink.href = watchUrl;
+			chapterLinks.forEach((l) => l.classList.remove('is-active'));
+			link.classList.add('is-active');
+		});
+	});
+</script>
