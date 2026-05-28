@@ -121,6 +121,21 @@ for (const item of navItems) {
 	</div>
 </header>
 
+<aside class="advent-sidebar" aria-label="Seitsmenda Päeva Adventistide Keila Kogudus">
+	<a href={base} class="sidebar-logo-link" tabindex="-1" aria-hidden="true">
+		<Image
+			src={adventLogo}
+			alt=""
+			width={280}
+			height={280}
+			class="sidebar-logo"
+			loading="eager"
+			decoding="async"
+			quality={90}
+		/>
+	</a>
+</aside>
+
 <style>
 	.header-main {
 		background: var(--color-surface-soft);
@@ -542,6 +557,38 @@ for (const item of navItems) {
 			font-size: 0.74rem;
 		}
 	}
+
+	/* ── Parempoolne riba ────────────────────────────────────────────────────── */
+
+	.advent-sidebar {
+		background-color: var(--color-primary);
+		bottom: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+		padding-top: 18px;
+		position: fixed;
+		right: 0;
+		top: 0;
+		width: var(--sidebar-width);
+		z-index: 90;
+	}
+
+	.sidebar-logo-link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 78%;
+		padding: 8px 0;
+		text-decoration: none;
+	}
+
+	.sidebar-logo {
+		filter: brightness(0) invert(1);
+		width: 100%;
+		height: auto;
+	}
 </style>
 
 <script>
@@ -680,4 +727,37 @@ for (const item of navItems) {
 	}
 
 	initPriorityNav();
+
+	// ── Sidebar scroll animation ────────────────────────────────────────────────
+	// As user scrolls down: sidebar orange → white, logo white → orange
+	(function () {
+		const sidebarEl = document.querySelector<HTMLElement>('.advent-sidebar');
+		const logoEl = document.querySelector<HTMLImageElement>('.sidebar-logo');
+		if (!sidebarEl || !logoEl) return;
+
+		// Start: #c7661a, End: #fffaf4 (page background)
+		const startR = 199, startG = 102, startB = 26;
+		const endR   = 255, endG   = 250, endB   = 244;
+
+		function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
+		function clamp(v: number) { return Math.max(0, Math.min(1, v)); }
+
+		function update() {
+			const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+			const t = clamp(window.scrollY / maxScroll);
+
+			const r = Math.round(lerp(startR, endR, t));
+			const g = Math.round(lerp(startG, endG, t));
+			const b = Math.round(lerp(startB, endB, t));
+			sidebarEl.style.backgroundColor = `rgb(${r},${g},${b})`;
+
+			// brightness(0) invert(1) = white, brightness(1) invert(0) = original color
+			const bri = lerp(0, 1, t).toFixed(3);
+			const inv = lerp(1, 0, t).toFixed(3);
+			logoEl.style.filter = `brightness(${bri}) invert(${inv})`;
+		}
+
+		window.addEventListener('scroll', update, { passive: true });
+		update();
+	})();
 </script>

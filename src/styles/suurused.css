@@ -1,4 +1,7 @@
 :root {
+	/* Parempoolne riba */
+	--sidebar-width: calc(100vw / 7);
+
 	/* Lehe üldlaiused */
 	--site-max-width: 1500px;
 	--content-narrow-width: 720px;

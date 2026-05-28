@@ -26,7 +26,13 @@
       "Bash(node scripts/sync-drive.mjs)",
       "Bash(curl -s http://127.0.0.1:4322/)",
       "Bash(kill %1)",
-      "Bash(npx astro *)"
+      "Bash(npx astro *)",
+      "WebFetch(domain:adventist.org)",
+      "Bash(curl -s -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36\" \"https://adventist.org/\")",
+      "Bash(curl -sL -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\" \"https://adventist.org/\")",
+      "Bash(identify /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/logos/advent-logo.png)",
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/logos/advent-logo.png)",
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/advent-logo.png)"
     ],
     "additionalDirectories": [
       "/Users/eenok/Desktop"

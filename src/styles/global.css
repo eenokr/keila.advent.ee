@@ -48,6 +48,7 @@ body {
 	font-family: var(--font-body);
 	margin: 0;
 	padding: 0;
+	padding-right: var(--sidebar-width);
 	text-align: left;
 	background: var(--color-page);
 	word-wrap: break-word;
