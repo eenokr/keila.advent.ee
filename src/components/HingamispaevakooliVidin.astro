@@ -115,7 +115,7 @@ try {
 					target="_blank"
 					rel="noopener noreferrer"
 					class="ss-cover-card ss-cover-more"
-					aria-label="Vaata kõiki kvartali õppetükke"
+					aria-label="Vaata õppetükkide arhiivi"
 				>
 					<div class="ss-cover-grid">
 						{pastCovers.map(c => (
@@ -123,7 +123,7 @@ try {
 						))}
 					</div>
 					<div class="ss-cover-cta">
-						<span class="ss-cover-cta-label">Vaata veel</span>
+						<span class="ss-cover-cta-label">Arhiiv</span>
 						<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
 							<path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
 						</svg>
@@ -287,9 +287,10 @@ try {
 	}
 
 	.ss-cover-img {
-		width: 100%;
-		height: auto;
 		display: block;
+		height: 100%;
+		object-fit: cover;
+		width: 100%;
 	}
 
 	.ss-cover-cta {
