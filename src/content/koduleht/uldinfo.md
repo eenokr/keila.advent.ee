@@ -22,10 +22,13 @@ nav:
   - label: "Lisad"
     children:
       - label: "Jutlused ja kuulamiseks mõeldud mõtted"
+        navLabel: "Jutlused"
         href: "#audio"
       - label: '"Usk ja elu" veebikoolitus'
+        navLabel: "Veebikoolitus"
         href: "#kursus"
       - label: "Selle nädala õppetükk"
+        navLabel: "Õppetükk"
         href: "#oppetykk"
 socials:
   - label: "Keila Adventkogudus Facebookis"

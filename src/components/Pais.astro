@@ -21,13 +21,24 @@ function withBase(href: string) {
 	if (href.startsWith('http')) return href;
 	if (href.startsWith('#')) return currentPath === base ? href : `${base}${href}`;
 	if (href === '/') return base;
-
 	return `${base}${href.replace(/^\//, '')}`;
+}
+
+// Flatten nav items: regular items + children of group items
+const flatNavItems: { label: string; navLabel: string; href: string }[] = [];
+for (const item of navItems) {
+	if (item.children) {
+		for (const child of item.children) {
+			flatNavItems.push({ label: child.label, navLabel: child.navLabel ?? child.label, href: child.href });
+		}
+	} else if (item.href) {
+		flatNavItems.push({ label: item.label, navLabel: item.navLabel ?? item.label, href: item.href });
+	}
 }
 ---
 
 <header class="header-main">
-	<nav class="header-nav">
+	<nav class="header-nav" aria-label="Põhinavigatsioon">
 		<div class="logo-container">
 			<a href={base} class="brand">
 				{logoAsset && (
@@ -49,26 +60,31 @@ function withBase(href: string) {
 			</a>
 		</div>
 
-		<ul class="nav-menu">
-			{navItems.map((item) => (
-				item.children ? (
-					<li class="nav-item has-dropdown">
-						<button class="nav-link nav-dropdown-toggle" type="button" aria-expanded="false">
-							{item.label}
-							<svg class="dropdown-chevron" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true" fill="none">
-								<path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-							</svg>
-						</button>
-						<div class="dropdown-menu" role="menu">
-							{item.children.map((child) => (
-								<a href={withBase(child.href)} class="dropdown-link" role="menuitem">{child.label}</a>
-							))}
-						</div>
-					</li>
-				) : (
-					<li class="nav-item"><a href={withBase(item.href!)} class="nav-link">{item.label}</a></li>
-				)
+		<ul class="nav-menu" id="nav-menu" role="list">
+			{flatNavItems.map((item, i) => (
+				<li class="nav-item" data-nav-item data-nav-index={i}>
+					<a href={withBase(item.href)} class="nav-link" title={item.label !== item.navLabel ? item.label : undefined}>
+						{item.navLabel}
+					</a>
+				</li>
 			))}
+
+			<!-- Overflow item: shown when items don't fit -->
+			<li class="nav-item nav-overflow-item" id="nav-overflow-item" hidden>
+				<button class="nav-link nav-dropdown-toggle" id="nav-overflow-toggle" type="button" aria-expanded="false" aria-controls="nav-overflow-menu">
+					{site.mobileMenuText}
+					<svg class="dropdown-chevron" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true" fill="none">
+						<path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</button>
+				<div class="dropdown-menu" id="nav-overflow-menu" role="menu">
+					{flatNavItems.map((item, i) => (
+						<a href={withBase(item.href)} class="dropdown-link" role="menuitem" data-overflow-link={i} hidden>
+							{item.label}
+						</a>
+					))}
+				</div>
+			</li>
 		</ul>
 
 		<div class="header-actions">
@@ -128,7 +144,7 @@ function withBase(href: string) {
 		margin: 0 auto;
 		padding: 0 20px;
 		display: grid;
-		grid-template-columns: minmax(220px, 1fr) auto minmax(160px, 1fr);
+		grid-template-columns: auto 1fr auto;
 		align-items: center;
 		min-height: var(--header-height);
 		font-family: var(--font-body);
@@ -178,7 +194,6 @@ function withBase(href: string) {
 		line-height: 1.18;
 		max-width: 170px;
 		text-transform: uppercase;
-		/* match logo transitions for consistent interaction */
 		transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease, color 0.3s ease;
 	}
 
@@ -186,7 +201,6 @@ function withBase(href: string) {
 		display: block;
 	}
 
-	/* apply the same interactive transform as the logo */
 	.brand:hover .brand-title,
 	.brand:focus-visible .brand-title,
 	.brand:active .brand-title {
@@ -204,12 +218,23 @@ function withBase(href: string) {
 		padding: 0;
 		gap: 18px;
 		justify-content: center;
-		justify-self: center;
+		justify-self: stretch;
 		min-width: 0;
+		overflow: clip;
 	}
 
 	.nav-item {
 		position: relative;
+		flex-shrink: 0;
+	}
+
+	/* Hide overflow items in the nav bar — JS controls this */
+	.nav-item[hidden] {
+		display: none;
+	}
+
+	.nav-overflow-item {
+		flex-shrink: 0;
 	}
 
 	.nav-dropdown-toggle {
@@ -278,6 +303,10 @@ function withBase(href: string) {
 		text-decoration: none;
 		transition: background 0.15s ease, color 0.15s ease;
 		white-space: normal;
+	}
+
+	.dropdown-link[hidden] {
+		display: none;
 	}
 
 	.dropdown-link:hover {
@@ -457,7 +486,6 @@ function withBase(href: string) {
 	@media (max-width: 900px) {
 		.header-nav {
 			padding: 0 14px;
-			grid-template-columns: minmax(172px, 1fr) auto minmax(118px, 1fr);
 			min-height: 82px;
 			column-gap: 10px;
 		}
@@ -493,20 +521,11 @@ function withBase(href: string) {
 		}
 	}
 
-	@media (max-width: 620px) {
+	@media (max-width: 520px) {
 		.header-nav {
 			grid-template-columns: auto auto;
 			justify-content: space-between;
 			min-height: 78px;
-		}
-
-		.brand-logo {
-			max-height: 52px;
-		}
-
-		.brand-title {
-			font-size: 0.54rem;
-			max-width: 120px;
 		}
 
 		.nav-menu {
@@ -522,30 +541,89 @@ function withBase(href: string) {
 			font-size: 0.74rem;
 		}
 	}
-
-	@media (max-width: 20px) {
-		.header-nav {
-			padding: 0 10px;
-		}
-
-		.brand-logo {
-			max-height: 48px;
-		}
-
-		.brand-title {
-			font-size: 0.5rem;
-			max-width: 110px;
-		}
-
-		.header-cta {
-			padding: 7px 9px;
-			font-size: 0.7rem;
-		}
-	}
 </style>
 
 <script>
-	// Mobile menu
+	// ── Priority Navigation ─────────────────────────────────────────────────────
+	// On wide screens: show all nav items flat. When they don't fit,
+	// move overflow items to a dropdown. Below 520px: use mobile burger instead.
+
+	function initPriorityNav() {
+		const navMenu = document.getElementById('nav-menu') as HTMLUListElement | null;
+		const overflowItem = document.getElementById('nav-overflow-item') as HTMLLIElement | null;
+		const overflowToggle = document.getElementById('nav-overflow-toggle') as HTMLButtonElement | null;
+		const overflowMenu = document.getElementById('nav-overflow-menu') as HTMLElement | null;
+		if (!navMenu || !overflowItem || !overflowToggle || !overflowMenu) return;
+
+		const allNavItems = Array.from(navMenu.querySelectorAll<HTMLElement>('[data-nav-item]'));
+		const overflowLinks = Array.from(overflowMenu.querySelectorAll<HTMLElement>('[data-overflow-link]'));
+		const gap = 18;
+
+		// Pre-measure natural widths of each item once (before any hiding)
+		const itemWidths: number[] = [];
+		let overflowBtnWidth = 0;
+
+		function preMeasure() {
+			allNavItems.forEach(el => el.removeAttribute('hidden'));
+			overflowItem.removeAttribute('hidden');
+			overflowBtnWidth = overflowItem.offsetWidth + gap;
+			allNavItems.forEach(el => { itemWidths.push(el.offsetWidth); });
+			overflowItem.setAttribute('hidden', '');
+		}
+
+		function measure() {
+			if (window.innerWidth <= 520) {
+				allNavItems.forEach(el => el.removeAttribute('hidden'));
+				overflowItem.setAttribute('hidden', '');
+				return;
+			}
+
+			const menuWidth = navMenu.offsetWidth;
+			let used = 0;
+			let firstHidden = -1;
+
+			for (let i = 0; i < allNavItems.length; i++) {
+				const w = itemWidths[i] ?? allNavItems[i].offsetWidth;
+				const next = used + (i > 0 ? gap : 0) + w;
+				// Reserve room for overflow button whenever we'll need it
+				const willNeedBtn = firstHidden >= 0 || i < allNavItems.length - 1;
+				if (next + (willNeedBtn ? overflowBtnWidth : 0) > menuWidth && firstHidden < 0) {
+					firstHidden = i;
+				}
+				used = next;
+			}
+
+			let anyHidden = false;
+			allNavItems.forEach((el, i) => {
+				const hide = firstHidden >= 0 && i >= firstHidden;
+				el.toggleAttribute('hidden', hide);
+				if (hide) anyHidden = true;
+			});
+			overflowLinks.forEach((link, i) => {
+				link.toggleAttribute('hidden', firstHidden < 0 || i < firstHidden);
+			});
+			overflowItem.toggleAttribute('hidden', !anyHidden);
+		}
+
+		preMeasure();
+		measure();
+
+		// ResizeObserver reacts instantly — no window resize lag
+		new ResizeObserver(() => measure()).observe(navMenu);
+
+		// Overflow dropdown toggle
+		overflowToggle.addEventListener('click', (e) => {
+			e.stopPropagation();
+			const open = overflowToggle.getAttribute('aria-expanded') === 'true';
+			overflowToggle.setAttribute('aria-expanded', String(!open));
+		});
+		document.addEventListener('click', () => overflowToggle.setAttribute('aria-expanded', 'false'));
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') overflowToggle.setAttribute('aria-expanded', 'false');
+		});
+	}
+
+	// ── Mobile menu ─────────────────────────────────────────────────────────────
 	const menuButton = document.querySelector<HTMLButtonElement>('.mobile-menu-toggle');
 	const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu');
 	const mobileLinks = document.querySelectorAll<HTMLAnchorElement>('.mobile-nav-link');
@@ -556,7 +634,6 @@ function withBase(href: string) {
 			menuButton.setAttribute('aria-expanded', String(!isOpen));
 			mobileMenu.hidden = isOpen;
 		});
-
 		mobileLinks.forEach((link) => {
 			link.addEventListener('click', () => {
 				menuButton.setAttribute('aria-expanded', 'false');
@@ -565,9 +642,8 @@ function withBase(href: string) {
 		});
 	}
 
-	// Mobile accordion toggles
-	const accordionToggles = document.querySelectorAll<HTMLButtonElement>('.mobile-accordion-toggle');
-	accordionToggles.forEach((toggle) => {
+	// ── Mobile accordion ────────────────────────────────────────────────────────
+	document.querySelectorAll<HTMLButtonElement>('.mobile-accordion-toggle').forEach((toggle) => {
 		toggle.addEventListener('click', () => {
 			const isOpen = toggle.getAttribute('aria-expanded') === 'true';
 			const children = toggle.nextElementSibling as HTMLElement | null;
@@ -576,32 +652,13 @@ function withBase(href: string) {
 		});
 	});
 
-	// Dropdown menus
-	const dropdownToggles = document.querySelectorAll<HTMLButtonElement>('.nav-dropdown-toggle');
-	dropdownToggles.forEach((toggle) => {
-		toggle.addEventListener('click', (e) => {
-			e.stopPropagation();
-			const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-			dropdownToggles.forEach((t) => t.setAttribute('aria-expanded', 'false'));
-			toggle.setAttribute('aria-expanded', String(!isOpen));
-		});
-	});
-	document.addEventListener('click', () => {
-		dropdownToggles.forEach((t) => t.setAttribute('aria-expanded', 'false'));
-	});
-	document.addEventListener('keydown', (e) => {
-		if (e.key === 'Escape') dropdownToggles.forEach((t) => t.setAttribute('aria-expanded', 'false'));
-	});
-
-	// Header glassmorphism on scroll
+	// ── Scroll glassmorphism ────────────────────────────────────────────────────
 	const header = document.querySelector<HTMLElement>('.header-main');
-	const handleScroll = () => {
-		header?.classList.toggle('is-scrolled', window.scrollY > 24);
-	};
+	const handleScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 24);
 	window.addEventListener('scroll', handleScroll, { passive: true });
 	handleScroll();
 
-	// Scroll-reveal animations via IntersectionObserver
+	// ── Scroll-reveal ───────────────────────────────────────────────────────────
 	if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 		document.documentElement.classList.add('animations-supported');
 		const revealObserver = new IntersectionObserver(
@@ -617,4 +674,6 @@ function withBase(href: string) {
 		);
 		document.querySelectorAll('.scroll-reveal').forEach((el) => revealObserver.observe(el));
 	}
+
+	initPriorityNav();
 </script>
