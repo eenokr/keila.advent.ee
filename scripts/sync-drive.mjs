@@ -25,6 +25,27 @@ try {
 
 const API_KEY = process.env.DRIVE_API_KEY;
 
+// Lokaalselt ei käivita sünki uuesti kui viimane sünk oli vähem kui 60 min tagasi.
+// CI-s (DRIVE_FORCE_SYNC=1 või CI=true) alati täielik sünk.
+const STAMP_FILE = '.sync-stamp';
+const STAMP_MAX_AGE_MS = 60 * 60 * 1000; // 60 minutit
+const forceSync = process.env.DRIVE_FORCE_SYNC === '1' || process.env.CI === 'true';
+
+async function isCacheFresh() {
+  if (forceSync) return false;
+  try {
+    const stamp = await fs.readFile(STAMP_FILE, 'utf-8');
+    const age = Date.now() - Number(stamp);
+    return age < STAMP_MAX_AGE_MS;
+  } catch {
+    return false;
+  }
+}
+
+async function writeStamp() {
+  await fs.writeFile(STAMP_FILE, String(Date.now()));
+}
+
 const FOLDERS = [
   { id: '1SE4Ocd1V12H8vriApZbgn2iqTEtyMRlh', key: 'galerii' }, // Koduka_galerii
   { id: '1CQh_hBc8_IjKVyjV8oVuxHT9ZubIdJa_', key: 'teated' },  // Koduka_teated
@@ -155,6 +176,11 @@ async function syncFolder({ id, key }) {
 }
 
 async function main() {
+  if (await isCacheFresh()) {
+    console.log('\nOK Pildid on värsked (< 60 min), sünk vahele jäetud. Käivita DRIVE_FORCE_SYNC=1 npm run sync sundsünkimiseks.\n');
+    return;
+  }
+
   if (!API_KEY) {
     console.error(
       '\n  X DRIVE_API_KEY puudub.\n' +
@@ -165,6 +191,7 @@ async function main() {
   for (const folder of FOLDERS) {
     await syncFolder(folder);
   }
+  await writeStamp();
   console.log('\nOK Kõik kaustad sünkroonitud.\n');
 }
 

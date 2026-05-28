@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import kodukaGalerii from '../data/koduka-galerii.json';
 import kodukaTeated from '../data/koduka-teated.json';
 import kirikuPilt from '../assets/branding/kiriku-pilt.jpg';
+import uheskoosStuduioPilt from '../assets/branding/uheskoos-stuudio.jpg';
 import GaleriiKarussell from '../components/GaleriiKarussell.astro';
 import PeaMeta from '../components/PeaMeta.astro';
 import TegevusNupp from '../components/TegevusNupp.astro';
@@ -113,7 +115,8 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	.map((source) => ({
 		...source,
 		imageUrl: undefined as string | undefined,
-		items: audioItemsByKey[source.key],
+		blockImage: source.key === 'uheskoos' ? uheskoosStuduioPilt : null,
+		items: audioItemsByKey[source.key as keyof typeof audioItemsByKey],
 	}))
 	.filter((block) => block.items.length > 0);
 ---
@@ -283,9 +286,11 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 													</div>
 													<div class="advent-audio-grid stagger">
 														{block.items.map((item) => (
-															<a class="advent-audio-card scroll-reveal" href={item.url} target="_blank" rel="noopener noreferrer">
+															<a class:list={['advent-audio-card scroll-reveal', block.blockImage && 'has-block-image']} href={item.url} target="_blank" rel="noopener noreferrer">
 																<div class="advent-audio-image" aria-hidden="true">
-																	{block.imageUrl || item.imageUrl ? (
+																	{block.blockImage ? (
+																		<Image src={block.blockImage} width={400} format="webp" quality={88} alt="" loading="lazy" />
+																	) : block.imageUrl || item.imageUrl ? (
 																		<img src={block.imageUrl ?? item.imageUrl} alt="" loading="lazy" />
 																	) : (
 																		<span />
@@ -946,6 +951,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		display: grid;
 		aspect-ratio: 1 / 1;
 		place-items: center;
+		position: relative;
 	}
 
 	.advent-audio-image img {
@@ -964,6 +970,36 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.advent-audio-card-copy {
 		padding: var(--audio-card-padding);
+	}
+
+	.advent-audio-card.has-block-image {
+		position: relative;
+	}
+
+	.advent-audio-card.has-block-image .advent-audio-image::after {
+		background: linear-gradient(to bottom, rgba(20, 10, 4, 0.72) 0%, rgba(20, 10, 4, 0.1) 55%, transparent 100%);
+		content: '';
+		inset: 0;
+		pointer-events: none;
+		position: absolute;
+		z-index: 1;
+	}
+
+	.advent-audio-card.has-block-image .advent-audio-card-copy {
+		left: 0;
+		padding: 10px 12px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 2;
+	}
+
+	.advent-audio-card.has-block-image .advent-audio-card-copy span {
+		color: rgba(255, 220, 160, 0.92);
+	}
+
+	.advent-audio-card.has-block-image .advent-audio-card-copy h5 {
+		color: #ffffff;
 	}
 
 	.advent-audio-card span {

@@ -19,6 +19,7 @@ pnpm-debug.log*
 
 # Drive-sync generated images
 public/koduka/
+.sync-stamp
 
 # macOS-specific files
 .DS_Store

@@ -45,6 +45,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Restore cached Drive images to avoid re-downloading unchanged files.
+      - name: Restore Drive image cache
+        uses: actions/cache@v4
+        with:
+          path: public/koduka
+          key: drive-images-${{ hashFiles('src/data/koduka-*.json') }}
+          restore-keys: drive-images-
+
       # Build the Astro site into the dist folder.
       - name: Build site
         run: npm run build

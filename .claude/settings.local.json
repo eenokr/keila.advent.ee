@@ -17,7 +17,19 @@
       "Read(//private/tmp/**)",
       "Bash(node /tmp/make_logo.mjs)",
       "Bash(node -e \"console.log\\(require.resolve\\('/Users/eenok/Documents/GitHub/keila.advent.ee/node_modules/sharp'\\)\\)\")",
-      "Bash(node --input-type=module)"
+      "Bash(node --input-type=module)",
+      "Bash(ls -lt ~/Desktop/*.jpg ~/Desktop/*.jpeg ~/Desktop/*.png ~/Downloads/*.jpg ~/Downloads/*.jpeg ~/Downloads/*.png 2>/dev/null | head -10)",
+      "Read(//Users/eenok/Desktop/**)",
+      "Read(//Users/eenok/Downloads/**)",
+      "Bash(xargs ls -lt)",
+      "Bash(cp ~/Desktop/IMG_0913.jpeg /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/uheskoos-stuudio.jpg && echo \"copied\")",
+      "Bash(node scripts/sync-drive.mjs)",
+      "Bash(curl -s http://127.0.0.1:4322/)",
+      "Bash(kill %1)",
+      "Bash(npx astro *)"
+    ],
+    "additionalDirectories": [
+      "/Users/eenok/Desktop"
     ]
   }
 }
