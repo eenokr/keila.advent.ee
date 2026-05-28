@@ -24,11 +24,11 @@ nav:
       - label: "Jutlused ja kuulamiseks mõeldud mõtted"
         navLabel: "Audio"
         href: "#audio"
-      - label: '"Usk ja elu" veebikoolitus'
-        navLabel: "Veebikoolitus"
+      - label: '"Usk ja elu" veebikursus'
+        navLabel: "Veebikursus"
         href: "#kursus"
-      - label: "Selle nädala õppetükk"
-        navLabel: "Hingamispäevakool"
+      - label: "Piiblitunnid"
+        navLabel: "Piiblitunnid"
         href: "#oppetykk"
 socials:
   - label: "Keila Adventkogudus Facebookis"

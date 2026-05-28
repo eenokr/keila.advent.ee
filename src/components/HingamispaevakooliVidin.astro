@@ -238,7 +238,7 @@ try {
 	.ss-cards {
 		display: flex;
 		gap: 14px;
-		align-items: flex-end;
+		align-items: stretch;
 	}
 
 	.ss-intro {
@@ -318,6 +318,27 @@ try {
 		width: 100%;
 	}
 
+	.ss-cover-more {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.ss-cover-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+		gap: 3px;
+		flex: 1;
+		min-height: 0;
+	}
+
+	.ss-cover-thumb {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
 	.ss-footer {
 		align-items: center;
 		display: flex;
@@ -352,16 +373,17 @@ try {
 		.ss-inner {
 			grid-template-columns: 1fr;
 			gap: 32px;
+			align-items: start;
 		}
 
-		.ss-cover-card {
-			max-width: 240px;
+		.ss-cards {
+			max-width: 440px;
 		}
 	}
 
 	@media (max-width: 640px) {
 		.ss-section { padding: 48px 18px; }
 		.ss-badges { flex-direction: column; }
-		.ss-cover-card { max-width: 200px; }
+		.ss-cards { max-width: 100%; }
 	}
 </style>
