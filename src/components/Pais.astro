@@ -155,7 +155,7 @@ for (const item of navItems) {
 
 	.header-nav {
 		width: 100%;
-		padding: 0 clamp(20px, 3vw, 48px);
+		padding: 0 var(--section-padding-x);
 		display: grid;
 		grid-template-columns: auto 1fr auto;
 		align-items: center;
@@ -184,8 +184,8 @@ for (const item of navItems) {
 		flex-direction: column;
 		font-family: var(--font-body);
 		font-size: clamp(1.1rem, 2.2vw, 2.2rem);
-		font-weight: 700;
-		letter-spacing: 0.01em;
+		font-weight: 400;
+		letter-spacing: 0.02em;
 		line-height: 1.2;
 		transition: color 0.3s ease;
 	}

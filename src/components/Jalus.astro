@@ -1,7 +1,5 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import adventLogo from '../assets/branding/advent-logo.png';
 
 const today = new Date();
 const [siteEntry] = await getCollection('site');
@@ -17,27 +15,6 @@ const iconPaths = {
 ---
 
 <footer class="footer-main">
-	<div class="footer-content">
-		<div class="footer-info">
-			<Image
-				src={adventLogo}
-				alt={site.logoAlt}
-				width={54}
-				height={57}
-				class="footer-logo"
-				loading="lazy"
-				decoding="async"
-				quality={90}
-			/>
-			<p class="footer-text">
-				{site.footerText}
-			</p>
-			<p class="footer-contact">
-				{site.footerContact}
-			</p>
-		</div>
-	</div>
-
 	<div class="footer-bottom">
 		<p>&copy; {today.getFullYear()} {site.title}. {site.footerCopyright}</p>
 		<div class="footer-socials">
@@ -60,39 +37,9 @@ const iconPaths = {
 		font-family: var(--font-body);
 	}
 
-	.footer-content {
-		max-width: var(--site-max-width);
-		margin: 0 auto;
-		margin-bottom: 40px;
-	}
-
-	.footer-info {
-		text-align: left;
-	}
-
-	.footer-logo {
-		height: 54px;
-		margin: 0 0 18px;
-		width: auto;
-	}
-
-	.footer-text,
-	.footer-contact {
-		font-size: var(--footer-text-size);
-		line-height: 1.6;
-		margin: 0 0 10px;
-		color: var(--color-text-soft);
-	}
-
-	.footer-contact {
-		font-weight: 500;
-	}
-
 	.footer-bottom {
 		max-width: var(--site-max-width);
 		margin: 0 auto;
-		padding-top: 30px;
-		border-top: 1px solid var(--color-border);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -126,19 +73,6 @@ const iconPaths = {
 	@media (max-width: 768px) {
 		.footer-main {
 			padding: 40px 20px 30px;
-		}
-
-		.footer-content {
-			margin-bottom: 30px;
-		}
-
-		.footer-info {
-			text-align: center;
-		}
-
-		.footer-logo {
-			margin-left: auto;
-			margin-right: auto;
 		}
 
 		.footer-bottom {
