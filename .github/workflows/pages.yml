@@ -48,6 +48,8 @@ jobs:
       # Build the Astro site into the dist folder.
       - name: Build site
         run: npm run build
+        env:
+          DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
 
       # Upload dist as the Pages artifact that the deploy job will publish.
       - name: Upload Pages artifact
