@@ -41,18 +41,6 @@ for (const item of navItems) {
 	<nav class="header-nav" aria-label="Põhinavigatsioon">
 		<div class="logo-container">
 			<a href={base} class="brand">
-				{logoAsset && (
-					<Image
-						src={logoAsset}
-						alt={site.logoAlt}
-						width={96}
-						height={96}
-						class="brand-logo"
-						loading="eager"
-						decoding="async"
-						quality={90}
-					/>
-				)}
 				<span class="brand-title" aria-label={site.title}>
 					<span class="brand-title-line">{titleLineOne}</span>
 					<span class="brand-title-line">{titleLineTwo}</span>
@@ -128,7 +116,17 @@ for (const item of navItems) {
 			alt=""
 			width={280}
 			height={280}
-			class="sidebar-logo"
+			class="sidebar-logo sidebar-logo-color"
+			loading="eager"
+			decoding="async"
+			quality={90}
+		/>
+		<Image
+			src={adventLogo}
+			alt=""
+			width={280}
+			height={280}
+			class="sidebar-logo sidebar-logo-white"
 			loading="eager"
 			decoding="async"
 			quality={90}
@@ -138,19 +136,20 @@ for (const item of navItems) {
 
 <style>
 	.header-main {
-		background: var(--color-surface-soft);
-		border-bottom: 1px solid var(--color-border);
 		position: sticky;
 		top: 0;
 		z-index: 100;
-		transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 	}
 
-	.header-main.is-scrolled {
-		background: rgba(255, 250, 244, 0.88);
+	.header-nav {
+		background: var(--color-surface-soft);
+		transition: background 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.header-main.is-scrolled .header-nav {
+		background: rgba(255, 250, 244, 0.92);
 		backdrop-filter: blur(16px);
 		-webkit-backdrop-filter: blur(16px);
-		border-bottom-color: rgba(235, 201, 161, 0.45);
 		box-shadow: 0 2px 24px rgba(117, 62, 19, 0.09);
 	}
 
@@ -582,13 +581,26 @@ for (const item of navItems) {
 		width: 78%;
 		padding: 8px 0;
 		text-decoration: none;
+		position: relative;
 	}
 
 	.sidebar-logo {
-		filter: brightness(0) invert(1);
 		width: 100%;
 		height: auto;
+		display: block;
 	}
+
+	.sidebar-logo-white {
+		filter: brightness(0) invert(1);
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	.sidebar-logo-color {
+		opacity: 0;
+	}
+
 </style>
 
 <script>
@@ -729,13 +741,12 @@ for (const item of navItems) {
 	initPriorityNav();
 
 	// ── Sidebar scroll animation ────────────────────────────────────────────────
-	// As user scrolls down: sidebar orange → white, logo white → orange
 	(function () {
 		const sidebarEl = document.querySelector<HTMLElement>('.advent-sidebar');
-		const logoEl = document.querySelector<HTMLImageElement>('.sidebar-logo');
-		if (!sidebarEl || !logoEl) return;
+		const logoWhite = document.querySelector<HTMLElement>('.sidebar-logo-white');
+		const logoColor = document.querySelector<HTMLElement>('.sidebar-logo-color');
+		if (!sidebarEl || !logoWhite || !logoColor) return;
 
-		// Start: #c7661a, End: #fffaf4 (page background)
 		const startR = 199, startG = 102, startB = 26;
 		const endR   = 255, endG   = 250, endB   = 244;
 
@@ -745,19 +756,16 @@ for (const item of navItems) {
 		function update() {
 			const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
 			const t = clamp(window.scrollY / maxScroll);
-
 			const r = Math.round(lerp(startR, endR, t));
 			const g = Math.round(lerp(startG, endG, t));
 			const b = Math.round(lerp(startB, endB, t));
 			sidebarEl.style.backgroundColor = `rgb(${r},${g},${b})`;
-
-			// brightness(0) invert(1) = white, brightness(1) invert(0) = original color
-			const bri = lerp(0, 1, t).toFixed(3);
-			const inv = lerp(1, 0, t).toFixed(3);
-			logoEl.style.filter = `brightness(${bri}) invert(${inv})`;
+			logoWhite.style.opacity = String((1 - t).toFixed(3));
+			logoColor.style.opacity = String(t.toFixed(3));
 		}
 
 		window.addEventListener('scroll', update, { passive: true });
 		update();
 	})();
+
 </script>

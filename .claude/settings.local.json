@@ -32,7 +32,9 @@
       "Bash(curl -sL -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\" \"https://adventist.org/\")",
       "Bash(identify /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/logos/advent-logo.png)",
       "Bash(sips -g pixelWidth -g pixelHeight /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/logos/advent-logo.png)",
-      "Bash(sips -g pixelWidth -g pixelHeight /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/advent-logo.png)"
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/advent-logo.png)",
+      "Bash(exiftool -Orientation /Users/eenok/Documents/GitHub/keila.advent.ee/public/koduka/galerii/*-1600.webp)",
+      "Bash(grep -v \"^$\")"
     ],
     "additionalDirectories": [
       "/Users/eenok/Desktop"
