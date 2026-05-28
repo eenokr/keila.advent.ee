@@ -220,7 +220,8 @@ for (const item of navItems) {
 		justify-content: center;
 		justify-self: stretch;
 		min-width: 0;
-		overflow: clip;
+		overflow-x: clip;
+		overflow-y: visible;
 	}
 
 	.nav-item {
@@ -555,8 +556,14 @@ for (const item of navItems) {
 		const overflowMenu = document.getElementById('nav-overflow-menu') as HTMLElement | null;
 		if (!navMenu || !overflowItem || !overflowToggle || !overflowMenu) return;
 
-		const allNavItems = Array.from(navMenu.querySelectorAll<HTMLElement>('[data-nav-item]'));
-		const overflowLinks = Array.from(overflowMenu.querySelectorAll<HTMLElement>('[data-overflow-link]'));
+		// Non-null assertions — we've already guarded above
+		const menu = navMenu!;
+		const ovItem = overflowItem!;
+		const ovToggle = overflowToggle!;
+		const ovMenu = overflowMenu!;
+
+		const allNavItems = Array.from(menu.querySelectorAll<HTMLElement>('[data-nav-item]'));
+		const overflowLinks = Array.from(ovMenu.querySelectorAll<HTMLElement>('[data-overflow-link]'));
 		const gap = 18;
 
 		// Pre-measure natural widths of each item once (before any hiding)
@@ -565,27 +572,26 @@ for (const item of navItems) {
 
 		function preMeasure() {
 			allNavItems.forEach(el => el.removeAttribute('hidden'));
-			overflowItem.removeAttribute('hidden');
-			overflowBtnWidth = overflowItem.offsetWidth + gap;
+			ovItem.removeAttribute('hidden');
+			overflowBtnWidth = ovItem.offsetWidth + gap;
 			allNavItems.forEach(el => { itemWidths.push(el.offsetWidth); });
-			overflowItem.setAttribute('hidden', '');
+			ovItem.setAttribute('hidden', '');
 		}
 
 		function measure() {
 			if (window.innerWidth <= 520) {
 				allNavItems.forEach(el => el.removeAttribute('hidden'));
-				overflowItem.setAttribute('hidden', '');
+				ovItem.setAttribute('hidden', '');
 				return;
 			}
 
-			const menuWidth = navMenu.offsetWidth;
+			const menuWidth = menu.offsetWidth;
 			let used = 0;
 			let firstHidden = -1;
 
 			for (let i = 0; i < allNavItems.length; i++) {
 				const w = itemWidths[i] ?? allNavItems[i].offsetWidth;
 				const next = used + (i > 0 ? gap : 0) + w;
-				// Reserve room for overflow button whenever we'll need it
 				const willNeedBtn = firstHidden >= 0 || i < allNavItems.length - 1;
 				if (next + (willNeedBtn ? overflowBtnWidth : 0) > menuWidth && firstHidden < 0) {
 					firstHidden = i;
@@ -602,24 +608,22 @@ for (const item of navItems) {
 			overflowLinks.forEach((link, i) => {
 				link.toggleAttribute('hidden', firstHidden < 0 || i < firstHidden);
 			});
-			overflowItem.toggleAttribute('hidden', !anyHidden);
+			ovItem.toggleAttribute('hidden', !anyHidden);
 		}
 
 		preMeasure();
 		measure();
 
-		// ResizeObserver reacts instantly — no window resize lag
-		new ResizeObserver(() => measure()).observe(navMenu);
+		new ResizeObserver(() => measure()).observe(menu);
 
-		// Overflow dropdown toggle
-		overflowToggle.addEventListener('click', (e) => {
+		ovToggle.addEventListener('click', (e) => {
 			e.stopPropagation();
-			const open = overflowToggle.getAttribute('aria-expanded') === 'true';
-			overflowToggle.setAttribute('aria-expanded', String(!open));
+			const open = ovToggle.getAttribute('aria-expanded') === 'true';
+			ovToggle.setAttribute('aria-expanded', String(!open));
 		});
-		document.addEventListener('click', () => overflowToggle.setAttribute('aria-expanded', 'false'));
+		document.addEventListener('click', () => ovToggle.setAttribute('aria-expanded', 'false'));
 		document.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape') overflowToggle.setAttribute('aria-expanded', 'false');
+			if (e.key === 'Escape') ovToggle.setAttribute('aria-expanded', 'false');
 		});
 	}
 
