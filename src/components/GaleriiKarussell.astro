@@ -16,9 +16,10 @@ interface Props {
 	controlsLabel?: string;
 	dotLabel?: string;
 	aspectRatio?: string;
+	showDots?: boolean;
 }
 
-const { slides, intervalMs = 4500, controlsLabel = 'Piltide valik', dotLabel = 'Näita pilti', aspectRatio = '4 / 3' } = Astro.props;
+const { slides, intervalMs = 4500, controlsLabel = 'Piltide valik', dotLabel = 'Näita pilti', aspectRatio = '4 / 3', showDots = true } = Astro.props;
 const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 ---
 
@@ -57,19 +58,21 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 			))}
 		</div>
 
-		<div class="gallery-controls" aria-label={controlsLabel}>
-			<div class="gallery-dots">
-				{slides.map((_, index) => (
-					<button
-						class:list={['gallery-dot', index === 0 && 'is-active']}
-						type="button"
-						data-gallery-dot
-						aria-label={`${dotLabel} ${index + 1}`}
-						aria-current={index === 0 ? 'true' : 'false'}
-					/>
-				))}
+		{showDots && (
+			<div class="gallery-controls" aria-label={controlsLabel}>
+				<div class="gallery-dots">
+					{slides.map((_, index) => (
+						<button
+							class:list={['gallery-dot', index === 0 && 'is-active']}
+							type="button"
+							data-gallery-dot
+							aria-label={`${dotLabel} ${index + 1}`}
+							aria-current={index === 0 ? 'true' : 'false'}
+						/>
+					))}
+				</div>
 			</div>
-		</div>
+		)}
 	</div>
 )}
 

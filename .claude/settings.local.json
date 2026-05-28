@@ -4,7 +4,20 @@
       "Bash(ls \"C:/Users/d3vk3v/AppData/Local/npm-cache/_npx/5e2e484947874241/node_modules/\" 2>&1 | head -5)",
       "Read(//c/Users/d3vk3v/AppData/Local/npm-cache/_npx/5e2e484947874241/node_modules/**)",
       "Bash(npm run *)",
-      "Bash(xargs ls -la)"
+      "Bash(xargs ls -la)",
+      "Bash(curl -s -o /tmp/off_logo_2.png \"https://advent.ee/images/off_logo_2.png\")",
+      "Read(//tmp/**)",
+      "Bash(identify /tmp/off_logo_2.png)",
+      "Bash(python3 -c \"from PIL import Image, ImageDraw, ImageFont; print\\('PIL ok'\\)\")",
+      "Bash(convert --version)",
+      "Bash(node -e \"const sharp = require\\('/Users/eenok/Documents/GitHub/keila.advent.ee/node_modules/sharp'\\); console.log\\('sharp ok'\\)\")",
+      "Bash(curl -s -o /tmp/off_logo.svg \"https://advent.ee/images/off_logo.svg\")",
+      "Bash(curl -s \"https://advent.ee/images/off_logo_2.svg\" -o /tmp/off_logo_2.svg)",
+      "Bash(cat /tmp/off_logo.svg | head -20)",
+      "Read(//private/tmp/**)",
+      "Bash(node /tmp/make_logo.mjs)",
+      "Bash(node -e \"console.log\\(require.resolve\\('/Users/eenok/Documents/GitHub/keila.advent.ee/node_modules/sharp'\\)\\)\")",
+      "Bash(node --input-type=module)"
     ]
   }
 }
