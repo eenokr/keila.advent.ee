@@ -36,20 +36,19 @@ const iconPaths = {
 				{site.footerContact}
 			</p>
 		</div>
+	</div>
 
+	<div class="footer-bottom">
+		<p>&copy; {today.getFullYear()} {site.title}. {site.footerCopyright}</p>
 		<div class="footer-socials">
 			{site.socials.map((social) => (
 				<a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.label}>
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+					<svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
 						<path d={iconPaths[social.type]} />
 					</svg>
 				</a>
 			))}
 		</div>
-	</div>
-
-	<div class="footer-bottom">
-		<p>&copy; {today.getFullYear()} {site.title}. {site.footerCopyright}</p>
 	</div>
 </footer>
 
@@ -64,11 +63,7 @@ const iconPaths = {
 	.footer-content {
 		max-width: var(--site-max-width);
 		margin: 0 auto;
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 60px;
 		margin-bottom: 40px;
-		align-items: start;
 	}
 
 	.footer-info {
@@ -93,34 +88,15 @@ const iconPaths = {
 		font-weight: 500;
 	}
 
-	.footer-socials {
-		display: flex;
-		justify-content: flex-end;
-		gap: 25px;
-	}
-
-	.footer-socials a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 40px;
-		height: 40px;
-		color: var(--color-accent);
-		text-decoration: none;
-		transition: color 0.3s ease, transform 0.3s ease;
-	}
-
-	.footer-socials a:hover {
-		color: var(--color-primary-dark);
-		transform: translateY(-3px);
-	}
-
 	.footer-bottom {
 		max-width: var(--site-max-width);
 		margin: 0 auto;
 		padding-top: 30px;
 		border-top: 1px solid var(--color-border);
-		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
 	}
 
 	.footer-bottom p {
@@ -129,14 +105,30 @@ const iconPaths = {
 		margin: 0;
 	}
 
+	.footer-socials {
+		display: flex;
+		gap: 20px;
+		flex-shrink: 0;
+	}
+
+	.footer-socials a {
+		color: var(--color-accent);
+		display: flex;
+		text-decoration: none;
+		transition: color 0.2s ease, transform 0.2s ease;
+	}
+
+	.footer-socials a:hover {
+		color: var(--color-primary-dark);
+		transform: translateY(-3px);
+	}
+
 	@media (max-width: 768px) {
 		.footer-main {
 			padding: 40px 20px 30px;
 		}
 
 		.footer-content {
-			grid-template-columns: 1fr;
-			gap: 30px;
 			margin-bottom: 30px;
 		}
 
@@ -149,8 +141,10 @@ const iconPaths = {
 			margin-right: auto;
 		}
 
-		.footer-socials {
-			justify-content: center;
+		.footer-bottom {
+			flex-direction: column;
+			text-align: center;
+			gap: 20px;
 		}
 	}
 </style>

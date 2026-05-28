@@ -7,9 +7,9 @@
 	--content-narrow-width: 720px;
 	--article-content-width: 760px;
 	--text-column-width: 680px;
-	--facebook-feed-width: 640px;
-	--facebook-feed-height: 580px;
-	--facebook-feed-scale: 1.28;
+	--facebook-feed-width: 550px;
+	--facebook-feed-height: 650px;
+	--facebook-feed-scale: 1.15;
 	--facebook-plugin-native-width: 500px;
 	--facebook-feed-radius: 8px;
 	--facebook-feed-fallback-font-size: 0.92rem;
@@ -46,7 +46,7 @@
 	--hero-gallery-min-width: 520px;
 
 	/* Sektsioonid */
-	--section-padding-y: 86px;
+	--section-padding-y: 100px;
 	--section-padding-x: clamp(20px, 5vw, 80px);
 	--section-title-size: clamp(2rem, 4vw, 3.25rem);
 	--section-title-line-height: 1.1;
@@ -145,7 +145,7 @@
 	--audio-link-margin-top: 9px;
 
 	/* Kontakt */
-	--contact-padding-y: 58px;
+	--contact-padding-y: 100px;
 	--contact-card-padding: 20px;
 	--contact-map-height: 280px;
 	--contact-card-min-width: 280px;
@@ -182,8 +182,8 @@
 	--sermon-text-size: 1.08rem;
 
 	/* Jalus */
-	--footer-padding-top: 60px;
-	--footer-padding-bottom: 40px;
+	--footer-padding-top: 80px;
+	--footer-padding-bottom: 60px;
 	--footer-text-size: 0.95rem;
 
 	/* Hingamispäevakooli vidin */
@@ -194,7 +194,7 @@
 
 @media (max-width: 860px) {
 	:root {
-		--section-padding-y: 56px;
+		--section-padding-y: 68px;
 		--hero-padding-top: 52px;
 		--hero-padding-bottom: 54px;
 		--section-grid-gap: 34px;

@@ -58,7 +58,8 @@
       "Bash(curl -s -o /dev/null -w \"2025-03: %{http_code}\\\\n\" \"https://raw.githubusercontent.com/Adventech/sabbath-school-lessons-2016-2026/master/src/et/2025-03/cover.png\")",
       "Bash(curl -s -o /dev/null -w \"2025-02: %{http_code}\\\\n\" \"https://raw.githubusercontent.com/Adventech/sabbath-school-lessons-2016-2026/master/src/et/2025-02/cover.png\")",
       "Bash(curl -s -o /dev/null -w \"2025-01: %{http_code}\\\\n\" \"https://raw.githubusercontent.com/Adventech/sabbath-school-lessons-2016-2026/master/src/et/2025-01/cover.png\")",
-      "Bash(wait)"
+      "Bash(wait)",
+      "Bash(grep -n \"section {$\\\\|section{$\" /Users/eenok/Documents/GitHub/keila.advent.ee/src/pages/index.astro)"
     ],
     "additionalDirectories": [
       "/Users/eenok/Desktop"

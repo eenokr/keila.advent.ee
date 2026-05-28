@@ -38,15 +38,12 @@ const pastCovers = ['2025-04', '2025-03', '2025-02', '2025-01'].map(id => ({
 	url: `${ghHistBase}/${id}/cover.png`,
 }));
 
-let quarterHumanDate: string | null = null;
 let quarterTitle: string | null = null;
 
 try {
 	const infoText = await fetch(`${ghBase}/info.yml`).then(r => r.ok ? r.text() : '');
 	const titleMatch = infoText.match(/title:\s*['"](.+?)['"]/);
-	const dateMatch = infoText.match(/human_date:\s*['"](.+?)['"]/);
 	quarterTitle = titleMatch?.[1] ?? null;
-	quarterHumanDate = dateMatch?.[1] ?? null;
 } catch (_) {
 	// metadata is optional
 }
@@ -141,7 +138,7 @@ try {
 <style>
 	.ss-section {
 		background: var(--color-page);
-		padding: 64px 20px;
+		padding: var(--section-padding-y) var(--section-padding-x);
 	}
 
 	.ss-inner {
@@ -382,7 +379,7 @@ try {
 	}
 
 	@media (max-width: 640px) {
-		.ss-section { padding: 48px 18px; }
+		.ss-section { padding: var(--section-padding-y) var(--section-padding-x); }
 		.ss-badges { flex-direction: column; }
 		.ss-cards { max-width: 100%; }
 	}
