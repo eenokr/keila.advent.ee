@@ -7,7 +7,7 @@ logoImage: "advent-logo.png"
 logoAlt: "Seitsmenda Päeva Adventistide Keila Kogudus"
 mobileMenuText: "Menüü"
 headerCta:
-  text: "Võta ühendust"
+  text: "Kontakt"
   href: "#contact"
 footerText: "Seitsmenda Päeva Adventistide Keila Kogudus"
 footerContact: "Keila, Harjumaa"
@@ -27,8 +27,6 @@ nav:
         href: "#kursus"
       - label: "Selle nädala õppetükk"
         href: "#oppetykk"
-  - label: "Kontakt"
-    href: "#contact"
 socials:
   - label: "Keila Adventkogudus Facebookis"
     href: "https://www.facebook.com/KeilaSPA/"

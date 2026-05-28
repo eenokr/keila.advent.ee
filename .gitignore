@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# Drive-sync generated images
+public/koduka/
+
 # macOS-specific files
 .DS_Store
 

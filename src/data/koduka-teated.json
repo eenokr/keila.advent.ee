@@ -1,0 +1,86 @@
+[
+  {
+    "id": "18BIiB_AswOm3oa58KL6mTgZwo9voCr-z",
+    "name": "679340301_1362372385920986_3864074961223872905_n.jpg",
+    "alt": "679340301 1362372385920986 3864074961223872905 n",
+    "modifiedTime": "2026-05-28T10:22:29.000Z",
+    "width": 1600,
+    "height": 1341,
+    "variants": [
+      {
+        "w": 400,
+        "src": "/koduka/teated/18BIiB_AswOm3oa58KL6mTgZwo9voCr-z-400.webp"
+      },
+      {
+        "w": 800,
+        "src": "/koduka/teated/18BIiB_AswOm3oa58KL6mTgZwo9voCr-z-800.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/koduka/teated/18BIiB_AswOm3oa58KL6mTgZwo9voCr-z-1600.webp"
+      }
+    ]
+  },
+  {
+    "id": "1Bs8nFpbFLAaJ-bG5AEkDGZnK7_LgVPbs",
+    "name": "695788248_1376059307885627_640495110123231438_n (1).jpg",
+    "alt": "695788248 1376059307885627 640495110123231438 n (1)",
+    "modifiedTime": "2026-05-28T10:22:24.000Z",
+    "width": 1600,
+    "height": 1341,
+    "variants": [
+      {
+        "w": 400,
+        "src": "/koduka/teated/1Bs8nFpbFLAaJ-bG5AEkDGZnK7_LgVPbs-400.webp"
+      },
+      {
+        "w": 800,
+        "src": "/koduka/teated/1Bs8nFpbFLAaJ-bG5AEkDGZnK7_LgVPbs-800.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/koduka/teated/1Bs8nFpbFLAaJ-bG5AEkDGZnK7_LgVPbs-1600.webp"
+      }
+    ]
+  },
+  {
+    "id": "1pa1d6BijVSwSi6j0uGCbSHnUqGVmFzlO",
+    "name": "700723847_1382145020610389_7172388202144883993_n (1).jpg",
+    "alt": "700723847 1382145020610389 7172388202144883993 n (1)",
+    "modifiedTime": "2026-05-28T10:22:20.000Z",
+    "width": 800,
+    "height": 1000,
+    "variants": [
+      {
+        "w": 400,
+        "src": "/koduka/teated/1pa1d6BijVSwSi6j0uGCbSHnUqGVmFzlO-400.webp"
+      },
+      {
+        "w": 800,
+        "src": "/koduka/teated/1pa1d6BijVSwSi6j0uGCbSHnUqGVmFzlO-800.webp"
+      }
+    ]
+  },
+  {
+    "id": "1Gbte3fXIfDE61EAQnuZOiKmSgbrtrWV8",
+    "name": "704099294_1387765203381704_745874124264996501_n (1).jpg",
+    "alt": "704099294 1387765203381704 745874124264996501 n (1)",
+    "modifiedTime": "2026-05-28T10:22:14.000Z",
+    "width": 1600,
+    "height": 1600,
+    "variants": [
+      {
+        "w": 400,
+        "src": "/koduka/teated/1Gbte3fXIfDE61EAQnuZOiKmSgbrtrWV8-400.webp"
+      },
+      {
+        "w": 800,
+        "src": "/koduka/teated/1Gbte3fXIfDE61EAQnuZOiKmSgbrtrWV8-800.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/koduka/teated/1Gbte3fXIfDE61EAQnuZOiKmSgbrtrWV8-1600.webp"
+      }
+    ]
+  }
+]

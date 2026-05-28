@@ -60,7 +60,7 @@ const facebookPluginUrl = normalizedPageUrl
 	}
 
 	.facebook-feed {
-		--facebook-current-scale: min(var(--facebook-feed-scale), calc(100vw / var(--facebook-plugin-native-width)));
+		--facebook-current-scale: min(var(--facebook-feed-scale), calc((100vw - 2 * var(--section-padding-x, 20px)) / var(--facebook-plugin-native-width)));
 		overflow: hidden;
 		padding: 0;
 	}
@@ -74,7 +74,7 @@ const facebookPluginUrl = normalizedPageUrl
 		border: 0;
 		display: block;
 		height: var(--facebook-feed-height);
-		margin: 0 auto;
+		margin-left: calc((100% - var(--facebook-plugin-native-width)) / 2);
 		transform: scale(var(--facebook-current-scale));
 		transform-origin: top center;
 		width: var(--facebook-plugin-native-width);

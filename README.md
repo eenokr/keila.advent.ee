@@ -116,6 +116,56 @@ public/                     faviconid, CNAME ja muud otse serveeritavad failid
 
 Pildifailide nimed võiksid olla väikeste tähtedega, ilma tühikute ja täpitähtedeta. Hea näide: `kiriku-pilt.jpg`.
 
+## Google Drive piltide sünkroon
+
+Galerii ja teadete pildid loetakse buildi ajal automaatselt Google Drive'i kaustadest. Skript asub `scripts/sync-drive.mjs` ja jookseb enne `astro build` (npm `prebuild` hook).
+
+### Seadistus
+
+Lisa projekti juurde `.env` fail (see on gitignore'i taga — ära commit-i):
+
+```
+DRIVE_API_KEY=AIzaSy...sinu_võti...
+```
+
+Hostingus (nt GitHub Actions) lisa samanimeline environment variable.
+
+### Käsitsi käivitamine
+
+```bash
+npm run sync
+```
+
+Skript laeb pildid alla `public/koduka/galerii/` ja `public/koduka/teated/` ning loob/uuendab manifestifailid `src/data/koduka-galerii.json` ja `src/data/koduka-teated.json`.
+
+### Kasutamine Astro lehel
+
+```astro
+---
+import galerii from '../data/koduka-galerii.json';
+import ResponsiveImage from '../components/ResponsiveImage.astro';
+---
+
+<div class="galerii">
+  {galerii.map((img) => (
+    <ResponsiveImage
+      variants={img.variants}
+      width={img.width}
+      height={img.height}
+      alt={img.alt}
+      sizes="(max-width: 768px) 100vw, 33vw"
+    />
+  ))}
+</div>
+```
+
+Teated samamoodi `src/data/koduka-teated.json`-iga.
+
+### Veatõrkeotsing
+
+- **403** → Drive kaust pole avalik. Sea jagamine: "Anyone with the link → Viewer".
+- **400** → Vale API võti või kausta ID.
+
 ## Enne pushimist
 
 Käivita:

@@ -2,73 +2,56 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
-type Slide = {
-	image: ImageMetadata;
-	alt: string;
-};
+type StaticSlide = { image: ImageMetadata; alt: string };
+type DriveSlide = { src: string; srcset?: string; width: number; height: number; alt: string };
+type Slide = StaticSlide | DriveSlide;
+
+function isStatic(s: Slide): s is StaticSlide {
+	return 'image' in s;
+}
 
 interface Props {
 	slides: Slide[];
 	intervalMs?: number;
 	controlsLabel?: string;
 	dotLabel?: string;
+	aspectRatio?: string;
 }
 
-const { slides, intervalMs = 4500, controlsLabel = 'Piltide valik', dotLabel = 'Näita pilti' } = Astro.props;
+const { slides, intervalMs = 4500, controlsLabel = 'Piltide valik', dotLabel = 'Näita pilti', aspectRatio = '4 / 3' } = Astro.props;
 const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 ---
 
 {slides.length > 0 && (
-	<div class="gallery-carousel" data-gallery-carousel data-interval-ms={intervalMs}>
+	<div class="gallery-carousel" data-gallery-carousel data-interval-ms={intervalMs} style={`--carousel-aspect-ratio: ${aspectRatio}`}>
 		<div class="gallery-slides" aria-live="polite" style={`--active-index: ${initialTrackIndex}; --drag-offset: 0px;`}>
 			{slides.length > 1 && slides.map((slide) => (
 				<div class="gallery-slide" aria-hidden="true">
 					<div class="gallery-image">
-						<Image
-							src={slide.image}
-							width={1200}
-							format="webp"
-							alt=""
-							loading="lazy"
-							fetchpriority="auto"
-							draggable="false"
-							decoding="async"
-							quality={82}
-						/>
+						{isStatic(slide)
+							? <Image src={slide.image} width={1200} format="webp" alt="" loading="lazy" fetchpriority="auto" draggable="false" decoding="async" quality={92} />
+							: <img src={slide.src} srcset={slide.srcset} width={slide.width} height={slide.height} alt="" loading="lazy" fetchpriority="auto" draggable="false" decoding="async" />
+						}
 					</div>
 				</div>
 			))}
 			{slides.map((slide, index) => (
 				<div class:list={['gallery-slide', index === 0 && 'is-active']} data-gallery-slide>
 					<div class="gallery-image">
-						<Image
-							src={slide.image}
-							width={1200}
-							format="webp"
-							alt={slide.alt}
-							loading={index === 0 ? 'eager' : 'lazy'}
-							fetchpriority={index === 0 ? 'high' : 'auto'}
-							draggable="false"
-							decoding={index === 0 ? 'sync' : 'async'}
-							quality={82}
-						/>
+						{isStatic(slide)
+							? <Image src={slide.image} width={1200} format="webp" alt={slide.alt} loading={index === 0 ? 'eager' : 'lazy'} fetchpriority={index === 0 ? 'high' : 'auto'} draggable="false" decoding={index === 0 ? 'sync' : 'async'} quality={92} />
+							: <img src={slide.src} srcset={slide.srcset} width={slide.width} height={slide.height} alt={slide.alt} loading={index === 0 ? 'eager' : 'lazy'} fetchpriority={index === 0 ? 'high' : 'auto'} draggable="false" decoding={index === 0 ? 'sync' : 'async'} />
+						}
 					</div>
 				</div>
 			))}
 			{slides.length > 1 && slides.map((slide) => (
 				<div class="gallery-slide" aria-hidden="true">
 					<div class="gallery-image">
-						<Image
-							src={slide.image}
-							width={1200}
-							format="webp"
-							alt=""
-							loading="lazy"
-							fetchpriority="auto"
-							draggable="false"
-							decoding="async"
-							quality={82}
-						/>
+						{isStatic(slide)
+							? <Image src={slide.image} width={1200} format="webp" alt="" loading="lazy" fetchpriority="auto" draggable="false" decoding="async" quality={92} />
+							: <img src={slide.src} srcset={slide.srcset} width={slide.width} height={slide.height} alt="" loading="lazy" fetchpriority="auto" draggable="false" decoding="async" />
+						}
 					</div>
 				</div>
 			))}
@@ -300,10 +283,11 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 
 <style>
 	.gallery-carousel {
+		aspect-ratio: var(--carousel-aspect-ratio, 4 / 3);
 		background: transparent;
 		border-radius: var(--gallery-border-radius);
 		box-shadow: var(--shadow-warm);
-		height: var(--gallery-panel-height);
+		height: auto;
 		overflow: hidden;
 		position: relative;
 		touch-action: pan-y;
@@ -369,7 +353,7 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 	}
 
 	.gallery-image :global(img) {
-		object-fit: cover;
+		object-fit: contain;
 	}
 
 	.gallery-controls {
@@ -418,12 +402,6 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 		}
 	}
 
-	@media (max-width: 860px) {
-		.gallery-carousel {
-			aspect-ratio: var(--gallery-mobile-aspect-ratio);
-			height: auto;
-		}
-	}
 
 	@media (max-width: 520px) {
 		.gallery-controls {

@@ -1,0 +1,38 @@
+---
+interface Variant {
+  w: number;
+  src: string;
+}
+interface Props {
+  variants: Variant[];
+  width: number;
+  height: number;
+  alt: string;
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  class?: string;
+}
+const {
+  variants,
+  width,
+  height,
+  alt,
+  sizes = '(max-width: 768px) 100vw, 50vw',
+  loading = 'lazy',
+  class: className,
+} = Astro.props;
+const srcset = variants.map((v) => `${v.src} ${v.w}w`).join(', ');
+const fallback = variants[variants.length - 1].src;
+---
+
+<img
+  src={fallback}
+  srcset={srcset}
+  sizes={sizes}
+  width={width}
+  height={height}
+  alt={alt}
+  loading={loading}
+  decoding="async"
+  class={className}
+/>
