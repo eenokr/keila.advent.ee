@@ -8,8 +8,20 @@
 // Võti loetakse keskkonnamuutujast DRIVE_API_KEY (vt .env).
 
 import fs from 'node:fs/promises';
+import fsSync from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
+
+try {
+  const env = fsSync.readFileSync('.env', 'utf-8');
+  for (const line of env.split('\n')) {
+    const eq = line.indexOf('=');
+    if (eq < 1) continue;
+    const key = line.slice(0, eq).trim();
+    const val = line.slice(eq + 1).trim();
+    if (key && !process.env[key]) process.env[key] = val;
+  }
+} catch {}
 
 const API_KEY = process.env.DRIVE_API_KEY;
 
