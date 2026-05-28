@@ -2,6 +2,54 @@
 import { getCollection } from 'astro:content';
 const [entry] = await getCollection('koduleht', (e) => e.id === 'oppetuki-app');
 const { eyebrow, title, description } = entry?.data ?? {};
+
+// Determine current active quarter (same logic as client-side script)
+const QUARTERS = [
+	{ id: '2026-01', start: new Date(2026, 0, 3)  },
+	{ id: '2026-02', start: new Date(2026, 2, 28) },
+	{ id: '2026-03', start: new Date(2026, 5, 27) },
+	{ id: '2026-04', start: new Date(2026, 8, 26) },
+	{ id: '2027-01', start: new Date(2026, 11, 26) },
+	{ id: '2027-02', start: new Date(2027, 2, 27) },
+];
+
+const now = new Date();
+const daysSinceSat = (now.getDay() + 1) % 7;
+const thisSat = new Date(now);
+thisSat.setDate(now.getDate() - daysSinceSat);
+thisSat.setHours(12, 0, 0, 0);
+
+let activeId = QUARTERS[0].id;
+for (const q of QUARTERS) {
+	const s = new Date(q.start);
+	s.setHours(12, 0, 0, 0);
+	if (thisSat >= s) activeId = q.id;
+}
+
+const quarterLink = `https://sabbath-school.adventech.io/et/${activeId}/`;
+const allQuartersLink = `https://sabbath-school.adventech.io/et/`;
+
+const ghBase = `https://raw.githubusercontent.com/Adventech/sabbath-school-lessons/master/src/et/${activeId}`;
+const coverUrl = `${ghBase}/cover.png`;
+
+const ghHistBase = `https://raw.githubusercontent.com/Adventech/sabbath-school-lessons-2016-2026/master/src/et`;
+const pastCovers = ['2025-04', '2025-03', '2025-02', '2025-01'].map(id => ({
+	id,
+	url: `${ghHistBase}/${id}/cover.png`,
+}));
+
+let quarterHumanDate: string | null = null;
+let quarterTitle: string | null = null;
+
+try {
+	const infoText = await fetch(`${ghBase}/info.yml`).then(r => r.ok ? r.text() : '');
+	const titleMatch = infoText.match(/title:\s*['"](.+?)['"]/);
+	const dateMatch = infoText.match(/human_date:\s*['"](.+?)['"]/);
+	quarterTitle = titleMatch?.[1] ?? null;
+	quarterHumanDate = dateMatch?.[1] ?? null;
+} catch (_) {
+	// metadata is optional
+}
 ---
 
 <section class="ss-section" id="oppetykk">
@@ -49,80 +97,51 @@ const { eyebrow, title, description } = entry?.data ?? {};
 		</div>
 
 		<div class="ss-right">
-			<div class="ss-intro">
-				<h3 class="ss-heading">Selle nädala õppetükk</h3>
-			</div>
-			<div class="ss-wrap">
-				<iframe
-					id="ss-frame"
-					class="ss-frame"
-					src="about:blank"
-					title="Tänane hingamispäevakooli õppetükk"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-				></iframe>
-			</div>
-			<div class="ss-footer">
-				<a id="ss-link" class="ss-link" href="https://sabbath-school.adventech.io/et" target="_blank" rel="noopener noreferrer">
-					Ava täisvaates
-					<svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-						<path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
+			<div class="ss-cards">
+				<a
+					href={quarterLink}
+					target="_blank"
+					rel="noopener noreferrer"
+					class={`ss-cover-card${coverUrl ? '' : ' ss-cover-card--empty'}`}
+					aria-label={`Ava ${quarterTitle ?? 'selle kvartali õppetükk'} sabbath-school.adventech.io lehel`}
+				>
+					{coverUrl && <img src={coverUrl} alt={quarterTitle ?? 'Kvartali õppetükk kaas'} class="ss-cover-img" loading="eager" />}
+					<div class="ss-cover-cta">
+						<span class="ss-cover-cta-label">Ava õppetükk</span>
+						<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+							<path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</div>
 				</a>
-				<span class="ss-credit">sabbath-school.adventech.io</span>
+				<a
+					href={allQuartersLink}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="ss-cover-card ss-cover-more"
+					aria-label="Vaata kõiki kvartali õppetükke"
+				>
+					<div class="ss-cover-grid">
+						{pastCovers.map(c => (
+							<img src={c.url} alt={c.id} class="ss-cover-thumb" loading="lazy" />
+						))}
+					</div>
+					<div class="ss-cover-cta">
+						<span class="ss-cover-cta-label">Vaata veel</span>
+						<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+							<path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</div>
+				</a>
 			</div>
 		</div>
 
 	</div>
 </section>
 
-<script>
-(function () {
-	const QUARTERS: { id: string; start: Date }[] = [
-		{ id: '2026-01', start: new Date(2026, 0, 3)  },
-		{ id: '2026-02', start: new Date(2026, 2, 28) },
-		{ id: '2026-03', start: new Date(2026, 5, 27) },
-		{ id: '2026-04', start: new Date(2026, 8, 26) },
-		{ id: '2027-01', start: new Date(2026, 11, 26) },
-		{ id: '2027-02', start: new Date(2027, 2, 27) },
-	];
-
-	function pad(n: number): string { return String(n).padStart(2, '0'); }
-
-	function computeUrl(): string {
-		const now = new Date();
-		const adventDay = (now.getDay() + 1) % 7 + 1;
-		const daysSinceSat = (now.getDay() + 1) % 7;
-		const thisSat = new Date(now);
-		thisSat.setDate(now.getDate() - daysSinceSat);
-		thisSat.setHours(12, 0, 0, 0);
-
-		let active = QUARTERS[0];
-		for (const q of QUARTERS) {
-			const qStart = new Date(q.start);
-			qStart.setHours(12, 0, 0, 0);
-			if (thisSat >= qStart) active = q;
-		}
-
-		const qRef = new Date(active.start);
-		qRef.setHours(12, 0, 0, 0);
-		const weeks = Math.round((thisSat.getTime() - qRef.getTime()) / (7 * 86400000));
-		const lessonNum = Math.max(1, Math.min(13, weeks + 1));
-
-		return 'https://sabbath-school.adventech.io/et/' + active.id + '/' + pad(lessonNum) + '/' + pad(adventDay);
-	}
-
-	const url = computeUrl();
-	const frame = document.getElementById('ss-frame') as HTMLIFrameElement | null;
-	const link = document.getElementById('ss-link') as HTMLAnchorElement | null;
-	if (frame) frame.src = url;
-	if (link) link.href = url;
-})();
-</script>
-
 <style>
 	.ss-section {
 		background: var(--color-page);
-		padding: 64px 20px 0;
+		padding: 64px 20px;
 	}
 
 	.ss-inner {
@@ -216,8 +235,14 @@ const { eyebrow, title, description } = entry?.data ?? {};
 		min-width: 0;
 	}
 
+	.ss-cards {
+		display: flex;
+		gap: 14px;
+		align-items: flex-end;
+	}
+
 	.ss-intro {
-		margin-bottom: 20px;
+		margin-bottom: 24px;
 	}
 
 	.ss-heading {
@@ -226,32 +251,79 @@ const { eyebrow, title, description } = entry?.data ?? {};
 		font-size: var(--section-title-size);
 		font-weight: 600;
 		line-height: 1.1;
+		margin: 0 0 8px;
+	}
+
+	.ss-quarter-date {
+		color: var(--color-text-soft);
+		font-size: 0.82rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
 		margin: 0;
+		text-transform: uppercase;
 	}
 
-	.ss-wrap {
-		border-radius: 16px 16px 0 0;
-		overflow: hidden;
-		box-shadow: 0 -4px 32px rgba(117, 62, 19, 0.08);
-	}
-
-	.ss-frame {
-		border: none;
+	.ss-cover-card {
 		display: block;
+		border-radius: 12px;
+		overflow: hidden;
+		box-shadow: var(--shadow-warm);
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+		text-decoration: none;
+		position: relative;
+		flex: 1;
+		min-width: 0;
+	}
+
+	.ss-cover-card:hover {
+		transform: translateY(-6px);
+		box-shadow: 0 32px 80px rgba(117, 62, 19, 0.22);
+	}
+
+	.ss-cover-card--empty {
+		aspect-ratio: 3 / 4;
+		background: var(--color-surface-warm);
+		border: 2px dashed var(--color-border);
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+	}
+
+	.ss-cover-img {
 		width: 100%;
-		height: var(--lesson-widget-height);
-		min-height: var(--lesson-widget-min-height);
-		max-height: var(--lesson-widget-max-height);
+		height: auto;
+		display: block;
+	}
+
+	.ss-cover-cta {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: var(--color-primary);
+		color: #fff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		padding: 14px 16px;
+		font-family: var(--font-heading);
+		font-size: 0.92rem;
+		font-weight: 600;
+		letter-spacing: 0.01em;
+	}
+
+	.ss-cover-card--empty .ss-cover-cta {
+		position: static;
+		width: 100%;
 	}
 
 	.ss-footer {
 		align-items: center;
-		background: var(--color-surface);
-		border-top: 1px solid var(--color-border);
 		display: flex;
 		gap: 16px;
 		justify-content: space-between;
-		padding: 14px 24px;
+		margin-top: 16px;
 	}
 
 	.ss-link {
@@ -282,22 +354,14 @@ const { eyebrow, title, description } = entry?.data ?? {};
 			gap: 32px;
 		}
 
-		.ss-left {
-			position: static;
-		}
-
-		.ss-badges {
-			flex-direction: row;
+		.ss-cover-card {
+			max-width: 240px;
 		}
 	}
 
 	@media (max-width: 640px) {
-		.ss-section { padding: 48px 0 0; }
-		.ss-left { padding: 0 18px; }
-		.ss-intro { padding: 0; }
-		.ss-wrap { border-radius: 0; }
-		.ss-frame { height: 100svh; min-height: 500px; max-height: none; }
-		.ss-footer { padding: 12px 18px; }
+		.ss-section { padding: 48px 18px; }
 		.ss-badges { flex-direction: column; }
+		.ss-cover-card { max-width: 200px; }
 	}
 </style>

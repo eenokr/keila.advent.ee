@@ -154,15 +154,14 @@ for (const item of navItems) {
 	}
 
 	.header-nav {
-		max-width: var(--header-max-width);
-		margin: 0 auto;
-		padding: 0 20px;
+		width: 100%;
+		padding: 0 clamp(20px, 3vw, 48px);
 		display: grid;
 		grid-template-columns: auto 1fr auto;
 		align-items: center;
 		min-height: var(--header-height);
 		font-family: var(--font-body);
-		column-gap: 16px;
+		column-gap: 24px;
 	}
 
 	.logo-container {
@@ -175,40 +174,20 @@ for (const item of navItems) {
 		display: flex;
 		align-items: center;
 		justify-content: flex-start;
-		gap: 8px;
-		height: 72px;
+		padding: 14px 0;
 		line-height: 1;
 	}
 
-	.brand-logo {
-		height: auto;
-		max-height: var(--header-logo-height);
-		width: auto;
-		display: block;
-		transform-origin: center;
-		transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
-	}
-
-	.brand:hover .brand-logo,
-	.brand:focus-visible .brand-logo,
-	.brand:active .brand-logo {
-		transform: scale(1.05) translateY(-2px);
-		opacity: 0.95;
-		filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.14));
-	}
-
 	.brand-title {
-		color: var(--color-heading);
+		color: var(--color-primary);
 		display: flex;
 		flex-direction: column;
-		font-family: var(--font-body);
-		font-size: var(--header-title-font-size);
+		font-family: var(--font-heading);
+		font-size: clamp(1.15rem, 2.4vw, 2.4rem);
 		font-weight: 400;
-		letter-spacing: 0.01em;
-		line-height: 1.18;
-		max-width: 170px;
-		text-transform: uppercase;
-		transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease, color 0.3s ease;
+		letter-spacing: -0.01em;
+		line-height: 1.15;
+		transition: color 0.3s ease;
 	}
 
 	.brand-title-line {
@@ -216,11 +195,7 @@ for (const item of navItems) {
 	}
 
 	.brand:hover .brand-title,
-	.brand:focus-visible .brand-title,
-	.brand:active .brand-title {
-		transform: scale(1.05) translateY(-2px);
-		opacity: 0.95;
-		filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.14));
+	.brand:focus-visible .brand-title {
 		color: var(--color-primary);
 	}
 
