@@ -7,8 +7,8 @@ buttons:
   - text: "Jumalateenistused"
     link: "#services"
     variant: "primary"
-  - text: "Piiblitunnid/Hingamispäevakool"
-    link: "https://sabbath-school.adventech.io/"
+  - text: "Piiblitunnid"
+    link: "#oppetykk"
     variant: "secondary"
 order: 1
 ---

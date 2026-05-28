@@ -34,7 +34,8 @@
       "Bash(sips -g pixelWidth -g pixelHeight /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/logos/advent-logo.png)",
       "Bash(sips -g pixelWidth -g pixelHeight /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/advent-logo.png)",
       "Bash(exiftool -Orientation /Users/eenok/Documents/GitHub/keila.advent.ee/public/koduka/galerii/*-1600.webp)",
-      "Bash(grep -v \"^$\")"
+      "Bash(grep -v \"^$\")",
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/eenok/Documents/GitHub/keila.advent.ee/public/koduka/galerii/1dI9FkZr-VhQFetw8Dji_aG_FPoN1Zh-D-800.webp)"
     ],
     "additionalDirectories": [
       "/Users/eenok/Desktop"
