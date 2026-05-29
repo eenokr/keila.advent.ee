@@ -185,13 +185,13 @@ for (const item of navItems) {
 		text-decoration: none;
 		display: flex;
 		align-items: center;
-		padding: 14px 0;
+		padding: 10px 0;
 		line-height: 1;
 	}
 
 	.brand-logo-img {
 		display: block;
-		height: 76px;
+		height: clamp(36px, 5vw, 58px);
 		width: auto;
 	}
 
@@ -509,9 +509,7 @@ for (const item of navItems) {
 			column-gap: 10px;
 		}
 
-		.brand { height: 66px; }
-
-		.brand-logo-img { height: 32px; }
+		.brand-logo-img { height: 30px; }
 
 		.nav-menu {
 			gap: 12px;
@@ -551,7 +549,7 @@ for (const item of navItems) {
 		}
 
 		.brand-logo-img {
-			height: 28px;
+			height: 26px;
 		}
 	}
 

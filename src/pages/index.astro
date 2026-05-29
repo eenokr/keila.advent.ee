@@ -1146,8 +1146,9 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		flex: 1;
 		font-size: 0.88rem;
 		font-weight: 500;
-		hyphens: auto;
 		line-height: 1.3;
+		overflow-wrap: break-word;
+		word-break: normal;
 	}
 
 	.course-chapter-card.is-active .chapter-title {
@@ -1512,6 +1513,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	showMoreBtn?.addEventListener('click', () => {
 		const expanded = showMoreBtn.dataset.expanded === 'true';
+		const scrollY = window.scrollY;
 		if (expanded) {
 			hiddenCards.forEach((el) => el.classList.add('chapter-hidden'));
 			showMoreBtn.dataset.expanded = 'false';
@@ -1521,5 +1523,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 			showMoreBtn.dataset.expanded = 'true';
 			if (label) label.textContent = 'Kuva vähem';
 		}
+		window.scrollTo({ top: scrollY, behavior: 'instant' });
 	});
 </script>
