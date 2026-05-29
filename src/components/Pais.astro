@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
 import adventLogo from '../assets/branding/advent-logo.png';
 import keilaLogo from '../assets/branding/keila-kogudus-logo.png';
@@ -9,14 +8,7 @@ const base = import.meta.env.BASE_URL;
 const [siteEntry] = await getCollection('site');
 const site = siteEntry.data;
 const navItems = site.nav;
-const titleLineOne = site.titleLine1;
-const titleLineTwo = site.titleLine2;
 const currentPath = Astro.url.pathname;
-const imageModules = import.meta.glob<ImageMetadata>('../assets/pildid/*', {
-	eager: true,
-	import: 'default',
-});
-const logoAsset = site.logoImage === 'advent-logo.png' ? adventLogo : imageModules[`../assets/pildid/${site.logoImage}`];
 
 function withBase(href: string) {
 	if (href.startsWith('http')) return href;
@@ -49,6 +41,7 @@ for (const item of navItems) {
 					class="brand-logo-img"
 					loading="eager"
 					decoding="async"
+					format="webp"
 					quality={100}
 				/>
 			</a>
@@ -130,6 +123,7 @@ for (const item of navItems) {
 			class="sidebar-logo sidebar-logo-color"
 			loading="eager"
 			decoding="async"
+			format="webp"
 			quality={90}
 		/>
 		<Image
@@ -140,6 +134,7 @@ for (const item of navItems) {
 			class="sidebar-logo sidebar-logo-white"
 			loading="eager"
 			decoding="async"
+			format="webp"
 			quality={90}
 		/>
 	</a>

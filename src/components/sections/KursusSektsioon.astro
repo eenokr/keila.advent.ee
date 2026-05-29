@@ -1,0 +1,446 @@
+---
+import TegevusNupp from '../TegevusNupp.astro';
+
+interface Button {
+	text: string;
+	link: string;
+	variant?: 'primary' | 'secondary';
+	external?: boolean;
+	ariaLabel?: string;
+}
+
+interface Chapter {
+	number: number;
+	title: string;
+	link: string;
+	youtubeId?: string;
+}
+
+interface Props {
+	course: {
+		eyebrow?: string;
+		title: string;
+		description?: string;
+		buttons?: Button[];
+		chapters?: Chapter[];
+	};
+}
+
+const { course } = Astro.props;
+---
+
+<section class="course-section" id="kursus">
+	<div class="course-container">
+
+		<div class="course-top-row">
+			<div class="course-copy-wrap scroll-reveal">
+				{course.eyebrow && <p class="eyebrow">{course.eyebrow}</p>}
+				<h2>{course.title}</h2>
+				{course.description?.split('\n').filter(Boolean).map((p) => <p class="section-description">{p}</p>)}
+				{course.buttons && course.buttons.length > 0 && (
+					<div class="course-actions">
+						{course.buttons.map((button) => (
+							<TegevusNupp {...button} />
+						))}
+					</div>
+				)}
+			</div>
+
+			<div class="course-video-wrap scroll-reveal" style="--reveal-delay: 100ms">
+				<iframe
+					id="course-video-iframe"
+					class="course-video-iframe"
+					src={`https://www.youtube.com/embed/${course.chapters?.[0]?.youtubeId ?? 'Dw_o0Fb3Pis'}?rel=0`}
+					title="Usk ja elu veebikoolitus"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+					allowfullscreen
+				></iframe>
+			</div>
+		</div>
+
+		{course.chapters && course.chapters.length > 0 && (
+			<nav class="course-chapters scroll-reveal" style="--reveal-delay: 150ms" aria-label="Kursuse peatükid">
+				<p class="course-chapters-label">Video peatükid</p>
+				<div class="course-chapters-list">
+					{course.chapters.slice(0, 4).map((chapter, i) => (
+						<a
+							class:list={['course-chapter-card', i === 0 && 'is-active']}
+							href={chapter.link}
+							data-course-url={chapter.link}
+							data-youtube-id={chapter.youtubeId}
+						>
+							<span class="chapter-num">{String(chapter.number).padStart(2, '0')}</span>
+							<span class="chapter-title">{chapter.title}</span>
+							<svg class="chapter-arrow" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+								<path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</a>
+					))}
+				</div>
+				{course.chapters.length > 4 && (
+					<div class="chapters-extra" id="chapters-extra">
+						<div class="course-chapters-list chapters-extra-list">
+							{course.chapters.slice(4).map((chapter) => (
+								<a
+									class="course-chapter-card"
+									href={chapter.link}
+									data-course-url={chapter.link}
+									data-youtube-id={chapter.youtubeId}
+								>
+									<span class="chapter-num">{String(chapter.number).padStart(2, '0')}</span>
+									<span class="chapter-title">{chapter.title}</span>
+									<svg class="chapter-arrow" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+										<path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+									</svg>
+								</a>
+							))}
+						</div>
+					</div>
+				)}
+				{course.chapters.length > 4 && (
+					<div class="chapters-show-more">
+						<button class="chapters-show-more-btn" id="chapters-show-more" type="button" data-expanded="false">
+							<svg class="chapters-toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+								<path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+							<span class="chapters-toggle-label">Kuva veel</span>
+						</button>
+					</div>
+				)}
+			</nav>
+		)}
+
+	</div>
+</section>
+
+<style>
+	.course-section {
+		background: linear-gradient(150deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-primary-soft) 100%);
+		padding: var(--section-padding-y) var(--section-padding-x);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.course-section::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(255, 210, 130, 0.12) 0%, transparent 65%);
+		pointer-events: none;
+	}
+
+	.course-container {
+		display: flex;
+		flex-direction: column;
+		gap: var(--course-container-gap);
+		max-width: var(--site-max-width);
+		margin: 0 auto;
+		position: relative;
+	}
+
+	.course-top-row {
+		align-items: center;
+		display: grid;
+		gap: var(--course-layout-gap);
+		grid-template-columns: var(--course-copy-column-width) 1fr;
+	}
+
+	.eyebrow {
+		color: rgba(255, 255, 255, 0.72);
+		font-family: var(--font-heading);
+		font-size: var(--eyebrow-font-size);
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		margin: 0 0 var(--hero-eyebrow-margin-bottom);
+		text-transform: uppercase;
+	}
+
+	.course-copy-wrap h2 {
+		color: #ffffff;
+		font-size: var(--section-title-size);
+		letter-spacing: -0.01em;
+		line-height: var(--section-title-line-height);
+		margin: 0;
+	}
+
+	.section-description {
+		color: rgba(255, 255, 255, 0.82);
+		font-size: var(--section-description-font-size);
+		line-height: var(--section-description-line-height);
+		margin: var(--section-description-margin-top) 0 0;
+		max-width: none;
+	}
+
+	.course-actions {
+		margin-top: var(--course-actions-margin-top);
+	}
+
+	:global(.course-section .button.primary) {
+		background: #ffffff;
+		border-color: #ffffff;
+		color: var(--color-primary-dark);
+		font-weight: 700;
+	}
+
+	:global(.course-section .button.primary:hover) {
+		background: var(--color-surface-warm);
+		border-color: var(--color-surface-warm);
+		color: var(--color-primary-dark);
+		transform: translateY(-2px) scale(1.02);
+	}
+
+	.course-chapters {
+		margin-top: var(--course-chapters-margin-top);
+	}
+
+	.course-chapters-label {
+		color: rgba(255, 255, 255, 0.52);
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		margin: 0 0 10px;
+		text-transform: uppercase;
+	}
+
+	.course-chapters-list {
+		display: grid;
+		gap: 8px;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-auto-rows: 1fr;
+	}
+
+	.course-chapter-card {
+		align-self: stretch;
+		background: rgba(255, 255, 255, 0.1);
+		border: 1.5px solid rgba(255, 255, 255, 0.14);
+		border-radius: 12px;
+		color: rgba(255, 255, 255, 0.88);
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+		height: 100%;
+		justify-content: space-between;
+		min-height: 72px;
+		padding: 12px 12px 10px;
+		position: relative;
+		text-decoration: none;
+		transition: background 0.2s ease, border-color 0.2s ease,
+		            color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.course-chapter-card:hover {
+		background: rgba(255, 255, 255, 0.2);
+		border-color: rgba(255, 255, 255, 0.32);
+		color: #ffffff;
+		transform: translateY(-2px);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+	}
+
+	.course-chapter-card.is-active {
+		background: #ffffff;
+		border-color: #ffffff;
+		box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+		color: var(--color-primary-dark);
+		transform: translateY(-2px);
+	}
+
+	.chapter-num {
+		color: rgba(255, 255, 255, 0.5);
+		display: block;
+		font-family: var(--font-body);
+		font-size: 1.125rem;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1;
+		margin-bottom: 8px;
+	}
+
+	.course-chapter-card.is-active .chapter-num {
+		color: var(--color-primary);
+	}
+
+	.chapter-title {
+		flex: 1;
+		font-size: 0.875rem;
+		font-weight: 500;
+		line-height: 1.3;
+		overflow-wrap: break-word;
+		word-break: normal;
+	}
+
+	.course-chapter-card.is-active .chapter-title {
+		font-weight: 700;
+	}
+
+	.chapter-arrow {
+		align-self: flex-end;
+		color: rgba(255, 255, 255, 0.4);
+		display: block;
+		flex-shrink: 0;
+		margin-top: 10px;
+		transition: transform 0.2s ease, color 0.2s ease;
+	}
+
+	.course-chapter-card:hover .chapter-arrow {
+		color: rgba(255, 255, 255, 0.85);
+		transform: translate(2px, -2px);
+	}
+
+	.course-chapter-card.is-active .chapter-arrow {
+		color: var(--color-primary);
+		transform: translate(2px, -2px);
+	}
+
+	.chapters-extra {
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.chapters-extra.is-open {
+		max-height: 1000px;
+	}
+
+	.chapters-extra-list {
+		padding-top: 8px;
+	}
+
+	.chapters-show-more {
+		display: flex;
+		justify-content: center;
+		margin-top: 14px;
+	}
+
+	.chapters-show-more-btn {
+		align-items: center;
+		background: #ffffff;
+		border: none;
+		border-radius: 50px;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+		color: var(--color-primary-dark);
+		cursor: pointer;
+		display: inline-flex;
+		font-family: var(--font-body);
+		font-size: 0.875rem;
+		font-weight: 600;
+		gap: 8px;
+		padding: 11px 28px;
+		transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.chapters-show-more-btn:hover {
+		background: var(--color-surface-warm);
+		box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
+		transform: translateY(-1px);
+	}
+
+	.chapters-toggle-icon {
+		transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.chapters-show-more-btn[data-expanded='true'] .chapters-toggle-icon {
+		transform: rotate(180deg);
+	}
+
+	.course-video-wrap {
+		aspect-ratio: var(--course-video-aspect-ratio);
+		border-radius: var(--course-video-radius);
+		box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5), 0 6px 20px rgba(0, 0, 0, 0.3);
+		overflow: hidden;
+		width: 100%;
+	}
+
+	.course-video-iframe {
+		border: none;
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
+
+	@media (max-width: 1024px) {
+		.course-top-row {
+			grid-template-columns: var(--course-copy-column-width-tablet) 1fr;
+			gap: var(--course-layout-gap-tablet);
+		}
+
+		.course-chapters-list {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 820px) {
+		.course-top-row { grid-template-columns: 1fr; }
+		.course-chapters-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+		.course-chapter-card {
+			flex-direction: row;
+			align-items: center;
+			justify-content: flex-start;
+			min-height: 52px;
+			padding: 12px 12px;
+		}
+
+		.chapter-num {
+			font-size: 0.875rem;
+			margin-bottom: 0;
+			flex-shrink: 0;
+			min-width: 22px;
+		}
+
+		.chapter-title {
+			font-size: 0.8125rem;
+			flex: 1;
+		}
+
+		.chapter-arrow {
+			align-self: center;
+			margin-top: 0;
+			flex-shrink: 0;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.course-chapters-list { grid-template-columns: 1fr; }
+	}
+</style>
+
+<script>
+	const chapterLinks = document.querySelectorAll<HTMLAnchorElement>('.course-chapter-card[data-course-url]');
+	const videoIframe = document.getElementById('course-video-iframe') as HTMLIFrameElement | null;
+
+	chapterLinks.forEach((link) => {
+		link.addEventListener('click', (e) => {
+			const youtubeId = link.dataset.youtubeId;
+			if (!youtubeId || !videoIframe) return;
+			e.preventDefault();
+			videoIframe.src = `https://www.youtube.com/embed/${youtubeId}?rel=0`;
+			chapterLinks.forEach((l) => l.classList.remove('is-active'));
+			link.classList.add('is-active');
+			if (window.innerWidth <= 820) {
+				const section = document.getElementById('kursus');
+				if (section) {
+					const headerHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 88;
+					const y = section.getBoundingClientRect().top + window.scrollY - headerHeight + 160;
+					window.scrollTo({ top: y, behavior: 'smooth' });
+				}
+			}
+		});
+	});
+
+	const showMoreBtn = document.getElementById('chapters-show-more') as HTMLButtonElement | null;
+	const chaptersExtra = document.getElementById('chapters-extra') as HTMLElement | null;
+	const label = showMoreBtn?.querySelector<HTMLElement>('.chapters-toggle-label');
+
+	showMoreBtn?.addEventListener('click', () => {
+		const expanded = showMoreBtn.dataset.expanded === 'true';
+		if (expanded) {
+			chaptersExtra?.classList.remove('is-open');
+			showMoreBtn.dataset.expanded = 'false';
+			if (label) label.textContent = 'Kuva veel';
+		} else {
+			chaptersExtra?.classList.add('is-open');
+			showMoreBtn.dataset.expanded = 'true';
+			if (label) label.textContent = 'Kuva vähem';
+		}
+	});
+</script>

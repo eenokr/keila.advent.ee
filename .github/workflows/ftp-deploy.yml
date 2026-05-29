@@ -1,16 +1,18 @@
 name: Build ja FTP-deploy keila.advent.ee
 
 on:
-  # Igapäevane automaatne uuendus. Cron on UTC ajas.
-  # 01:00 UTC = Eesti aeg 03:00 (suvel) / 02:00 (talvel).
+  # Iga muudatus main harus ehitatakse ja deployitakse kohe FTP kaudu keila.advent.ee serverisse.
+  push:
+    branches:
+      - main
+
+  # Igapäevane automaatne uuendus (Drive'i pildid, Sheetsi kogunemised, advent.ee audio).
+  # Cron on UTC ajas. 01:00 UTC = Eesti aeg 03:00 (suvel) / 02:00 (talvel).
   schedule:
     - cron: '0 1 * * *'
 
   # Lubab käivitada käsitsi Actions tabist.
   workflow_dispatch:
-
-  # NB: see töövoog EI käivitu pushimisel — see jääb GitHub Pages workflow (pages.yml)
-  # ülesandeks. Kui soovid, et FTP uueneks ka iga pushi peale, lisa siia "push:" trigger.
 
 # Korraga jookseb ainult üks FTP-deploy. Uus käivitus ootab eelmise lõppu ära,
 # et kaks deployd ei kirjutaks serverisse korraga.
@@ -70,13 +72,12 @@ jobs:
           # Kaust serveris, kuhu leht läheb. Muuda vajadusel, nt: public_html/ või www/ või htdocs/
           # Peab lõppema kaldkriipsuga.
           server-dir: ./
-          # Kui server vajab krüpteeritud ühendust, eemalda kommentaar ja täpsusta:
+          # Tavaline FTP (port 21). Kui host hakkab nõudma krüpteeritud ühendust,
+          # eemalda allolevatelt ridadelt kommentaar:
           # protocol: ftps
           # port: 21
-          # Ära lae üles GitHub Pages-spetsiifilisi faile.
+          # Ära lae üles versioonihalduse ega sõltuvuste faile.
           exclude: |
             **/.git*
             **/.git*/**
             **/node_modules/**
-            CNAME
-            .nojekyll

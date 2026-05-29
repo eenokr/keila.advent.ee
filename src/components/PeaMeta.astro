@@ -4,7 +4,9 @@
 import '../styles/global.css';
 import '../styles/suurused.css';
 import type { ImageMetadata } from 'astro';
+import { getCollection } from 'astro:content';
 import FallbackImage from '../assets/branding/kiriku-pilt.jpg';
+import adventLogo from '../assets/branding/advent-logo.png';
 import AtkinsonBold from '../assets/fonts/atkinson-bold.woff?url';
 import AtkinsonRegular from '../assets/fonts/atkinson-regular.woff?url';
 import { SITE_TITLE } from '../consts';
@@ -14,12 +16,50 @@ interface Props {
 	description: string;
 	siteTitle?: string;
 	image?: ImageMetadata;
+	imageAlt?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const base = import.meta.env.BASE_URL;
-const { title, description, siteTitle = SITE_TITLE, image = FallbackImage } = Astro.props;
+const { title, description, siteTitle = SITE_TITLE, image = FallbackImage, imageAlt = siteTitle } = Astro.props;
 const imageURL = new URL(image.src, Astro.url);
+
+// Struktureeritud andmed (JSON-LD) — aitavad otsingumootoritel kogudust kui kohta tuvastada
+// ja näidata rikastatud tulemusena. Andmed loetakse sisufailidest (uldinfo.md, kontakt.md).
+const [siteEntry] = await getCollection('site');
+const [contactEntry] = await getCollection('contact');
+const siteData = siteEntry.data;
+const contactData = contactEntry.data;
+const phoneItem = contactData.contactItems.find((item) => item.href?.startsWith('tel:'));
+const emailItem = contactData.contactItems.find((item) => item.href?.startsWith('mailto:'));
+const [streetAddress, addressLocality = 'Keila'] = (contactData.address ?? 'Põllu 5, Keila')
+	.split(',')
+	.map((part) => part.trim());
+
+const structuredData = {
+	'@context': 'https://schema.org',
+	'@type': 'Church',
+	name: siteData.title,
+	url: Astro.site?.href,
+	logo: new URL(adventLogo.src, Astro.site).href,
+	image: new URL(image.src, Astro.site).href,
+	description: siteData.description,
+	...(emailItem ? { email: emailItem.value } : {}),
+	...(phoneItem ? { telephone: phoneItem.value } : {}),
+	address: {
+		'@type': 'PostalAddress',
+		streetAddress,
+		addressLocality,
+		addressRegion: 'Harjumaa',
+		addressCountry: 'EE',
+	},
+	openingHoursSpecification: {
+		'@type': 'OpeningHoursSpecification',
+		dayOfWeek: 'Saturday',
+		opens: '11:00',
+	},
+	sameAs: siteData.socials.map((social) => social.href),
+};
 ---
 
 <!-- Global Metadata -->
@@ -51,6 +91,7 @@ const imageURL = new URL(image.src, Astro.url);
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={imageURL} />
+<meta property="og:image:alt" content={imageAlt} />
 <meta property="og:site_name" content={siteTitle} />
 <meta property="og:locale" content="et_EE" />
 
@@ -60,30 +101,7 @@ const imageURL = new URL(image.src, Astro.url);
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={imageURL} />
-<script>
-((doc, win) => {
-	const prefersReduced = win.matchMedia('(prefers-reduced-motion: reduce)').matches;
-	if (prefersReduced) return;
+<meta property="twitter:image:alt" content={imageAlt} />
 
-	document.addEventListener('DOMContentLoaded', () => {
-		doc.classList.add('animations-supported');
-
-		const scrollObserver = new IntersectionObserver((entries, observer) => {
-			entries.forEach((entry) => {
-				if (entry.isIntersecting) {
-					entry.target.classList.add('visible');
-					observer.unobserve(entry.target);
-				}
-			});
-		}, {
-			threshold: 0.18,
-		});
-
-		Array.from(doc.querySelectorAll('.hero-copy, .gallery-carousel, .section-heading, .about-grid, .social-panel, .resource-group, .course-grid, .app-card, .visit-inner, article'))
-			.forEach((element) => {
-				element.classList.add('scroll-reveal');
-				scrollObserver.observe(element);
-			});
-	});
-})(document.documentElement, window);
-</script>
+<!-- Struktureeritud andmed (schema.org Church) -->
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />

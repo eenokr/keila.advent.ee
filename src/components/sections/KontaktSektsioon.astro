@@ -1,0 +1,174 @@
+---
+interface ContactItem {
+	label: string;
+	value: string;
+	href?: string;
+}
+
+interface Props {
+	contactInfo: {
+		eyebrow?: string;
+		title: string;
+		cardTitle: string;
+		mapEmbedUrl?: string;
+		mapTitle?: string;
+		address?: string;
+		contactItems: ContactItem[];
+	};
+	visibleContactItems: ContactItem[];
+}
+
+const { contactInfo, visibleContactItems } = Astro.props;
+---
+
+<section class="visit-section" id="contact">
+	<div class="visit-header scroll-reveal">
+		<p class="eyebrow">{contactInfo.eyebrow}</p>
+		<h2>{contactInfo.title}</h2>
+	</div>
+	<div class="visit-inner scroll-reveal" style="--reveal-delay: 100ms">
+		{contactInfo.mapEmbedUrl && (
+			<div class="contact-map">
+				<iframe
+					title={contactInfo.mapTitle ?? contactInfo.address}
+					src={contactInfo.mapEmbedUrl}
+					loading="eager"
+					referrerpolicy="no-referrer-when-downgrade"
+					allowfullscreen
+				></iframe>
+			</div>
+		)}
+		<div class="contact-card">
+			<div class="visit-details">
+				<h3>{contactInfo.cardTitle}</h3>
+				{visibleContactItems.map((item) => (
+					<p>
+						<strong>{item.label}:</strong>{' '}
+						{item.href ? (
+							<a href={item.href}>{item.value}</a>
+						) : (
+							item.value
+						)}
+					</p>
+				))}
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.visit-section {
+		background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 62%, #d9791f 100%);
+		color: var(--color-surface);
+		padding: var(--contact-padding-y) var(--section-padding-x);
+	}
+
+	.visit-header {
+		max-width: var(--site-max-width);
+		margin: 0 auto;
+		margin-bottom: var(--contact-map-margin-top);
+	}
+
+	.visit-inner {
+		max-width: var(--site-max-width);
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: minmax(0, 1.15fr) minmax(var(--contact-card-min-width), 0.65fr);
+		gap: var(--contact-layout-gap);
+		align-items: stretch;
+	}
+
+	.eyebrow {
+		color: var(--color-surface);
+		font-family: var(--font-heading);
+		font-size: var(--eyebrow-font-size);
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		margin: 0 0 var(--hero-eyebrow-margin-bottom);
+		text-transform: uppercase;
+	}
+
+	.visit-header h2 {
+		color: var(--color-surface);
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: var(--section-title-size);
+		letter-spacing: -0.01em;
+		line-height: var(--section-title-line-height);
+		margin: 0;
+	}
+
+	.contact-card {
+		background: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: var(--contact-card-radius);
+		display: grid;
+		gap: var(--schedule-grid-gap);
+		padding: var(--contact-card-padding);
+	}
+
+	.contact-map {
+		background: rgba(255, 255, 255, 0.16);
+		border: 1px solid rgba(255, 255, 255, 0.22);
+		border-radius: var(--contact-map-radius);
+		box-shadow: var(--shadow-warm);
+		overflow: hidden;
+	}
+
+	.contact-map iframe {
+		border: 0;
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
+
+	.visit-details {
+		background: rgba(255, 255, 255, 0.14);
+		border: 1px solid rgba(255, 255, 255, 0.24);
+		border-radius: var(--contact-details-radius);
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
+		padding: var(--contact-details-padding);
+	}
+
+	.visit-details h3 {
+		color: var(--color-surface);
+		font-family: var(--font-heading);
+		font-size: var(--contact-title-size);
+		margin: 0 0 var(--schedule-grid-gap);
+	}
+
+	.visit-details p {
+		color: var(--color-surface);
+		font-size: var(--contact-text-size);
+		line-height: var(--contact-text-line-height);
+	}
+
+	.visit-details a {
+		color: var(--color-surface);
+		text-decoration-color: rgba(255, 255, 255, 0.58);
+		text-underline-offset: 3px;
+	}
+
+	.visit-details a:hover {
+		text-decoration-color: var(--color-surface);
+	}
+
+	.visit-details p + p {
+		margin-top: var(--contact-field-gap);
+	}
+
+	@media (max-width: 860px) {
+		.visit-inner {
+			grid-template-columns: 1fr;
+			gap: var(--section-grid-gap);
+		}
+
+		.contact-map {
+			height: var(--contact-map-height);
+		}
+
+		.contact-map iframe {
+			height: 100%;
+		}
+	}
+</style>

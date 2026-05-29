@@ -1,0 +1,245 @@
+---
+import SektsiooniPealkiri from '../SektsiooniPealkiri.astro';
+import Infokaart from '../Infokaart.astro';
+
+interface Card {
+	title: string;
+	description: string;
+	icon?: string;
+	iconAlt?: string;
+}
+
+interface Activity {
+	key: string;
+	positiveText: string;
+	icon?: string;
+	iconAlt?: string;
+}
+
+interface ScheduleItem {
+	date: string;
+	[key: string]: unknown;
+}
+
+interface Props {
+	services: {
+		eyebrow?: string;
+		title: string;
+		description?: string;
+		cards?: Card[];
+	};
+	serviceScheduleItems: ScheduleItem[];
+	serviceScheduleActivities: readonly Activity[];
+	getIcon: (filename?: string) => string | undefined;
+}
+
+const { services, serviceScheduleItems, serviceScheduleActivities, getIcon } = Astro.props;
+---
+
+<section class="info-section" id="services">
+	<div class="section-inner">
+		<div class="scroll-reveal">
+			<SektsiooniPealkiri eyebrow={services.eyebrow} title={services.title} description={services.description} />
+		</div>
+		{services.cards && services.cards.length > 0 && (
+			<div class="info-grid stagger">
+				{services.cards.map((card) => (
+					<div class="scroll-reveal">
+						<Infokaart {...card} />
+					</div>
+				))}
+			</div>
+		)}
+		{serviceScheduleItems.length > 0 && (
+			<div class="service-schedule scroll-reveal" style="--reveal-delay: 80ms">
+				<div class="service-schedule-grid stagger">
+					{serviceScheduleItems.map((item) => (
+						<article
+							class:list={[
+								'service-schedule-card',
+								!serviceScheduleActivities.some((activity) => item[activity.key]) && 'is-empty',
+							]}
+						>
+							<h4>{item.date}</h4>
+							{serviceScheduleActivities.some((activity) => item[activity.key]) ? (
+								<ul class="service-schedule-list">
+									{serviceScheduleActivities
+										.filter((activity) => item[activity.key])
+										.map((activity) => {
+											const activityIcon = getIcon(activity.icon);
+											return (
+												<li>
+													{activityIcon && <img src={activityIcon} alt={activity.iconAlt ?? ''} loading="lazy" />}
+													<span>{activity.positiveText}</span>
+												</li>
+											);
+										})}
+								</ul>
+							) : (
+								<div class="service-schedule-empty" aria-label="Sel päeval tegevusi ei toimu">
+									<img class="schedule-lock" src={getIcon('lukk.svg')} alt="" loading="lazy" />
+								</div>
+							)}
+						</article>
+					))}
+				</div>
+			</div>
+		)}
+	</div>
+</section>
+
+<style>
+	.info-section {
+		background: var(--color-surface);
+		padding: var(--section-padding-y) var(--section-padding-x);
+	}
+
+	.section-inner {
+		max-width: var(--site-max-width);
+		margin: 0 auto;
+	}
+
+	.info-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: var(--info-grid-gap);
+		margin-top: var(--info-grid-margin-top);
+	}
+
+	.info-grid > .scroll-reveal {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.info-grid > .scroll-reveal :global(.info-card) {
+		flex: 1;
+	}
+
+	.service-schedule {
+		margin-top: var(--schedule-margin-top);
+	}
+
+	.service-schedule-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: var(--schedule-grid-gap);
+		margin-top: var(--schedule-grid-margin-top);
+	}
+
+	.service-schedule-card {
+		background: linear-gradient(150deg, #c7661a 0%, #e07820 55%, #f09030 100%);
+		border: none;
+		border-radius: var(--schedule-card-radius);
+		min-height: var(--schedule-card-min-height);
+		padding: var(--schedule-card-padding);
+	}
+
+	.service-schedule-card h4 {
+		color: #ffffff;
+		font-family: var(--font-heading);
+		font-size: var(--schedule-date-font-size);
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		line-height: 1.15;
+		margin: 0 0 16px;
+		padding-bottom: 14px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+		text-transform: uppercase;
+	}
+
+	.service-schedule-list {
+		color: rgba(255, 255, 255, 0.92);
+		font-size: var(--schedule-text-font-size);
+		font-weight: 600;
+		letter-spacing: 0.09em;
+		line-height: 1.4;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		text-transform: uppercase;
+	}
+
+	.service-schedule-list li {
+		align-items: center;
+		display: flex;
+		gap: var(--schedule-item-gap);
+		list-style: none;
+	}
+
+	.service-schedule-list li::marker {
+		content: '';
+	}
+
+	.service-schedule-list li + li {
+		margin-top: var(--schedule-item-gap-y);
+	}
+
+	.service-schedule-list img {
+		flex: 0 0 auto;
+		filter: brightness(0) invert(1);
+		height: var(--schedule-icon-size);
+		object-fit: contain;
+		opacity: 0.95;
+		width: var(--schedule-icon-size);
+	}
+
+	.service-schedule-card.is-empty {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		min-height: var(--schedule-empty-card-min-height);
+	}
+
+	.service-schedule-card.is-empty h4 {
+		align-self: stretch;
+	}
+
+	.service-schedule-empty {
+		display: grid;
+		flex: 1;
+		place-items: center;
+		transform: translateY(-10px);
+		width: 100%;
+	}
+
+	.schedule-lock {
+		height: var(--schedule-lock-size);
+		opacity: 0.55;
+		object-fit: contain;
+		width: var(--schedule-lock-size);
+	}
+
+	@media (max-width: 860px) {
+		.info-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.service-schedule-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 8px;
+			grid-auto-rows: auto;
+		}
+
+		.service-schedule-card {
+			min-height: 0;
+			padding: 14px 12px;
+		}
+
+		.service-schedule-card h4 {
+			font-size: 1.125rem;
+		}
+
+		.service-schedule-list {
+			font-size: 0.875rem;
+		}
+
+		.service-schedule-list img {
+			height: 20px;
+			width: 20px;
+		}
+
+		.service-schedule-list li {
+			gap: 7px;
+		}
+	}
+</style>

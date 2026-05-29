@@ -1,0 +1,166 @@
+---
+import GaleriiKarussell from '../GaleriiKarussell.astro';
+import TegevusNupp from '../TegevusNupp.astro';
+
+interface Slide {
+	src?: string;
+	srcset?: string;
+	width?: number;
+	height?: number;
+	alt: string;
+	image?: ImageMetadata;
+}
+
+interface Button {
+	text: string;
+	link: string;
+	variant?: 'primary' | 'secondary';
+	external?: boolean;
+	ariaLabel?: string;
+}
+
+interface Props {
+	hero: {
+		title: string;
+		description?: string;
+		buttons?: Button[];
+	};
+	heroSlides: Slide[];
+}
+
+const { hero, heroSlides } = Astro.props;
+---
+
+<section class="hero-section" id="home">
+	<div class="hero-content">
+		<div class="hero-copy scroll-reveal">
+			<h1>{hero.title}</h1>
+			<p class="hero-intro">{hero.description}</p>
+			<div class="hero-actions">
+				{hero.buttons?.map((button) => (
+					<TegevusNupp {...button} />
+				))}
+			</div>
+		</div>
+		<div class="scroll-reveal hero-carousel-wrap" style="--reveal-delay: 120ms">
+			<GaleriiKarussell
+				slides={heroSlides}
+				intervalMs={6000}
+				controlsLabel="Teadete valik"
+				dotLabel="Näita teadet"
+			/>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero-section {
+		background: linear-gradient(160deg, var(--color-surface-soft) 0%, #fdf3e6 55%, var(--color-surface) 100%);
+		padding: var(--hero-padding-top) var(--section-padding-x) var(--hero-padding-bottom);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.hero-section::before {
+		content: '';
+		position: absolute;
+		top: -100px;
+		right: -60px;
+		width: var(--hero-background-orb-size);
+		height: var(--hero-background-orb-size);
+		background: radial-gradient(circle, rgba(199, 102, 26, 0.07) 0%, transparent 68%);
+		pointer-events: none;
+	}
+
+	.hero-section::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image: radial-gradient(circle, rgba(199, 102, 26, 0.055) 1px, transparent 1px);
+		background-size: var(--hero-background-dot-size) var(--hero-background-dot-size);
+		pointer-events: none;
+		opacity: 0.6;
+	}
+
+	.hero-content {
+		max-width: var(--site-max-width);
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: var(--hero-column-gap);
+		align-items: center;
+		position: relative;
+	}
+
+	.hero-carousel-wrap {
+		position: relative;
+	}
+
+	.hero-copy {
+		max-width: var(--hero-text-width);
+	}
+
+	.eyebrow {
+		color: var(--color-accent);
+		font-family: var(--font-heading);
+		font-size: var(--eyebrow-font-size);
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		margin: 0 0 var(--hero-eyebrow-margin-bottom);
+		text-transform: uppercase;
+	}
+
+	.hero-copy h1 {
+		color: var(--color-heading);
+		font-family: var(--font-heading);
+		font-weight: 600;
+		letter-spacing: -0.02em;
+		font-size: var(--hero-title-size);
+		line-height: var(--hero-title-line-height);
+		margin: 0;
+	}
+
+	.hero-intro {
+		color: var(--color-text-soft);
+		font-size: var(--hero-intro-font-size);
+		line-height: var(--hero-intro-line-height);
+		margin: var(--hero-intro-margin-top) 0 0;
+		max-width: var(--hero-intro-width);
+	}
+
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--hero-buttons-gap);
+		margin-top: var(--hero-buttons-margin-top);
+	}
+
+	.hero-carousel-wrap,
+	.hero-carousel-wrap {
+		justify-self: center;
+		width: min(100%, var(--gallery-panel-width));
+	}
+
+	@media (max-width: 1024px) {
+		.hero-content {
+			grid-template-columns: 1fr;
+			gap: var(--section-grid-gap);
+		}
+
+		.hero-copy {
+			justify-self: center;
+		}
+
+		.hero-carousel-wrap { order: -1; }
+	}
+
+	@media (max-width: 520px) {
+		.hero-copy h1 {
+			font-size: var(--hero-title-size);
+		}
+
+		.hero-actions {
+			width: 100%;
+		}
+	}
+</style>

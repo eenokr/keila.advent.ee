@@ -1,0 +1,251 @@
+---
+import { Image } from 'astro:assets';
+import SektsiooniPealkiri from '../SektsiooniPealkiri.astro';
+import TegevusNupp from '../TegevusNupp.astro';
+
+interface AudioItem {
+	url: string;
+	title: string;
+	date?: string;
+	imageUrl?: string;
+}
+
+interface AudioBlock {
+	key: string;
+	title: string;
+	sourceUrl: string;
+	buttonText: string;
+	imageUrl?: string;
+	blockImage: ImageMetadata | null;
+	items: AudioItem[];
+}
+
+interface Props {
+	audio: {
+		eyebrow?: string;
+		title: string;
+		description?: string;
+	};
+	adventAudioBlocks: AudioBlock[];
+}
+
+const { audio, adventAudioBlocks } = Astro.props;
+---
+
+<section class="resources-section" id="audio">
+	<div class="section-inner">
+		<div class="scroll-reveal">
+			<SektsiooniPealkiri eyebrow={audio.eyebrow} title={audio.title} description={audio.description} />
+		</div>
+
+		<div class="resource-groups">
+			<article class="resource-group">
+				<div class="advent-audio-blocks">
+					{adventAudioBlocks.map((block) => (
+						<div class="advent-audio-block">
+							<div class="advent-audio-heading">
+								<h4>{block.title}</h4>
+								<TegevusNupp
+									text={block.buttonText}
+									link={block.sourceUrl}
+									variant="secondary"
+									external
+									ariaLabel={`${block.buttonText}: ${block.title}`}
+								/>
+							</div>
+							<div class="advent-audio-grid stagger">
+								{block.items.map((item) => (
+									<a class="advent-audio-card scroll-reveal" href={item.url} target="_blank" rel="noopener noreferrer">
+										<div class="advent-audio-image" aria-hidden="true">
+											{block.blockImage ? (
+												<Image src={block.blockImage} width={400} format="webp" quality={88} alt="" loading="lazy" />
+											) : block.imageUrl || item.imageUrl ? (
+												<img src={block.imageUrl ?? item.imageUrl} alt="" loading="lazy" />
+											) : (
+												<span />
+											)}
+										</div>
+										<div class="advent-audio-card-copy">
+											{item.date && <span>{item.date}</span>}
+											<h5>{item.title}</h5>
+										</div>
+									</a>
+								))}
+							</div>
+						</div>
+					))}
+				</div>
+			</article>
+		</div>
+	</div>
+</section>
+
+<style>
+	.resources-section {
+		background: var(--color-surface);
+		padding: var(--section-padding-y) var(--section-padding-x);
+	}
+
+	.section-inner {
+		max-width: var(--site-max-width);
+		margin: 0 auto;
+	}
+
+	.resource-groups {
+		display: grid;
+		gap: var(--audio-section-gap);
+		margin-top: var(--audio-section-margin-top);
+	}
+
+	.resource-group {
+		padding-top: 0;
+	}
+
+	.advent-audio-blocks {
+		display: grid;
+		gap: var(--audio-block-gap);
+	}
+
+	.advent-audio-block {
+		display: grid;
+		gap: var(--audio-inner-gap);
+	}
+
+	.advent-audio-heading {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		gap: var(--audio-heading-gap);
+	}
+
+	.advent-audio-heading h4 {
+		color: var(--color-heading);
+		font-family: var(--font-heading);
+		font-size: var(--audio-heading-font-size);
+		line-height: 1.25;
+		margin: 0;
+	}
+
+	.advent-audio-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(var(--audio-card-min-width), 1fr));
+		gap: var(--audio-grid-gap);
+	}
+
+	.advent-audio-card {
+		background: linear-gradient(150deg, #c7661a 0%, #e07820 55%, #f09030 100%);
+		border: none;
+		border-radius: var(--audio-card-radius);
+		color: inherit;
+		display: block;
+		min-height: var(--audio-card-min-height);
+		overflow: hidden;
+		text-decoration: none;
+		transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+		            box-shadow 0.28s ease;
+	}
+
+	.advent-audio-card:hover {
+		box-shadow: 0 6px 24px rgba(117, 62, 19, 0.28);
+		transform: translateY(-4px);
+	}
+
+	.advent-audio-image {
+		background: linear-gradient(135deg, #9e470f 0%, #b85c16 100%);
+		display: grid;
+		aspect-ratio: 1 / 1;
+		place-items: center;
+		position: relative;
+	}
+
+	.advent-audio-image img {
+		height: 100%;
+		object-fit: cover;
+		width: 100%;
+	}
+
+	.advent-audio-image span {
+		background: var(--color-primary);
+		border-radius: 999px;
+		height: var(--audio-image-placeholder-size);
+		opacity: 0.18;
+		width: var(--audio-image-placeholder-size);
+	}
+
+	.advent-audio-card-copy {
+		padding: var(--audio-card-padding);
+	}
+
+	.advent-audio-card span {
+		color: rgba(255, 255, 255, 0.78);
+		display: block;
+		font-size: var(--audio-date-font-size);
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		margin-bottom: var(--audio-date-margin-bottom);
+		text-transform: uppercase;
+	}
+
+	.advent-audio-card h5 {
+		color: #ffffff;
+		font-family: var(--font-heading);
+		font-size: var(--audio-title-font-size);
+		font-weight: 600;
+		line-height: 1.35;
+		margin: 0;
+	}
+
+	.advent-audio-card p {
+		color: rgba(255, 255, 255, 0.88);
+		font-size: var(--audio-link-font-size);
+		font-weight: 600;
+		margin: var(--audio-link-margin-top) 0 0;
+	}
+
+	@media (max-width: 860px) {
+		.advent-audio-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: var(--audio-grid-gap-mobile);
+		}
+
+		.advent-audio-card {
+			min-width: 0;
+		}
+
+		.advent-audio-card-copy {
+			padding: var(--audio-card-padding-mobile);
+		}
+
+		.advent-audio-heading {
+			display: contents;
+		}
+
+		.advent-audio-heading h4 {
+			order: 0;
+		}
+
+		.advent-audio-heading :global(.button) {
+			order: 2;
+			justify-self: start;
+		}
+
+		.advent-audio-grid {
+			order: 1;
+		}
+	}
+
+	@media (max-width: 520px) {
+		.advent-audio-card span {
+			font-size: var(--audio-date-font-size-mobile);
+		}
+
+		.advent-audio-card h5 {
+			font-size: var(--audio-title-font-size-mobile);
+			overflow-wrap: anywhere;
+		}
+
+		.advent-audio-card p {
+			font-size: var(--audio-link-font-size-mobile);
+		}
+	}
+</style>

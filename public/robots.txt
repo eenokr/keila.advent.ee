@@ -1,0 +1,6 @@
+# Seitsmenda Päeva Adventistide Keila Kogudus — https://keila.advent.ee
+# Lubame kõigil otsingumootoritel kogu lehte indekseerida.
+User-agent: *
+Allow: /
+
+Sitemap: https://keila.advent.ee/sitemap-index.xml

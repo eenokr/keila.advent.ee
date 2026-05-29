@@ -1,0 +1,183 @@
+---
+import GaleriiKarussell from '../GaleriiKarussell.astro';
+import TegevusNupp from '../TegevusNupp.astro';
+
+interface Slide {
+	src?: string;
+	srcset?: string;
+	width?: number;
+	height?: number;
+	alt: string;
+	image?: ImageMetadata;
+}
+
+interface Button {
+	text: string;
+	link: string;
+	variant?: 'primary' | 'secondary';
+	external?: boolean;
+	ariaLabel?: string;
+}
+
+interface Props {
+	about: {
+		eyebrow?: string;
+		title: string;
+		description?: string;
+		buttons?: Button[];
+	};
+	communitySlides: Slide[];
+}
+
+const { about, communitySlides } = Astro.props;
+---
+
+<section class="about-section" id="about">
+	<div class="about-grid">
+		{communitySlides.length > 0 && (
+			<div class="about-image about-carousel-wrap scroll-reveal">
+				<GaleriiKarussell
+					slides={communitySlides}
+					intervalMs={7000}
+					showDots={false}
+					controlsLabel="Koguduse piltide valik"
+					dotLabel="Näita koguduse pilti"
+				/>
+			</div>
+		)}
+		<div class="about-copy scroll-reveal" style="--reveal-delay: 100ms">
+			<p class="eyebrow">{about.eyebrow}</p>
+			<h2>{about.title}</h2>
+			{about.description?.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
+			{about.buttons && about.buttons.length > 0 && (
+				<div class="about-actions">
+					{about.buttons.map((button) => (
+						<TegevusNupp {...button} />
+					))}
+				</div>
+			)}
+		</div>
+	</div>
+</section>
+
+<style>
+	.about-section {
+		background: var(--color-surface-warm);
+		padding: var(--section-padding-y) var(--section-padding-x);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.about-section::before {
+		content: '';
+		position: absolute;
+		bottom: -80px;
+		left: -80px;
+		width: var(--section-background-orb-size);
+		height: var(--section-background-orb-size);
+		background: radial-gradient(circle, rgba(199, 102, 26, 0.055) 0%, transparent 70%);
+		pointer-events: none;
+	}
+
+	.about-grid {
+		max-width: var(--site-max-width);
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: var(--section-grid-gap);
+		align-items: center;
+		position: relative;
+	}
+
+	.about-image {
+		border-radius: var(--contact-map-radius);
+		overflow: hidden;
+		box-shadow: 0 20px 60px rgba(117, 62, 19, 0.18),
+		            0 4px 14px rgba(117, 62, 19, 0.1);
+		outline: 1px solid var(--color-border);
+		outline-offset: -1px;
+		transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+		            box-shadow 0.4s ease;
+		aspect-ratio: var(--about-image-aspect-ratio);
+	}
+
+	.about-image:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 28px 72px rgba(117, 62, 19, 0.2),
+		            0 6px 18px rgba(117, 62, 19, 0.12);
+	}
+
+	.about-carousel-wrap,
+	.about-carousel-wrap:hover {
+		outline: 0;
+		transform: none;
+	}
+
+	.about-image picture {
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
+
+	.about-image img {
+		height: 100%;
+		object-fit: cover;
+		width: 100%;
+	}
+
+	.about-carousel-wrap {
+		justify-self: center;
+		width: min(100%, var(--gallery-panel-width));
+	}
+
+	.eyebrow {
+		color: var(--color-accent);
+		font-family: var(--font-heading);
+		font-size: var(--eyebrow-font-size);
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		margin: 0 0 var(--hero-eyebrow-margin-bottom);
+		text-transform: uppercase;
+	}
+
+	.about-copy h2 {
+		color: var(--color-heading);
+		font-family: var(--font-heading);
+		font-weight: 600;
+		letter-spacing: 0;
+		font-size: var(--section-title-size);
+		letter-spacing: -0.01em;
+		line-height: var(--section-title-line-height);
+		margin: 0;
+	}
+
+	.about-copy {
+		max-width: var(--text-column-width);
+	}
+
+	.about-copy p {
+		color: var(--color-text-soft);
+		font-size: var(--paragraph-font-size);
+		line-height: var(--paragraph-line-height);
+		margin: 0;
+		margin-top: var(--section-description-margin-top);
+	}
+
+	.about-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--section-actions-gap);
+		margin-top: var(--section-actions-margin-top);
+	}
+
+	@media (max-width: 1024px) {
+		.about-grid {
+			grid-template-columns: 1fr;
+			gap: var(--section-grid-gap);
+		}
+
+		.about-copy {
+			justify-self: center;
+		}
+	}
+</style>

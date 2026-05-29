@@ -1,0 +1,146 @@
+---
+import SektsiooniPealkiri from '../SektsiooniPealkiri.astro';
+import FacebookiVoog from '../FacebookiVoog.astro';
+import TegevusNupp from '../TegevusNupp.astro';
+
+interface Button {
+	text: string;
+	link: string;
+	variant?: 'primary' | 'secondary';
+	external?: boolean;
+	ariaLabel?: string;
+}
+
+interface Props {
+	facebook: {
+		eyebrow?: string;
+		title: string;
+		description?: string;
+		buttons?: Button[];
+		pageUrl?: string;
+	};
+}
+
+const { facebook } = Astro.props;
+---
+
+<section class="facebook-section" id="facebook">
+	<div class="section-inner social-panel">
+		<div class="social-copy scroll-reveal">
+			<p class="eyebrow">{facebook.eyebrow}</p>
+			<h2>{facebook.title}</h2>
+			{facebook.description && <p>{facebook.description}</p>}
+			<div class="social-actions">
+				{facebook.buttons?.map((button) => (
+					<TegevusNupp {...button} />
+				))}
+			</div>
+		</div>
+		<FacebookiVoog pageUrl={facebook.pageUrl} />
+	</div>
+</section>
+
+<style>
+	.facebook-section {
+		background: var(--color-surface-warm);
+		padding: var(--section-padding-y) var(--section-padding-x);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.facebook-section::before {
+		content: '';
+		position: absolute;
+		top: -60px;
+		right: -60px;
+		width: var(--facebook-section-orb-size);
+		height: var(--facebook-section-orb-size);
+		background: radial-gradient(circle, rgba(199, 102, 26, 0.06) 0%, transparent 70%);
+		pointer-events: none;
+	}
+
+	.section-inner {
+		max-width: var(--site-max-width);
+		margin: 0 auto;
+	}
+
+	.social-panel {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, var(--facebook-feed-width));
+		align-items: center;
+		gap: var(--facebook-layout-gap);
+	}
+
+	.social-panel :global(.facebook-card),
+	.social-panel :global(.facebook-feed),
+	.social-panel :global(.facebook-feed-empty) {
+		justify-self: end;
+		width: min(100%, var(--facebook-feed-width));
+	}
+
+	.social-copy {
+		justify-self: start;
+		text-align: left;
+		max-width: var(--text-column-width);
+	}
+
+	.eyebrow {
+		color: var(--color-accent);
+		font-family: var(--font-heading);
+		font-size: var(--eyebrow-font-size);
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		margin: 0 0 var(--hero-eyebrow-margin-bottom);
+		text-transform: uppercase;
+	}
+
+	.social-copy h2 {
+		color: var(--color-heading);
+		font-family: var(--font-heading);
+		font-weight: 600;
+		letter-spacing: 0;
+		font-size: var(--section-title-size);
+		letter-spacing: -0.01em;
+		line-height: var(--section-title-line-height);
+		margin: 0;
+	}
+
+	.social-copy p:not(.eyebrow) {
+		color: var(--color-text-soft);
+		font-size: var(--paragraph-font-size);
+		line-height: var(--paragraph-line-height);
+		margin: 0;
+		margin-top: var(--section-description-margin-top);
+	}
+
+	.social-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--section-actions-gap);
+		margin-top: var(--section-actions-margin-top);
+	}
+
+	@media (max-width: 1100px) {
+		.social-panel {
+			grid-template-columns: 1fr;
+		}
+
+		.social-panel :global(.facebook-card),
+		.social-panel :global(.facebook-feed),
+		.social-panel :global(.facebook-feed-empty) {
+			justify-self: center;
+			width: min(100%, var(--facebook-feed-width));
+		}
+
+		.social-copy {
+			justify-self: center;
+		}
+	}
+
+	@media (max-width: 860px) {
+		.social-panel {
+			align-items: stretch;
+			flex-direction: column;
+		}
+	}
+</style>
