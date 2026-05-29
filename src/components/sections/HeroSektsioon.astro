@@ -96,6 +96,12 @@ const { hero, heroSlides } = Astro.props;
 		position: relative;
 	}
 
+	/* Sama tugev vari nagu alumisel (Meist) galeriil. */
+	.hero-carousel-wrap :global(.gallery-viewport) {
+		box-shadow: 0 20px 60px rgba(117, 62, 19, 0.18),
+		            0 4px 14px rgba(117, 62, 19, 0.1);
+	}
+
 	.hero-copy {
 		max-width: var(--hero-text-width);
 	}
