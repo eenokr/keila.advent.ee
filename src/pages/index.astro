@@ -347,9 +347,9 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 									<nav class="course-chapters scroll-reveal" style="--reveal-delay: 150ms" aria-label="Kursuse peatükid">
 										<p class="course-chapters-label">Video peatükid</p>
 										<div class="course-chapters-list">
-											{course.chapters.map((chapter, i) => (
+											{course.chapters.slice(0, 4).map((chapter, i) => (
 												<a
-													class:list={['course-chapter-card', i === 0 && 'is-active', i >= 4 && 'chapter-hidden']}
+													class:list={['course-chapter-card', i === 0 && 'is-active']}
 													href={chapter.link}
 													data-course-url={chapter.link}
 													data-youtube-id={chapter.youtubeId}
@@ -362,6 +362,26 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 												</a>
 											))}
 										</div>
+										{course.chapters.length > 4 && (
+											<div class="chapters-extra" id="chapters-extra">
+												<div class="course-chapters-list chapters-extra-list">
+													{course.chapters.slice(4).map((chapter, i) => (
+														<a
+															class="course-chapter-card"
+															href={chapter.link}
+															data-course-url={chapter.link}
+															data-youtube-id={chapter.youtubeId}
+														>
+															<span class="chapter-num">{String(chapter.number).padStart(2, '0')}</span>
+															<span class="chapter-title">{chapter.title}</span>
+															<svg class="chapter-arrow" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+																<path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+															</svg>
+														</a>
+													))}
+												</div>
+											</div>
+										)}
 										{course.chapters.length > 4 && (
 											<div class="chapters-show-more">
 												<button class="chapters-show-more-btn" id="chapters-show-more" type="button" data-expanded="false">
@@ -660,22 +680,15 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.service-schedule-card {
-		background: var(--color-surface-warm);
-		border: 1px solid var(--color-border);
+		background: linear-gradient(150deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-primary-soft) 100%);
+		border: none;
 		border-radius: var(--schedule-card-radius);
 		min-height: var(--schedule-card-min-height);
 		padding: var(--schedule-card-padding);
-		transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
-	}
-
-	.service-schedule-card:hover {
-		border-color: var(--color-border-strong);
-		box-shadow: 0 6px 22px rgba(117, 62, 19, 0.1);
-		transform: translateY(-3px);
 	}
 
 	.service-schedule-card h4 {
-		color: var(--color-heading);
+		color: #ffffff;
 		font-family: var(--font-heading);
 		font-size: var(--schedule-date-font-size);
 		line-height: 1.2;
@@ -683,7 +696,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.service-schedule-list {
-		color: var(--color-text-soft);
+		color: rgba(255, 255, 255, 0.88);
 		font-size: var(--schedule-text-font-size);
 		line-height: 1.55;
 		list-style: none;
@@ -708,6 +721,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.service-schedule-list img {
 		flex: 0 0 auto;
+		filter: brightness(0) invert(1);
 		height: var(--schedule-icon-size);
 		object-fit: contain;
 		width: var(--schedule-icon-size);
@@ -715,7 +729,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.service-schedule-card.is-empty {
 		align-items: center;
-		border-color: transparent;
 		display: flex;
 		flex-direction: column;
 		min-height: var(--schedule-empty-card-min-height);
@@ -1011,7 +1024,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	/* Veebikoolitus: src/content/koduleht/veebikoolitus.md */
 	.course-section {
-		background: linear-gradient(150deg, #6b2204 0%, var(--color-primary-dark) 35%, var(--color-primary) 70%, #d17828 100%);
+		background: linear-gradient(150deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-primary-soft) 100%);
 		padding: var(--section-padding-y) var(--section-padding-x);
 		position: relative;
 		overflow: hidden;
@@ -1174,8 +1187,18 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		transform: translate(2px, -2px);
 	}
 
-	.chapter-hidden {
-		display: none;
+	.chapters-extra {
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.chapters-extra.is-open {
+		max-height: 1000px;
+	}
+
+	.chapters-extra-list {
+		padding-top: 8px;
 	}
 
 	.chapters-show-more {
@@ -1551,21 +1574,19 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	// Show more / less chapters
 	const showMoreBtn = document.getElementById('chapters-show-more') as HTMLButtonElement | null;
-	const hiddenCards = document.querySelectorAll<HTMLElement>('.chapter-hidden');
+	const chaptersExtra = document.getElementById('chapters-extra') as HTMLElement | null;
 	const label = showMoreBtn?.querySelector<HTMLElement>('.chapters-toggle-label');
 
 	showMoreBtn?.addEventListener('click', () => {
 		const expanded = showMoreBtn.dataset.expanded === 'true';
-		const scrollY = window.scrollY;
 		if (expanded) {
-			hiddenCards.forEach((el) => el.classList.add('chapter-hidden'));
+			chaptersExtra?.classList.remove('is-open');
 			showMoreBtn.dataset.expanded = 'false';
 			if (label) label.textContent = 'Kuva veel';
 		} else {
-			hiddenCards.forEach((el) => el.classList.remove('chapter-hidden'));
+			chaptersExtra?.classList.add('is-open');
 			showMoreBtn.dataset.expanded = 'true';
 			if (label) label.textContent = 'Kuva vähem';
 		}
-		window.scrollTo({ top: scrollY, behavior: 'instant' });
 	});
 </script>

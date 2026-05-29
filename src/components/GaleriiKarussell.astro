@@ -291,9 +291,13 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 		border-radius: var(--gallery-border-radius);
 		box-shadow: var(--shadow-warm);
 		height: auto;
+		/* Safari overflow+border-radius fix */
+		-webkit-mask-image: -webkit-radial-gradient(white, black);
+		mask-image: radial-gradient(white, black);
 		overflow: hidden;
 		position: relative;
 		touch-action: pan-y;
+		-webkit-user-select: none;
 		user-select: none;
 		width: min(100%, var(--gallery-panel-width));
 	}
@@ -311,15 +315,20 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 		--active-index: 0;
 		--drag-offset: 0px;
 		display: flex;
+		-webkit-transform: translateX(calc(var(--active-index) * -100% + var(--drag-offset)));
 		transform: translateX(calc(var(--active-index) * -100% + var(--drag-offset)));
+		-webkit-transition: -webkit-transform 0.95s cubic-bezier(0.2, 0.8, 0.2, 1);
 		transition: transform 0.95s cubic-bezier(0.2, 0.8, 0.2, 1);
+		will-change: transform;
 	}
 
 	.gallery-carousel.is-dragging .gallery-slides {
+		-webkit-transition: none;
 		transition: none;
 	}
 
 	.gallery-carousel.is-snapping .gallery-slides {
+		-webkit-transition: none;
 		transition: none;
 	}
 
@@ -330,6 +339,9 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 		opacity: 1;
 		position: relative;
 		width: 100%;
+		/* Force GPU layer per slide to prevent bleed-through */
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
 	}
 
 	.gallery-slide.is-active {
