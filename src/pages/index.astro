@@ -349,7 +349,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 										<div class="course-chapters-list">
 											{course.chapters.map((chapter, i) => (
 												<a
-													class:list={['course-chapter-card', i === 0 && 'is-active']}
+													class:list={['course-chapter-card', i === 0 && 'is-active', i >= 4 && 'chapter-hidden']}
 													href={chapter.link}
 													data-course-url={chapter.link}
 													data-youtube-id={chapter.youtubeId}
@@ -362,6 +362,16 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 												</a>
 											))}
 										</div>
+										{course.chapters.length > 4 && (
+											<div class="chapters-show-more">
+												<button class="chapters-show-more-btn" id="chapters-show-more" type="button" data-expanded="false">
+													<svg class="chapters-toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+														<path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+													</svg>
+													<span class="chapters-toggle-label">Kuva veel</span>
+												</button>
+											</div>
+										)}
 									</nav>
 								)}
 
@@ -1163,6 +1173,47 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		transform: translate(2px, -2px);
 	}
 
+	.chapter-hidden {
+		display: none;
+	}
+
+	.chapters-show-more {
+		display: flex;
+		justify-content: center;
+		margin-top: 14px;
+	}
+
+	.chapters-show-more-btn {
+		align-items: center;
+		background: #ffffff;
+		border: none;
+		border-radius: 50px;
+		box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+		color: var(--color-primary-dark);
+		cursor: pointer;
+		display: inline-flex;
+		font-family: var(--font-body);
+		font-size: 0.9rem;
+		font-weight: 600;
+		gap: 8px;
+		padding: 11px 28px;
+		transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.chapters-show-more-btn:hover {
+		background: var(--color-surface-warm);
+		box-shadow: 0 6px 22px rgba(0,0,0,0.18);
+		transform: translateY(-1px);
+	}
+
+	.chapters-toggle-icon {
+		transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.chapters-show-more-btn[data-expanded='true'] .chapters-toggle-icon {
+		transform: rotate(180deg);
+	}
+
 	/* Right panel — video player */
 	.course-panel-right { min-width: 0; }
 
@@ -1452,5 +1503,23 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 				}
 			}
 		});
+	});
+
+	// Show more / less chapters
+	const showMoreBtn = document.getElementById('chapters-show-more') as HTMLButtonElement | null;
+	const hiddenCards = document.querySelectorAll<HTMLElement>('.chapter-hidden');
+	const label = showMoreBtn?.querySelector<HTMLElement>('.chapters-toggle-label');
+
+	showMoreBtn?.addEventListener('click', () => {
+		const expanded = showMoreBtn.dataset.expanded === 'true';
+		if (expanded) {
+			hiddenCards.forEach((el) => el.classList.add('chapter-hidden'));
+			showMoreBtn.dataset.expanded = 'false';
+			if (label) label.textContent = 'Kuva veel';
+		} else {
+			hiddenCards.forEach((el) => el.classList.remove('chapter-hidden'));
+			showMoreBtn.dataset.expanded = 'true';
+			if (label) label.textContent = 'Kuva vähem';
+		}
 	});
 </script>
