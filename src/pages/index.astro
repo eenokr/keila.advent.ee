@@ -5,7 +5,6 @@ import kodukaGalerii from '../data/koduka-galerii.json';
 import kodukaTeated from '../data/koduka-teated.json';
 import kirikuPilt from '../assets/branding/kiriku-pilt.jpg';
 import uheskoosStuduioPilt from '../assets/branding/uheskoos-stuudio.jpg';
-import keilaLogo from '../assets/branding/keila-kogudus-logo.png';
 import GaleriiKarussell from '../components/GaleriiKarussell.astro';
 import PeaMeta from '../components/PeaMeta.astro';
 import TegevusNupp from '../components/TegevusNupp.astro';
@@ -136,15 +135,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 						<section class="hero-section" id="home">
 							<div class="hero-content">
 								<div class="hero-copy scroll-reveal">
-									<Image
-										src={keilaLogo}
-										alt={site.title}
-										height={400}
-										class="hero-logo"
-										loading="eager"
-										decoding="async"
-										quality={100}
-									/>
 									<h1>{hero.title}</h1>
 									<p class="hero-intro">{hero.description}</p>
 									<div class="hero-actions">
@@ -491,13 +481,6 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		max-width: var(--hero-text-width);
 	}
 
-	.hero-logo {
-		display: block;
-		width: 100%;
-		height: auto;
-		max-width: 520px;
-		margin-bottom: 32px;
-	}
 
 	.eyebrow {
 		color: var(--color-accent);

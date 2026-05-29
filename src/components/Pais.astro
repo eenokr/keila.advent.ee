@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
 import adventLogo from '../assets/branding/advent-logo.png';
+import keilaLogo from '../assets/branding/keila-kogudus-logo.png';
 
 const base = import.meta.env.BASE_URL;
 const [siteEntry] = await getCollection('site');
@@ -39,6 +40,20 @@ for (const item of navItems) {
 
 <header class="header-main">
 	<nav class="header-nav" aria-label="Põhinavigatsioon">
+		<div class="logo-container">
+			<a href={base} class="brand" aria-label={site.title}>
+				<Image
+					src={keilaLogo}
+					alt={site.title}
+					height={200}
+					class="brand-logo-img"
+					loading="eager"
+					decoding="async"
+					quality={100}
+				/>
+			</a>
+		</div>
+
 		<ul class="nav-menu" id="nav-menu" role="list">
 			{flatNavItems.map((item, i) => (
 				<li class="nav-item" data-nav-item data-nav-index={i}>
@@ -148,11 +163,35 @@ for (const item of navItems) {
 		width: 100%;
 		padding: 0 var(--section-padding-x);
 		display: grid;
-		grid-template-columns: 1fr auto;
+		grid-template-columns: auto 1fr auto;
 		align-items: center;
 		min-height: var(--header-height);
 		font-family: var(--font-body);
 		column-gap: 24px;
+	}
+
+	.logo-container {
+		justify-self: start;
+		min-width: 0;
+	}
+
+	.brand {
+		text-decoration: none;
+		display: flex;
+		align-items: center;
+		padding: 14px 0;
+		line-height: 1;
+	}
+
+	.brand-logo-img {
+		display: block;
+		height: 64px;
+		width: auto;
+	}
+
+	.brand:hover .brand-logo-img,
+	.brand:focus-visible .brand-logo-img {
+		opacity: 0.8;
 	}
 
 	.nav-menu {
@@ -436,6 +475,10 @@ for (const item of navItems) {
 			column-gap: 10px;
 		}
 
+		.brand { height: 66px; }
+
+		.brand-logo-img { height: 32px; }
+
 		.nav-menu {
 			gap: 12px;
 		}
@@ -452,7 +495,8 @@ for (const item of navItems) {
 
 	@media (max-width: 520px) {
 		.header-nav {
-			grid-template-columns: 1fr auto;
+			grid-template-columns: auto auto;
+			justify-content: space-between;
 			min-height: 78px;
 		}
 

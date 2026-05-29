@@ -30,7 +30,7 @@
 	/* Avalehe ülemine hero */
 	--hero-padding-top: 96px;
 	--hero-padding-bottom: 84px;
-	--hero-title-size: clamp(2.7rem, 6vw, 5rem);
+	--hero-title-size: clamp(2.2rem, 4.5vw, 3.8rem);
 	--hero-title-line-height: 1.04;
 	--hero-intro-font-size: 1.18rem;
 	--hero-intro-line-height: 1.78;
@@ -68,7 +68,7 @@
 
 	/* Päis */
 	--header-max-width: var(--site-max-width);
-	--header-height: 88px;
+	--header-height: 108px;
 	--header-logo-height: 64px;
 	--header-title-font-size: 0.68rem;
 	--header-nav-font-size: 0.95rem;
