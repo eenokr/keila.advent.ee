@@ -68,7 +68,7 @@
 
 	/* Päis */
 	--header-max-width: var(--site-max-width);
-	--header-height: 108px;
+	--header-height: 92px;
 	--header-logo-height: 64px;
 	--header-title-font-size: 0.68rem;
 	--header-nav-font-size: 0.95rem;

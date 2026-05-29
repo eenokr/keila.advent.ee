@@ -65,11 +65,8 @@ for (const item of navItems) {
 
 			<!-- Overflow item: shown when items don't fit -->
 			<li class="nav-item nav-overflow-item" id="nav-overflow-item" hidden>
-				<button class="nav-link nav-dropdown-toggle" id="nav-overflow-toggle" type="button" aria-expanded="false" aria-controls="nav-overflow-menu">
-					{site.mobileMenuText}
-					<svg class="dropdown-chevron" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true" fill="none">
-						<path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
+				<button class="nav-overflow-btn" id="nav-overflow-toggle" type="button" aria-expanded="false" aria-controls="nav-overflow-menu" aria-label={site.mobileMenuText}>
+					<span aria-hidden="true">☰</span>
 				</button>
 				<div class="dropdown-menu" id="nav-overflow-menu" role="menu">
 					{flatNavItems.map((item, i) => (
@@ -190,7 +187,7 @@ for (const item of navItems) {
 
 	.brand-logo-img {
 		display: block;
-		height: 64px;
+		height: 76px;
 		width: auto;
 	}
 
@@ -227,37 +224,28 @@ for (const item of navItems) {
 		flex-shrink: 0;
 	}
 
-	.nav-dropdown-toggle {
+	.nav-overflow-btn {
 		align-items: center;
-		background: none;
-		border: none;
+		background: transparent;
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
 		color: var(--color-text);
 		cursor: pointer;
 		display: inline-flex;
-		font-family: var(--font-body);
-		font-size: var(--header-nav-font-size);
-		font-weight: 400;
-		gap: 4px;
+		font-size: 1rem;
+		height: 40px;
+		justify-content: center;
 		line-height: 1;
 		margin: 0;
-		padding: 8px 0;
+		padding: 0;
 		position: relative;
-		text-transform: uppercase;
-		vertical-align: middle;
-		white-space: nowrap;
+		width: 40px;
 	}
 
-	.nav-dropdown-toggle:hover {
+	.nav-overflow-btn:hover,
+	.nav-overflow-btn[aria-expanded='true'] {
+		border-color: var(--color-primary);
 		color: var(--color-primary);
-	}
-
-	.dropdown-chevron {
-		flex-shrink: 0;
-		transition: transform 0.22s ease;
-	}
-
-	.nav-dropdown-toggle[aria-expanded='true'] .dropdown-chevron {
-		transform: rotate(180deg);
 	}
 
 	.dropdown-menu {
@@ -277,7 +265,7 @@ for (const item of navItems) {
 		z-index: 200;
 	}
 
-	.nav-dropdown-toggle[aria-expanded='true'] + .dropdown-menu {
+	.nav-overflow-btn[aria-expanded='true'] + .dropdown-menu {
 		opacity: 1;
 		pointer-events: auto;
 		transform: translateX(-50%) translateY(0);
@@ -389,7 +377,7 @@ for (const item of navItems) {
 		padding: 0 14px;
 		text-decoration: none;
 		font-family: var(--font-body);
-		font-weight: 400;
+		font-weight: 600;
 		font-size: var(--header-cta-font-size);
 		transition: all 0.3s ease;
 		white-space: nowrap;

@@ -32,10 +32,9 @@ const facebookPluginUrl = normalizedPageUrl
 				title={title}
 				src={facebookPluginUrl}
 				scrolling="yes"
-				frameborder="0"
-				allowfullscreen={true}
 				allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
 				referrerpolicy="origin-when-cross-origin"
+				loading="lazy"
 			></iframe>
 		</div>
 		<div class="facebook-feed-bottom-bar">
@@ -60,7 +59,11 @@ const facebookPluginUrl = normalizedPageUrl
 	}
 
 	.facebook-feed {
-		--facebook-current-scale: min(var(--facebook-feed-scale), calc((100vw - 2 * var(--section-padding-x, 20px)) / var(--facebook-plugin-native-width)));
+		/* Scale the 500px-wide plugin to fit the available container width. */
+		--facebook-current-scale: min(
+			var(--facebook-feed-scale),
+			calc((100vw - 2 * var(--section-padding-x, 20px)) / var(--facebook-plugin-native-width))
+		);
 		--facebook-header-clip: 73px;
 		overflow: hidden;
 		padding: 0;
@@ -94,23 +97,32 @@ const facebookPluginUrl = normalizedPageUrl
 		display: block;
 		height: var(--facebook-feed-height);
 		margin-left: calc((100% - var(--facebook-plugin-native-width)) / 2);
-		margin-top: calc(-1 * var(--facebook-header-clip, 73px) * var(--facebook-current-scale));
+		margin-top: calc(-1 * var(--facebook-header-clip) * var(--facebook-current-scale));
 		transform: scale(var(--facebook-current-scale));
 		transform-origin: top center;
 		width: var(--facebook-plugin-native-width);
 	}
 
-.facebook-feed-empty {
+	.facebook-feed-empty {
 		color: var(--color-text-muted);
 		padding: 1rem;
 		text-align: center;
 	}
 
-	@media (max-width: 500px) {
+	/*
+	 * Mobile: subtract the fixed sidebar width from the available width so the
+	 * scaled plugin never slides under the sidebar on the right.
+	 */
+	@media (max-width: 520px) {
 		.facebook-feed,
 		.facebook-feed-empty {
-			max-width: 100%;
-			width: 100%;
+			--avail-width: calc(100vw - var(--sidebar-width, 0px) - 2 * var(--section-padding-x, 20px));
+			--facebook-current-scale: min(
+				var(--facebook-feed-scale),
+				calc(var(--avail-width) / var(--facebook-plugin-native-width))
+			);
+			max-width: var(--avail-width);
+			width: var(--avail-width);
 		}
 	}
 </style>
