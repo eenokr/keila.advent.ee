@@ -205,7 +205,28 @@
 
 @media (max-width: 520px) {
 	:root {
-		--hero-title-size: 2.35rem;
+		--hero-title-size: 2.1rem;
 		--body-font-size: 15px;
+		--section-padding-y: 52px;
+		--hero-padding-top: 40px;
+		--hero-padding-bottom: 40px;
+		--section-grid-gap: 28px;
+		--hero-intro-font-size: 1.05rem;
+		--hero-buttons-margin-top: 24px;
+		--paragraph-font-size: 1rem;
+	}
+}
+
+@media (max-width: 430px) {
+	:root {
+		--hero-title-size: 1.85rem;
+		--section-padding-y: 44px;
+		--hero-padding-top: 32px;
+		--hero-padding-bottom: 32px;
+		--section-grid-gap: 22px;
+		--hero-intro-font-size: 0.97rem;
+		--paragraph-font-size: 0.95rem;
+		--section-description-margin-top: 14px;
+		--hero-buttons-margin-top: 20px;
 	}
 }
