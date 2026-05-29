@@ -1,0 +1,82 @@
+name: Build ja FTP-deploy keila.advent.ee
+
+on:
+  # Igapäevane automaatne uuendus. Cron on UTC ajas.
+  # 01:00 UTC = Eesti aeg 03:00 (suvel) / 02:00 (talvel).
+  schedule:
+    - cron: '0 1 * * *'
+
+  # Lubab käivitada käsitsi Actions tabist.
+  workflow_dispatch:
+
+  # NB: see töövoog EI käivitu pushimisel — see jääb GitHub Pages workflow (pages.yml)
+  # ülesandeks. Kui soovid, et FTP uueneks ka iga pushi peale, lisa siia "push:" trigger.
+
+# Korraga jookseb ainult üks FTP-deploy. Uus käivitus ootab eelmise lõppu ära,
+# et kaks deployd ei kirjutaks serverisse korraga.
+concurrency:
+  group: ftp-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Lae repo alla.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Node.js 22 + npm cache.
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Sõltuvused täpselt package-lock.json järgi.
+      - name: Install dependencies
+        run: npm ci
+
+      # Drive-piltide cache, et mitte iga kord kõike uuesti alla laadida.
+      - name: Restore Drive image cache
+        uses: actions/cache@v4
+        with:
+          path: public/koduka
+          key: drive-images-ftp-${{ github.run_id }}
+          restore-keys: drive-images-ftp-
+
+      # Ehita leht. prebuild hook tõmbab värske info Drive'ist, Sheetsist ja advent.ee-st.
+      # SITE_URL paneb sitemap'i ja kanoonilised lingid keila.advent.ee peale.
+      - name: Build site
+        run: npm run build
+        env:
+          DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
+          SITE_URL: https://keila.advent.ee
+
+      # Lae dist/ FTP serverisse. Action peab arvet serveri olekust ja laeb üles
+      # AINULT muutunud failid (võrdleb .ftp-deploy-sync-state.json failiga serveris).
+      - name: FTP deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Kaust, kust laetakse (build väljund). Peab lõppema kaldkriipsuga.
+          local-dir: ./dist/
+          # Kaust serveris, kuhu leht läheb. Muuda vajadusel, nt: public_html/ või www/ või htdocs/
+          # Peab lõppema kaldkriipsuga.
+          server-dir: ./
+          # Kui server vajab krüpteeritud ühendust, eemalda kommentaar ja täpsusta:
+          # protocol: ftps
+          # port: 21
+          # Ära lae üles GitHub Pages-spetsiifilisi faile.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            CNAME
+            .nojekyll
