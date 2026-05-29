@@ -70,7 +70,9 @@
       "Bash(find /var/folders -name \"*.png\" -newer /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.png 2>/dev/null | head -5; find /Users/eenok/Library/Caches -name \"*.png\" -newer /tmp 2>/dev/null | head -5)",
       "Read(//Users/eenok/Library/Caches/**)",
       "Bash(magick /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.png -resize 1x1 txt:-)",
-      "Bash(magick /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.png -format \"%[fx:mean.r*255],%[fx:mean.g*255],%[fx:mean.b*255]\" info:)"
+      "Bash(magick /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.png -format \"%[fx:mean.r*255],%[fx:mean.g*255],%[fx:mean.b*255]\" info:)",
+      "Bash(grep -E '\\\\.\\(py\\)$|^mobile-|\\\\.DS_Store$|temp_')",
+      "Bash(DRIVE_FORCE_SYNC=1 npm run sync)"
     ],
     "additionalDirectories": [
       "/Users/eenok/Desktop"

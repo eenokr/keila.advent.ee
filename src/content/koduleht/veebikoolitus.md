@@ -1,6 +1,6 @@
 ---
 eyebrow: ""
-title: '"Usk ja elu" veebikursus'
+title: "Usk ja elu veebikursus"
 description: |
   Teoloog Mervi Cederström kutsub sind 12-osalises veebikursuses „Usk ja elu" avastama enda lugu Jumala suuremas loos.
   Meeldejäävama kogemuse saamiseks võta abiliseks märkmik, kuhu kirjutada üles kursuse käigus tekkivad küsimused, tähelepanekud ja oma lugu.
