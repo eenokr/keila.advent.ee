@@ -130,7 +130,7 @@ async function syncFolder({ id, key }) {
 
     console.log(`[${key}] töötlen: ${f.name}`);
     const buf = await downloadFile(f.id);
-    const meta = await sharp(buf, { failOn: 'none' }).metadata();
+    const meta = await sharp(buf, { failOn: 'none' }).rotate().metadata();
     const origW = meta.width ?? Math.max(...WIDTHS);
     const origH = meta.height ?? 0;
 
@@ -141,6 +141,7 @@ async function syncFolder({ id, key }) {
     for (const w of targetWidths) {
       const outName = `${f.id}-${w}.webp`;
       await sharp(buf, { failOn: 'none' })
+        .rotate()
         .resize({ width: w, withoutEnlargement: true })
         .webp({ quality: WEBP_QUALITY })
         .toFile(path.join(outDir, outName));
