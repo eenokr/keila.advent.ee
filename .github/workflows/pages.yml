@@ -46,11 +46,14 @@ jobs:
         run: npm ci
 
       # Restore cached Drive images to avoid re-downloading unchanged files.
+      # Key includes run_id so each run saves a fresh cache entry (with any
+      # newly downloaded images). restore-keys falls back to the most recent
+      # matching entry so unchanged files are always found on disk.
       - name: Restore Drive image cache
         uses: actions/cache@v4
         with:
           path: public/koduka
-          key: drive-images-${{ hashFiles('src/data/koduka-*.json') }}
+          key: drive-images-${{ github.run_id }}
           restore-keys: drive-images-
 
       # Build the Astro site into the dist folder.

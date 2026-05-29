@@ -59,7 +59,11 @@
       "Bash(curl -s -o /dev/null -w \"2025-02: %{http_code}\\\\n\" \"https://raw.githubusercontent.com/Adventech/sabbath-school-lessons-2016-2026/master/src/et/2025-02/cover.png\")",
       "Bash(curl -s -o /dev/null -w \"2025-01: %{http_code}\\\\n\" \"https://raw.githubusercontent.com/Adventech/sabbath-school-lessons-2016-2026/master/src/et/2025-01/cover.png\")",
       "Bash(wait)",
-      "Bash(grep -n \"section {$\\\\|section{$\" /Users/eenok/Documents/GitHub/keila.advent.ee/src/pages/index.astro)"
+      "Bash(grep -n \"section {$\\\\|section{$\" /Users/eenok/Documents/GitHub/keila.advent.ee/src/pages/index.astro)",
+      "Bash(git -C /Users/eenok/Documents/GitHub/keila.advent.ee ls-files src/data/)",
+      "Bash(python3 -c \"from PIL import Image; img = Image.open\\('/Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.png'\\); print\\(img.size\\)\")",
+      "Bash(identify /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.png)",
+      "Bash(file /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.*)"
     ],
     "additionalDirectories": [
       "/Users/eenok/Desktop"
