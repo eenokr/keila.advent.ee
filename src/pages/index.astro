@@ -680,7 +680,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	}
 
 	.service-schedule-card {
-		background: linear-gradient(150deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-primary-soft) 100%);
+		background: linear-gradient(150deg, #c7661a 0%, #e07820 55%, #f09030 100%);
 		border: none;
 		border-radius: var(--schedule-card-radius);
 		min-height: var(--schedule-card-min-height);
@@ -691,17 +691,25 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		color: #ffffff;
 		font-family: var(--font-heading);
 		font-size: var(--schedule-date-font-size);
-		line-height: 1.2;
-		margin: 0 0 var(--schedule-item-gap);
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		line-height: 1.15;
+		margin: 0 0 16px;
+		padding-bottom: 14px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+		text-transform: uppercase;
 	}
 
 	.service-schedule-list {
-		color: rgba(255, 255, 255, 0.88);
+		color: rgba(255, 255, 255, 0.92);
 		font-size: var(--schedule-text-font-size);
-		line-height: 1.55;
+		font-weight: 600;
+		letter-spacing: 0.09em;
+		line-height: 1.4;
 		list-style: none;
 		margin: 0;
 		padding: 0;
+		text-transform: uppercase;
 	}
 
 	.service-schedule-list li {
@@ -724,6 +732,7 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		filter: brightness(0) invert(1);
 		height: var(--schedule-icon-size);
 		object-fit: contain;
+		opacity: 0.95;
 		width: var(--schedule-icon-size);
 	}
 
