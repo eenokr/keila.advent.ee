@@ -20,5 +20,5 @@ contactItems:
     value: "keila@advent.ee"
     href: "mailto:keila@advent.ee"
   - label: "Parkimisinfo"
-    value: "tee ääres tasuta"
+    value: "tänava ääres, tasuta"
 ---

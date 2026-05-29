@@ -32,11 +32,35 @@ const allQuartersLink = `https://sabbath-school.adventech.io/et/`;
 const ghBase = `https://raw.githubusercontent.com/Adventech/sabbath-school-lessons/master/src/et/${activeId}`;
 const coverUrl = `${ghBase}/cover.png`;
 
-const ghHistBase = `https://raw.githubusercontent.com/Adventech/sabbath-school-lessons-2016-2026/master/src/et`;
-const pastCovers = ['2025-04', '2025-03', '2025-02', '2025-01'].map(id => ({
-	id,
-	url: `${ghHistBase}/${id}/cover.png`,
-}));
+const activeIndex = QUARTERS.findIndex(q => q.id === activeId);
+const ghFutureBase = `https://raw.githubusercontent.com/Adventech/sabbath-school-lessons/master/src/et`;
+const ghHistBase   = `https://raw.githubusercontent.com/Adventech/sabbath-school-lessons-2016-2026/master/src/et`;
+
+async function coverExists(url: string): Promise<boolean> {
+	try {
+		const r = await fetch(url, { method: 'HEAD' });
+		return r.ok;
+	} catch { return false; }
+}
+
+// Check future quarters in parallel
+const futureQuarters = QUARTERS.slice(activeIndex + 1);
+const futureChecks = await Promise.all(
+	futureQuarters.map(q => {
+		const url = `${ghFutureBase}/${q.id}/cover.png`;
+		return coverExists(url).then(ok => ok ? { id: q.id, url } : null);
+	})
+);
+
+const archiveCovers: { id: string; url: string }[] = futureChecks.filter(Boolean) as { id: string; url: string }[];
+
+// Fill remaining slots with known past quarters
+const pastIds = ['2025-04', '2025-03', '2025-02', '2025-01', '2024-04', '2024-03'];
+for (const id of pastIds) {
+	if (archiveCovers.length >= 4) break;
+	archiveCovers.push({ id, url: `${ghHistBase}/${id}/cover.png` });
+}
+const nextCovers = archiveCovers.slice(0, 4);
 
 let quarterTitle: string | null = null;
 
@@ -118,7 +142,7 @@ try {
 					aria-label="Vaata õppetükkide arhiivi"
 				>
 					<div class="ss-cover-grid">
-						{pastCovers.map(c => (
+						{nextCovers.map(c => (
 							<img src={c.url} alt={c.id} class="ss-cover-thumb" loading="lazy" />
 						))}
 					</div>
@@ -330,7 +354,6 @@ try {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: 1fr 1fr;
-		gap: 3px;
 		flex: 1;
 		min-height: 0;
 	}
