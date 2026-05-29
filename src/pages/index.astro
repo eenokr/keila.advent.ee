@@ -1077,65 +1077,90 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 	.course-chapters-list {
 		display: grid;
-		gap: var(--course-chapters-gap);
+		gap: 8px;
 		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-auto-rows: 1fr;
 	}
 
 	.course-chapter-card {
-		align-items: center;
-		background: rgba(255, 255, 255, 0.07);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		border-radius: var(--course-chapter-radius);
-		color: rgba(255, 255, 255, 0.82);
+		align-self: stretch;
+		background: rgba(255, 255, 255, 0.1);
+		border: 1.5px solid rgba(255, 255, 255, 0.14);
+		border-radius: 12px;
+		color: rgba(255, 255, 255, 0.88);
 		display: flex;
-		gap: var(--course-chapter-gap);
-		padding: var(--course-chapter-padding);
+		flex-direction: column;
+		gap: 0;
+		height: 100%;
+		justify-content: space-between;
+		min-height: 72px;
+		padding: 12px 12px 10px;
+		position: relative;
 		text-decoration: none;
-		transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+		transition: background 0.2s ease, border-color 0.2s ease,
+		            color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 	}
 
 	.course-chapter-card:hover {
-		background: rgba(255, 255, 255, 0.15);
-		border-color: rgba(255, 255, 255, 0.25);
+		background: rgba(255, 255, 255, 0.2);
+		border-color: rgba(255, 255, 255, 0.32);
 		color: #ffffff;
+		transform: translateY(-2px);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
 	}
 
 	.course-chapter-card.is-active {
-		background: rgba(255, 255, 255, 0.22);
-		border-color: rgba(255, 255, 255, 0.45);
-		color: #ffffff;
+		background: #ffffff;
+		border-color: #ffffff;
+		box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+		color: var(--color-primary-dark);
+		transform: translateY(-2px);
 	}
 
 	.chapter-num {
-		color: rgba(255, 255, 255, 0.38);
-		flex-shrink: 0;
-		font-size: 0.68rem;
-		font-weight: 700;
-		letter-spacing: 0.04em;
+		color: rgba(255, 255, 255, 0.5);
+		display: block;
+		font-family: Georgia, 'Times New Roman', serif;
+		font-size: 1.1rem;
+		font-style: italic;
+		font-weight: 400;
 		line-height: 1;
-		min-width: 20px;
+		margin-bottom: 8px;
 	}
 
-	.course-chapter-card.is-active .chapter-num { color: rgba(255,255,255,0.6); }
+	.course-chapter-card.is-active .chapter-num {
+		color: var(--color-primary);
+	}
 
 	.chapter-title {
 		flex: 1;
-		font-size: 0.85rem;
+		font-size: 0.88rem;
 		font-weight: 500;
+		hyphens: auto;
 		line-height: 1.3;
-		min-width: 0;
+	}
+
+	.course-chapter-card.is-active .chapter-title {
+		font-weight: 700;
 	}
 
 	.chapter-arrow {
-		color: rgba(255, 255, 255, 0.3);
+		align-self: flex-end;
+		color: rgba(255, 255, 255, 0.4);
+		display: block;
 		flex-shrink: 0;
-		transition: transform 0.18s ease, color 0.18s ease;
+		margin-top: 10px;
+		transition: transform 0.2s ease, color 0.2s ease;
 	}
 
-	.course-chapter-card:hover .chapter-arrow,
+	.course-chapter-card:hover .chapter-arrow {
+		color: rgba(255, 255, 255, 0.85);
+		transform: translate(2px, -2px);
+	}
+
 	.course-chapter-card.is-active .chapter-arrow {
-		color: rgba(255, 255, 255, 0.7);
-		transform: translateX(2px);
+		color: var(--color-primary);
+		transform: translate(2px, -2px);
 	}
 
 	/* Right panel — video player */
@@ -1196,8 +1221,9 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 		.course-chapters-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 	}
 
-	@media (max-width: 480px) {
+	@media (max-width: 420px) {
 		.course-chapters-list { grid-template-columns: 1fr; }
+		.course-chapter-card { min-height: 76px; }
 	}
 
 
