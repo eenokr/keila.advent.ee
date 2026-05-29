@@ -64,7 +64,13 @@
       "Bash(python3 -c \"from PIL import Image; img = Image.open\\('/Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.png'\\); print\\(img.size\\)\")",
       "Bash(identify /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.png)",
       "Bash(file /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.*)",
-      "Bash(curl -s http://localhost:4322/)"
+      "Bash(curl -s http://localhost:4322/)",
+      "Bash(ls /var/folders/*/T/*.png /tmp/*.png /Users/eenok/Desktop/*.png 2>/dev/null | head -5; ls /private/tmp/*.png 2>/dev/null | head -5)",
+      "Read(//private/var/folders/**)",
+      "Bash(find /var/folders -name \"*.png\" -newer /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.png 2>/dev/null | head -5; find /Users/eenok/Library/Caches -name \"*.png\" -newer /tmp 2>/dev/null | head -5)",
+      "Read(//Users/eenok/Library/Caches/**)",
+      "Bash(magick /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.png -resize 1x1 txt:-)",
+      "Bash(magick /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.png -format \"%[fx:mean.r*255],%[fx:mean.g*255],%[fx:mean.b*255]\" info:)"
     ],
     "additionalDirectories": [
       "/Users/eenok/Desktop"
