@@ -20,23 +20,25 @@ interface Props {
 }
 
 const { slides, intervalMs = 4500, controlsLabel = 'Piltide valik', dotLabel = 'Näita pilti', aspectRatio = '4 / 3', showDots = true } = Astro.props;
-const initialTrackIndex = slides.length > 1 ? slides.length : 0;
+const firstSlide = slides[0];
+const lastSlide = slides[slides.length - 1];
+const initialTrackIndex = slides.length > 1 ? 1 : 0;
 ---
 
 {slides.length > 0 && (
 	<div class="gallery-carousel" data-gallery-carousel data-interval-ms={intervalMs}>
 		<div class="gallery-viewport" style={`--carousel-aspect-ratio: ${aspectRatio}`}>
 		<div class="gallery-slides" aria-live="polite" style={`--active-index: ${initialTrackIndex}; --drag-offset: 0px;`}>
-			{slides.length > 1 && slides.map((slide) => (
+			{slides.length > 1 && lastSlide && (
 				<div class="gallery-slide" aria-hidden="true">
 					<div class="gallery-image">
-						{isStatic(slide)
-							? <Image src={slide.image} width={1200} format="webp" alt="" loading="lazy" fetchpriority="auto" draggable="false" decoding="async" quality={92} />
-							: <img src={slide.src} srcset={slide.srcset} width={slide.width} height={slide.height} alt="" loading="lazy" fetchpriority="auto" draggable="false" decoding="async" />
+						{isStatic(lastSlide)
+							? <Image src={lastSlide.image} width={1200} format="webp" alt="" loading="lazy" fetchpriority="auto" draggable="false" decoding="async" quality={92} />
+							: <img src={lastSlide.src} srcset={lastSlide.srcset} width={lastSlide.width} height={lastSlide.height} alt="" loading="lazy" fetchpriority="auto" draggable="false" decoding="async" />
 						}
 					</div>
 				</div>
-			))}
+			)}
 			{slides.map((slide, index) => (
 				<div class:list={['gallery-slide', index === 0 && 'is-active']} data-gallery-slide>
 					<div class="gallery-image">
@@ -47,16 +49,16 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 					</div>
 				</div>
 			))}
-			{slides.length > 1 && slides.map((slide) => (
+			{slides.length > 1 && firstSlide && (
 				<div class="gallery-slide" aria-hidden="true">
 					<div class="gallery-image">
-						{isStatic(slide)
-							? <Image src={slide.image} width={1200} format="webp" alt="" loading="lazy" fetchpriority="auto" draggable="false" decoding="async" quality={92} />
-							: <img src={slide.src} srcset={slide.srcset} width={slide.width} height={slide.height} alt="" loading="lazy" fetchpriority="auto" draggable="false" decoding="async" />
+						{isStatic(firstSlide)
+							? <Image src={firstSlide.image} width={1200} format="webp" alt="" loading="lazy" fetchpriority="auto" draggable="false" decoding="async" quality={92} />
+							: <img src={firstSlide.src} srcset={firstSlide.srcset} width={firstSlide.width} height={firstSlide.height} alt="" loading="lazy" fetchpriority="auto" draggable="false" decoding="async" />
 						}
 					</div>
 				</div>
-			))}
+			)}
 		</div>
 		</div>
 
@@ -103,7 +105,7 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 		if (!(slideTrack instanceof HTMLElement)) return;
 
 		function getTrackIndex(index) {
-			return slides.length > 1 ? slides.length + index : index;
+			return slides.length > 1 ? index + 1 : index;
 		}
 
 		function updateSlidePosition(trackIndex = getTrackIndex(activeIndex)) {
@@ -112,6 +114,16 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 
 		function setDragOffset(offset = 0) {
 			slideTrack.style.setProperty('--drag-offset', `${offset}px`);
+		}
+
+		function preloadNearby(index: number) {
+			[-1, 0, 1].forEach((offset) => {
+				const i = (index + offset + slides.length) % slides.length;
+				const img = slides[i]?.querySelector('img');
+				if (img && img.getAttribute('loading') === 'lazy') {
+					img.setAttribute('loading', 'eager');
+				}
+			});
 		}
 
 		function snapToRealSlide(index = activeIndex) {
@@ -145,9 +157,9 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 			activeIndex = normalizedIndex;
 			updateSlidePosition(
 				isForwardWrap
-					? slides.length * 2
+					? slides.length + 1
 					: isBackwardWrap
-						? slides.length - 1
+						? 0
 						: getTrackIndex(activeIndex),
 			);
 			setDragOffset();
@@ -160,6 +172,8 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 				dot.classList.toggle('is-active', isActive);
 				dot.setAttribute('aria-current', String(isActive));
 			});
+
+			preloadNearby(normalizedIndex);
 
 			if (isForwardWrap || isBackwardWrap) {
 				isWrapping = true;
@@ -289,9 +303,7 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 		const visibility = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
 				if (entry.isIntersecting) {
-					carousel.querySelectorAll('img[loading="lazy"]').forEach((img) => {
-						img.setAttribute('loading', 'eager');
-					});
+					preloadNearby(activeIndex);
 					startTimer();
 				} else {
 					stopTimer();
@@ -364,12 +376,11 @@ const initialTrackIndex = slides.length > 1 ? slides.length : 0;
 		opacity: 1;
 		position: relative;
 		width: 100%;
-		/* Force GPU layer per slide to prevent bleed-through */
-		-webkit-transform: translateZ(0);
-		transform: translateZ(0);
 	}
 
 	.gallery-slide.is-active {
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
 		z-index: 1;
 	}
 
