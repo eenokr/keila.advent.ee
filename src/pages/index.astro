@@ -1271,11 +1271,36 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 	@media (max-width: 820px) {
 		.course-top-row { grid-template-columns: 1fr; }
 		.course-chapters-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+		.course-chapter-card {
+			flex-direction: row;
+			align-items: center;
+			justify-content: flex-start;
+			min-height: 52px;
+			padding: 12px 12px;
+		}
+
+		.chapter-num {
+			font-size: 0.85rem;
+			margin-bottom: 0;
+			flex-shrink: 0;
+			min-width: 22px;
+		}
+
+		.chapter-title {
+			font-size: 0.83rem;
+			flex: 1;
+		}
+
+		.chapter-arrow {
+			align-self: center;
+			margin-top: 0;
+			flex-shrink: 0;
+		}
 	}
 
 	@media (max-width: 420px) {
 		.course-chapters-list { grid-template-columns: 1fr; }
-		.course-chapter-card { min-height: 76px; }
 	}
 
 
@@ -1409,12 +1434,30 @@ const adventAudioBlocks = (audio.audioSources ?? [])
 
 		.service-schedule-grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
-			gap: var(--schedule-grid-gap-mobile);
+			gap: 8px;
+			grid-auto-rows: auto;
 		}
 
 		.service-schedule-card {
-			min-height: var(--schedule-card-min-height-mobile);
-			padding: var(--schedule-card-padding-mobile);
+			min-height: 0;
+			padding: 14px 12px;
+		}
+
+		.service-schedule-card h4 {
+			font-size: 1.1rem;
+		}
+
+		.service-schedule-list {
+			font-size: 0.82rem;
+		}
+
+		.service-schedule-list img {
+			height: 20px;
+			width: 20px;
+		}
+
+		.service-schedule-list li {
+			gap: 7px;
 		}
 
 		.advent-audio-grid {
