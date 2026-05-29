@@ -130,34 +130,41 @@ async function syncFolder({ id, key }) {
 
     console.log(`[${key}] töötlen: ${f.name}`);
     const buf = await downloadFile(f.id);
-    const meta = await sharp(buf, { failOn: 'none' }).rotate().metadata();
-    const origW = meta.width ?? Math.max(...WIDTHS);
-    const origH = meta.height ?? 0;
 
-    const targetWidths = WIDTHS.filter((w) => w <= origW);
-    if (targetWidths.length === 0) targetWidths.push(origW);
+    // Orientatsiooni-teadlik lähtelaius: EXIF 90°/270° pööre vahetab laiuse ja kõrguse.
+    // (NB: .metadata() tagastab EXIF-eelsed mõõdud, seega arvestame orientatsiooniga ise.)
+    const meta = await sharp(buf, { failOn: 'none' }).metadata();
+    const swapWH = (meta.orientation ?? 1) >= 5;
+    const srcWidth = (swapWH ? meta.height : meta.width) ?? Math.max(...WIDTHS);
 
+    const targetWidths = WIDTHS.filter((w) => w <= srcWidth);
+    if (targetWidths.length === 0) targetWidths.push(srcWidth);
+
+    // .rotate() orienteerib pildi EXIF järgi õigeks ja eemaldab orientatsiooni-lipu.
+    // toFile() info annab TEGELIKUD väljundmõõdud — nii on manifesti width/height
+    // alati kooskõlas salvestatud failiga (varem läksid EXIF-pööratud piltidel paigast).
     const variants = [];
+    let outWidth = 0;
+    let outHeight = 0;
     for (const w of targetWidths) {
       const outName = `${f.id}-${w}.webp`;
-      await sharp(buf, { failOn: 'none' })
+      const info = await sharp(buf, { failOn: 'none' })
         .rotate()
         .resize({ width: w, withoutEnlargement: true })
         .webp({ quality: WEBP_QUALITY })
         .toFile(path.join(outDir, outName));
       variants.push({ w, src: `/koduka/${key}/${outName}` });
+      outWidth = info.width;
+      outHeight = info.height;
     }
-
-    const largest = Math.max(...targetWidths);
-    const height = origW ? Math.round((origH * largest) / origW) : origH;
 
     manifest.push({
       id: f.id,
       name: f.name,
       alt: f.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '),
       modifiedTime: f.modifiedTime,
-      width: largest,
-      height,
+      width: outWidth,
+      height: outHeight,
       variants,
     });
   }
