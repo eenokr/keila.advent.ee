@@ -33,46 +33,27 @@ const iconSrc = icon
 
 <style>
 	.info-card {
-		background: var(--color-surface);
-		border: 1px solid var(--color-border);
+		background: linear-gradient(150deg, #c7661a 0%, #e07820 55%, #f09030 100%);
+		border: none;
 		border-radius: var(--info-card-radius);
 		min-height: var(--info-card-min-height);
 		padding: var(--info-card-padding);
 		position: relative;
 		overflow: hidden;
 		transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-		            box-shadow 0.3s ease,
-		            border-color 0.3s ease;
-	}
-
-	.info-card::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		height: var(--info-card-top-line-height);
-		background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-soft) 100%);
-		border-radius: var(--info-card-radius) var(--info-card-radius) 0 0;
-		opacity: 0.6;
-		transition: opacity 0.3s ease;
+		            box-shadow 0.3s ease;
 	}
 
 	.info-card:hover {
-		border-color: var(--color-border-strong);
-		box-shadow: 0 8px 32px rgba(117, 62, 19, 0.11),
-		            0 2px 8px rgba(117, 62, 19, 0.06);
+		box-shadow: 0 8px 32px rgba(117, 62, 19, 0.28),
+		            0 2px 8px rgba(117, 62, 19, 0.18);
 		transform: translateY(-4px);
-	}
-
-	.info-card:hover::before {
-		opacity: 1;
 	}
 
 	.info-card-icon-wrap {
 		align-items: center;
-		background: linear-gradient(135deg, var(--color-surface-warm) 0%, var(--color-surface-soft) 100%);
-		border: 1px solid var(--color-border);
+		background: rgba(255, 255, 255, 0.18);
+		border: 1px solid rgba(255, 255, 255, 0.25);
 		border-radius: var(--schedule-card-radius);
 		display: inline-flex;
 		height: var(--info-card-icon-box-size);
@@ -83,22 +64,23 @@ const iconSrc = icon
 
 	.info-card-icon {
 		display: block;
+		filter: brightness(0) invert(1);
 		height: var(--info-card-icon-size);
 		object-fit: contain;
 		width: var(--info-card-icon-size);
 	}
 
 	h3 {
-		color: var(--color-heading);
+		color: #ffffff;
 		font-family: var(--font-heading);
 		font-size: var(--info-card-title-size);
-		font-weight: 600;
+		font-weight: 700;
 		line-height: 1.25;
 		margin: 0 0 var(--info-card-title-margin-bottom);
 	}
 
 	p {
-		color: var(--color-text-soft);
+		color: rgba(255, 255, 255, 0.9);
 		font-size: var(--info-card-text-size);
 		line-height: var(--paragraph-line-height);
 		margin: 0;
