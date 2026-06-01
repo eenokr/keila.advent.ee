@@ -115,8 +115,8 @@
     "semantic_hash": "8eb0f37202b7ec7f5360b6530ae363c6"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/components/sections/MeistSektsioon.astro": {
-    "mtime": 1780303686.7815554,
-    "ast_hash": "b265a34f1296866b798c6818a4ea88b4",
+    "mtime": 1780307405.1495585,
+    "ast_hash": "e81154dacaaa59a69a1033dd9e1dfc09",
     "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/components/sections/AudioSektsioon.astro": {
@@ -155,12 +155,12 @@
     "semantic_hash": "b206424c870c560ad61bb407eca27ac8"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/data/koduka-teated.json": {
-    "mtime": 1780301905.2544904,
+    "mtime": 1780307035.2285864,
     "ast_hash": "ecec55ad779f8b5bba1180b228fcff34",
     "semantic_hash": "ecec55ad779f8b5bba1180b228fcff34"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/data/koduka-galerii.json": {
-    "mtime": 1780301904.898248,
+    "mtime": 1780307034.8891835,
     "ast_hash": "19ece080c898d0a204bcd04784042d08",
     "semantic_hash": "19ece080c898d0a204bcd04784042d08"
   },
