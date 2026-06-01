@@ -200,6 +200,12 @@
 		--section-grid-gap: 34px;
 		--contact-map-height: 240px;
 		--gallery-controls-offset: 14px;
+		--contact-padding-y: 72px;
+		--contact-title-size: 1.45rem;
+		--contact-text-size: 1rem;
+		--contact-details-padding: 24px;
+		--contact-layout-gap: 28px;
+		--contact-card-padding: 16px;
 	}
 }
 

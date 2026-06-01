@@ -634,7 +634,7 @@
       "label": "preMeasure()",
       "file_type": "code",
       "source_file": "src/components/Pais.astro",
-      "source_location": "L635",
+      "source_location": "L637",
       "id": "components_pais_premeasure",
       "community": 4,
       "norm_label": "premeasure()"
@@ -643,7 +643,7 @@
       "label": "measure()",
       "file_type": "code",
       "source_file": "src/components/Pais.astro",
-      "source_location": "L643",
+      "source_location": "L645",
       "id": "components_pais_measure",
       "community": 4,
       "norm_label": "measure()"
@@ -652,7 +652,7 @@
       "label": "lerp()",
       "file_type": "code",
       "source_file": "src/components/Pais.astro",
-      "source_location": "L757",
+      "source_location": "L759",
       "id": "components_pais_lerp",
       "community": 4,
       "norm_label": "lerp()"
@@ -661,7 +661,7 @@
       "label": "clamp()",
       "file_type": "code",
       "source_file": "src/components/Pais.astro",
-      "source_location": "L758",
+      "source_location": "L760",
       "id": "components_pais_clamp",
       "community": 4,
       "norm_label": "clamp()"
@@ -670,7 +670,7 @@
       "label": "update()",
       "file_type": "code",
       "source_file": "src/components/Pais.astro",
-      "source_location": "L760",
+      "source_location": "L762",
       "id": "components_pais_update",
       "community": 4,
       "norm_label": "update()"

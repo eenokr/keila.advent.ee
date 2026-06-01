@@ -84,7 +84,7 @@ const { about, communitySlides } = Astro.props;
 		margin: 0 auto;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-		gap: var(--section-grid-gap);
+		gap: var(--hero-column-gap);
 		align-items: center;
 		position: relative;
 	}
@@ -109,17 +109,24 @@ const { about, communitySlides } = Astro.props;
 
 	.about-carousel-wrap,
 	.about-carousel-wrap:hover {
+		border-radius: 0;
+		box-shadow: none;
 		outline: 0;
+		overflow: visible;
 		transform: none;
 	}
 
-	.about-image picture {
+	.about-carousel-wrap :global(.gallery-viewport) {
+		box-shadow: none;
+	}
+
+	.about-image:not(.about-carousel-wrap) picture {
 		display: block;
 		height: 100%;
 		width: 100%;
 	}
 
-	.about-image img {
+	.about-image:not(.about-carousel-wrap) img {
 		height: 100%;
 		object-fit: cover;
 		width: 100%;
@@ -153,6 +160,8 @@ const { about, communitySlides } = Astro.props;
 
 	.about-copy {
 		max-width: var(--text-column-width);
+		min-width: 0;
+		width: 100%;
 	}
 
 	.about-copy p {
@@ -178,6 +187,43 @@ const { about, communitySlides } = Astro.props;
 
 		.about-copy {
 			justify-self: center;
+			max-width: 100%;
+		}
+
+		.about-carousel-wrap {
+			aspect-ratio: auto;
+			max-width: calc(100vw - var(--sidebar-width) - (2 * var(--section-padding-x)));
+			width: 100%;
+		}
+
+		.about-carousel-wrap :global(.gallery-viewport) {
+			aspect-ratio: 4 / 3;
+			box-shadow: 0 20px 60px rgba(117, 62, 19, 0.18),
+			            0 4px 14px rgba(117, 62, 19, 0.1);
+		}
+
+		.about-carousel-wrap :global(.gallery-image img) {
+			height: 100%;
+			max-height: none;
+			max-width: none;
+			object-fit: cover;
+			width: 100%;
+		}
+	}
+
+	@media (max-width: 520px) {
+		.about-section {
+			padding-inline: var(--section-padding-x);
+		}
+
+		.about-copy h2 {
+			font-size: var(--hero-title-size);
+			line-height: var(--hero-title-line-height);
+		}
+
+		.about-copy p {
+			font-size: var(--hero-intro-font-size);
+			line-height: var(--hero-intro-line-height);
 		}
 	}
 </style>
