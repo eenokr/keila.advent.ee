@@ -109,8 +109,15 @@ const { about, communitySlides } = Astro.props;
 
 	.about-carousel-wrap,
 	.about-carousel-wrap:hover {
+		border-radius: 0;
+		box-shadow: none;
 		outline: 0;
+		overflow: visible;
 		transform: none;
+	}
+
+	.about-carousel-wrap :global(.gallery-viewport) {
+		box-shadow: none;
 	}
 
 	.about-image picture {

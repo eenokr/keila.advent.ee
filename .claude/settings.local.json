@@ -73,7 +73,8 @@
       "Bash(magick /Users/eenok/Documents/GitHub/keila.advent.ee/src/assets/branding/keila-kogudus-logo.png -format \"%[fx:mean.r*255],%[fx:mean.g*255],%[fx:mean.b*255]\" info:)",
       "Bash(grep -E '\\\\.\\(py\\)$|^mobile-|\\\\.DS_Store$|temp_')",
       "Bash(DRIVE_FORCE_SYNC=1 npm run sync)",
-      "Bash(awk '{print $NF, $5}')"
+      "Bash(awk '{print $NF, $5}')",
+      "mcp__Claude_Preview__preview_start"
     ],
     "additionalDirectories": [
       "/Users/eenok/Desktop"

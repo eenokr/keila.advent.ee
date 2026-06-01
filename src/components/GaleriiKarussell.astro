@@ -340,10 +340,13 @@ const initialTrackIndex = slides.length > 1 ? 1 : 0;
 	}
 
 	.gallery-slides,
-	.gallery-image,
-	.gallery-image :global(picture),
-	.gallery-slide :global(picture),
 	.gallery-slide :global(img) {
+		height: 100%;
+		width: 100%;
+	}
+
+	.gallery-image,
+	.gallery-image :global(picture) {
 		height: 100%;
 		width: 100%;
 	}
@@ -389,11 +392,11 @@ const initialTrackIndex = slides.length > 1 ? 1 : 0;
 	}
 
 	.gallery-image {
+		align-items: center;
+		display: flex;
 		inset: 0;
+		justify-content: center;
 		position: absolute;
-	}
-
-	.gallery-image {
 		z-index: 1;
 	}
 
@@ -404,7 +407,12 @@ const initialTrackIndex = slides.length > 1 ? 1 : 0;
 	}
 
 	.gallery-image :global(img) {
+		border-radius: var(--gallery-border-radius);
+		height: auto;
+		max-height: 100%;
+		max-width: 100%;
 		object-fit: contain;
+		width: auto;
 	}
 
 	.gallery-controls {

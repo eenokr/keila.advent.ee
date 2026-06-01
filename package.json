@@ -9,7 +9,7 @@
     "sync": "node scripts/sync-drive.mjs",
     "predev": "node scripts/sync-drive.mjs",
     "prebuild": "node scripts/sync-drive.mjs",
-    "dev": "astro dev --host 127.0.0.1",
+    "dev": "astro dev --host 0.0.0.0",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
