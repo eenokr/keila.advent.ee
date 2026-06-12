@@ -16,6 +16,9 @@ on:
 
 # Korraga jookseb ainult üks FTP-deploy. Uus käivitus ootab eelmise lõppu ära,
 # et kaks deployd ei kirjutaks serverisse korraga.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 concurrency:
   group: ftp-deploy
   cancel-in-progress: false
