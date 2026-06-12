@@ -1,9 +1,9 @@
 [
   {
     "id": "11sNgC4Z8NjUpQB680WP2IA8y6ISoN0sO",
-    "name": "Blue and White Ilustrative Bonfire Winter Night Flyer (Facebooki postitus)-4.png",
-    "alt": "Blue and White Ilustrative Bonfire Winter Night Flyer (Facebooki postitus) 4",
-    "modifiedTime": "2026-05-29T10:16:52.000Z",
+    "name": "Koguduse jaanipäev.png",
+    "alt": "Koguduse jaanipäev",
+    "modifiedTime": "2026-06-10T16:03:26.516Z",
     "width": 1600,
     "height": 1341,
     "variants": [
@@ -22,16 +22,38 @@
     ]
   },
   {
-    "id": "11mCT6-l6KVqltig6LmHvJRwdP58a_VqJ",
-    "name": "293153_vanalinnapaevad_2026.jpg",
-    "alt": "293153 vanalinnapaevad 2026",
-    "modifiedTime": "2026-05-28T15:00:25.000Z",
-    "width": 400,
-    "height": 199,
+    "id": "1hqpZGpgwF3B7LQoyUcGB5p79aseFgcoW",
+    "name": "kontsert_kusagil_on_kodu_06.2026.jpg",
+    "alt": "kontsert kusagil on kodu 06.2026",
+    "modifiedTime": "2026-06-10T15:58:59.000Z",
+    "width": 800,
+    "height": 1132,
     "variants": [
       {
         "w": 400,
-        "src": "/koduka/teated/11mCT6-l6KVqltig6LmHvJRwdP58a_VqJ-400.webp"
+        "src": "/koduka/teated/1hqpZGpgwF3B7LQoyUcGB5p79aseFgcoW-400.webp"
+      },
+      {
+        "w": 800,
+        "src": "/koduka/teated/1hqpZGpgwF3B7LQoyUcGB5p79aseFgcoW-800.webp"
+      }
+    ]
+  },
+  {
+    "id": "1nDZcQKtWXRsYlGbuDqgdTzeldPcMRF-i",
+    "name": "poistelaager.jpg",
+    "alt": "poistelaager",
+    "modifiedTime": "2026-06-08T14:19:58.000Z",
+    "width": 800,
+    "height": 450,
+    "variants": [
+      {
+        "w": 400,
+        "src": "/koduka/teated/1nDZcQKtWXRsYlGbuDqgdTzeldPcMRF-i-400.webp"
+      },
+      {
+        "w": 800,
+        "src": "/koduka/teated/1nDZcQKtWXRsYlGbuDqgdTzeldPcMRF-i-800.webp"
       }
     ]
   },
@@ -46,24 +68,6 @@
       {
         "w": 400,
         "src": "/koduka/teated/1lR5wE0kjyCGdKcTMzpAA-hm289vRurMt-400.webp"
-      }
-    ]
-  },
-  {
-    "id": "1CZFPzCd0Yfgs0fsSvBh_WfCzDGasYoAi",
-    "name": "poistelaager_2026-2.jpg",
-    "alt": "poistelaager 2026 2",
-    "modifiedTime": "2026-05-28T15:00:00.000Z",
-    "width": 800,
-    "height": 436,
-    "variants": [
-      {
-        "w": 400,
-        "src": "/koduka/teated/1CZFPzCd0Yfgs0fsSvBh_WfCzDGasYoAi-400.webp"
-      },
-      {
-        "w": 800,
-        "src": "/koduka/teated/1CZFPzCd0Yfgs0fsSvBh_WfCzDGasYoAi-800.webp"
       }
     ]
   },
