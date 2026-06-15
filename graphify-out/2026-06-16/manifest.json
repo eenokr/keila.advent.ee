@@ -155,12 +155,12 @@
     "semantic_hash": "b206424c870c560ad61bb407eca27ac8"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/data/koduka-teated.json": {
-    "mtime": 1781557376.8329403,
+    "mtime": 1781543972.3454833,
     "ast_hash": "528ea564be9c281f3d377500f3b1c617",
     "semantic_hash": "528ea564be9c281f3d377500f3b1c617"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/data/koduka-galerii.json": {
-    "mtime": 1781557376.4809728,
+    "mtime": 1781543971.9501088,
     "ast_hash": "78ad61f09e712831776ce4376fe1033f",
     "semantic_hash": "78ad61f09e712831776ce4376fe1033f"
   },
@@ -175,9 +175,9 @@
     "semantic_hash": "0e067168fd4bd1171cfeb62b4e3df15d"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/README.md": {
-    "mtime": 1781557368.1434119,
-    "ast_hash": "6457965583ad99f21270f7cd07a9d774",
-    "semantic_hash": ""
+    "mtime": 1781290149.6068988,
+    "ast_hash": "8165749c8dfaca739d4c0a1881c3997e",
+    "semantic_hash": "8165749c8dfaca739d4c0a1881c3997e"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/public/robots.txt": {
     "mtime": 1781290149.6364193,

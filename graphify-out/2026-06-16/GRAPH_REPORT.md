@@ -1,11 +1,11 @@
 # Graph Report - keila.advent.ee  (2026-06-16)
 
 ## Corpus Check
-- 54 files · ~206,801 words
+- 54 files · ~206,476 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 331 nodes · 301 edges · 103 communities (37 shown, 66 thin omitted)
+- 327 nodes · 297 edges · 103 communities (37 shown, 66 thin omitted)
 - Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 29 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
@@ -102,8 +102,8 @@
 1. `../../components/PeaMeta.astro` - 18 edges
 2. `Keila Adventkogudus Project README` - 13 edges
 3. `../../components/Pais.astro` - 12 edges
-4. `Keila Adventkogudus` - 11 edges
-5. `getServiceScheduleItems()` - 10 edges
+4. `getServiceScheduleItems()` - 10 edges
+5. `Keila Adventkogudus` - 10 edges
 6. `scripts` - 9 edges
 7. `../components/sections/HingamispaevakooliVidin.astro` - 9 edges
 8. `Jutlused ja Raadiosaated (Audio) Section` - 9 edges
@@ -145,16 +145,16 @@ Cohesion: 0.11
 Nodes (16): Jalus, PeaMeta, advent.ee audio HTML scraper, Google Sheets CSV service schedule, Sabbath School quarter selection logic, Schema.org JSON-LD Church structured data, adventAudio, serviceSchedule (+8 more)
 
 ### Community 3 - "Content Collections & Routing"
-Cohesion: 0.25
-Nodes (8): activeIndex, futureQuarters, nextCovers, now, pastIds, QUARTERS, thisSat, ../components/sections/HingamispaevakooliVidin.astro
+Cohesion: 0.12
+Nodes (14): canonicalURL, emailItem, imageURL, phoneItem, [streetAddress, addressLocality = 'Keila'], structuredData, astro, ../../components/PeaMeta.astro (+6 more)
 
 ### Community 4 - "Build Dependencies & Config"
-Cohesion: 0.10
-Nodes (19): dependencies, astro, @astrojs/mdx, @astrojs/sitemap, sharp, engines, node, name (+11 more)
+Cohesion: 0.11
+Nodes (18): dependencies, @astrojs/mdx, @astrojs/sitemap, sharp, engines, node, name, scripts (+10 more)
 
 ### Community 5 - "SEO & Contact"
-Cohesion: 0.08
-Nodes (22): iconPaths, today, clamp(), lerp(), update(), canonicalURL, emailItem, imageURL (+14 more)
+Cohesion: 0.10
+Nodes (17): iconPaths, today, clamp(), lerp(), update(), activeIndex, futureQuarters, nextCovers (+9 more)
 
 ### Community 6 - "Service Schedule Parser"
 Cohesion: 0.20
@@ -185,8 +185,8 @@ Cohesion: 0.50
 Nodes (3): editor.fontSize, window.density.editorTabHeight, window.zoomLevel
 
 ### Community 86 - "Community 86"
-Cohesion: 0.09
-Nodes (22): Avaldamine (deploy), Avalehe sektsioonid, Enne pushimist, Facebooki postituste sünk, Google Drive piltide sünk, Jutlused ja raadiosaated, Keila Adventkogudus, Kes me oleme (+14 more)
+Cohesion: 0.11
+Nodes (18): Avaldamine (deploy), Avalehe sektsioonid, Enne pushimist, Google Drive piltide sünk, Jutlused ja raadiosaated, Keila Adventkogudus, Kes me oleme, Kogunemiste kuupäevad (+10 more)
 
 ### Community 87 - "Community 87"
 Cohesion: 0.29
@@ -197,24 +197,24 @@ Cohesion: 0.60
 Nodes (5): ensureOutputExists(), fetchPosts(), getFreshToken(), main(), persistTokenToGithub()
 
 ## Knowledge Gaps
-- **170 isolated node(s):** `name`, `type`, `version`, `node`, `sync` (+165 more)
+- **167 isolated node(s):** `name`, `type`, `version`, `node`, `sync` (+162 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **66 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `../../components/PeaMeta.astro` connect `SEO & Contact` to `Astro Page Assembly`, `Build Dependencies & Config`?**
-  _High betweenness centrality (0.150) - this node is a cross-community bridge._
+- **Why does `../../components/PeaMeta.astro` connect `Content Collections & Routing` to `Astro Page Assembly`, `SEO & Contact`?**
+  _High betweenness centrality (0.154) - this node is a cross-community bridge._
+- **Why does `dependencies` connect `Build Dependencies & Config` to `Content Collections & Routing`?**
+  _High betweenness centrality (0.135) - this node is a cross-community bridge._
+- **Why does `astro` connect `Content Collections & Routing` to `Build Dependencies & Config`?**
+  _High betweenness centrality (0.133) - this node is a cross-community bridge._
 - **What connects `name`, `type`, `version` to the rest of the system?**
-  _175 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _172 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Astro Page Assembly` be split into smaller, more focused modules?**
   _Cohesion score 0.07058823529411765 - nodes in this community are weakly interconnected._
 - **Should `Church & Content Entities` be split into smaller, more focused modules?**
   _Cohesion score 0.12 - nodes in this community are weakly interconnected._
 - **Should `UI Shell & External Data Concepts` be split into smaller, more focused modules?**
   _Cohesion score 0.11255411255411256 - nodes in this community are weakly interconnected._
-- **Should `Build Dependencies & Config` be split into smaller, more focused modules?**
-  _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
-- **Should `SEO & Contact` be split into smaller, more focused modules?**
-  _Cohesion score 0.08374384236453201 - nodes in this community are weakly interconnected._
