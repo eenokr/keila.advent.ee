@@ -18,7 +18,7 @@
 	--facebook-feed-height: 650px;
 	--facebook-feed-scale: 1.15;
 	--facebook-plugin-native-width: 500px;
-	--facebook-feed-radius: 8px;
+	--facebook-feed-radius: 14px;
 	--facebook-feed-fallback-font-size: 0.9375rem;
 	--facebook-feed-fallback-line-height: 1.45;
 	--facebook-feed-fallback-padding: 12px 16px;
@@ -85,7 +85,7 @@
 	--info-grid-gap: 20px;
 	--gallery-panel-width: 740px;
 	--gallery-panel-height: 460px;
-	--gallery-border-radius: 8px;
+	--gallery-border-radius: 14px;
 	--gallery-mobile-aspect-ratio: 16 / 11;
 	--gallery-dot-size: 13px;
 	--gallery-dot-gap: 10px;
@@ -142,7 +142,7 @@
 	--audio-block-gap: 20px;
 	--audio-inner-gap: 10px;
 	--audio-heading-gap: 16px;
-	--audio-card-radius: 12px;
+	--audio-card-radius: 14px;
 	--audio-image-placeholder-size: 22px;
 	--audio-date-margin-bottom: 7px;
 	--audio-link-font-size: 0.875rem;
@@ -161,9 +161,9 @@
 	--contact-text-line-height: 1.65;
 	--contact-details-padding: 32px;
 	--contact-layout-gap: 48px;
-	--contact-card-radius: 20px;
-	--contact-details-radius: 18px;
-	--contact-map-radius: 16px;
+	--contact-card-radius: 14px;
+	--contact-details-radius: 14px;
+	--contact-map-radius: 14px;
 	--contact-map-margin-top: 28px;
 	--contact-field-gap: 12px;
 	--app-card-padding: 34px;
@@ -177,7 +177,7 @@
 	--course-actions-margin-top: 28px;
 	--course-chapters-margin-top: 28px;
 	--course-chapters-gap: 6px;
-	--course-chapter-radius: 8px;
+	--course-chapter-radius: 14px;
 	--course-chapter-gap: 10px;
 	--course-chapter-padding: 10px 12px;
 	--course-video-aspect-ratio: 16 / 9;

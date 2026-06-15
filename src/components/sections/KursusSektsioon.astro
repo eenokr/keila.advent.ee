@@ -213,7 +213,7 @@ const { course } = Astro.props;
 		align-self: stretch;
 		background: rgba(255, 255, 255, 0.1);
 		border: 1.5px solid rgba(255, 255, 255, 0.14);
-		border-radius: 12px;
+		border-radius: var(--course-chapter-radius);
 		color: rgba(255, 255, 255, 0.88);
 		display: flex;
 		flex-direction: column;
@@ -359,12 +359,11 @@ const { course } = Astro.props;
 
 	@media (max-width: 1300px) {
 		.course-top-row {
-			grid-template-columns: var(--course-copy-column-width-tablet) 1fr;
-			gap: var(--course-layout-gap-tablet);
+			grid-template-columns: 1fr;
 		}
 
 		.course-chapters-list {
-			grid-template-columns: repeat(3, minmax(0, 1fr));
+			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 	}
 
