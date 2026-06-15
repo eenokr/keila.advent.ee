@@ -1,6 +1,5 @@
 ---
 import SektsiooniPealkiri from '../SektsiooniPealkiri.astro';
-import FacebookiVoog from '../FacebookiVoog.astro';
 import FacebookiPostitused from '../FacebookiPostitused.astro';
 import TegevusNupp from '../TegevusNupp.astro';
 import facebookPosts from '../../data/facebook-posts.json';
@@ -38,10 +37,8 @@ const { facebook } = Astro.props;
 				))}
 			</div>
 		</div>
-		{facebookPosts.posts?.length > 0 ? (
+		{facebookPosts.posts?.length > 0 && (
 			<FacebookiPostitused posts={facebookPosts.posts} pageUrl={facebook.pageUrl} />
-		) : (
-			<FacebookiVoog pageUrl={facebook.pageUrl} />
 		)}
 	</div>
 </section>
