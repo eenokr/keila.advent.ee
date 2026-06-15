@@ -1,3 +1,10 @@
+/*
+ * Peamine paigutuse murdepunkt: sellest laiusest allapoole lähevad
+ * kaheveerulised sektsioonipaigutused üksteise peale (vertikaalseks).
+ * Väärtus on kasutatud @media (max-width: 1300px) päringutes:
+ *   FacebookiSektsioon, HeroSektsioon, MeistSektsioon, KursusSektsioon
+ */
+
 :root {
 	/* Parempoolne riba */
 	--sidebar-width: calc(100vw / 7);
