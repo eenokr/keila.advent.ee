@@ -159,10 +159,10 @@ async function persistTokenToGithub(newToken) {
     return;
   }
   if (!process.env.GH_TOKEN) {
-    console.warn(
-      'Uus Facebook token saadud, aga GH_TOKEN puudub - secret\'i FB_PAGE_TOKEN ' +
-        'automaatset uuendust jäeti vahele. Vana token kehtib veel kuni varasema ' +
-        'aegumiseni, aga tasub GH_TOKEN seadistada (vt README).'
+    console.error(
+      '⚠️  HOIATUS: Uus Facebook Page token saadud, aga GH_TOKEN puudub - ' +
+        'FB_PAGE_TOKEN secret-i automaatne uuendus jäeti vahele!\n' +
+        '   Järgmine build kasutab vana (aegunud) tokenit. Lisa GH_PAT repo secrets-isse.'
     );
     return;
   }
