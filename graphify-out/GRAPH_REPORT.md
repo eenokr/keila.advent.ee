@@ -1,7 +1,7 @@
 # Graph Report - keila.advent.ee  (2026-06-16)
 
 ## Corpus Check
-- 54 files · ~206,801 words
+- 54 files · ~206,982 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `de61d286`
+- Built from commit: `a202f89f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -134,7 +134,7 @@
 
 ### Community 0 - "Astro Page Assembly"
 Cohesion: 0.07
-Nodes (26): fetchedAt, posts, adventAudioBlocks, audioItemsByKey, communitySlides, koduleht, orderedKoduleheEntries, visibleContactItems (+18 more)
+Nodes (25): fetchedAt, posts, adventAudioBlocks, audioItemsByKey, communitySlides, koduleht, orderedKoduleheEntries, visibleContactItems (+17 more)
 
 ### Community 1 - "Church & Content Entities"
 Cohesion: 0.12
@@ -197,7 +197,7 @@ Cohesion: 0.60
 Nodes (5): ensureOutputExists(), fetchPosts(), getFreshToken(), main(), persistTokenToGithub()
 
 ## Knowledge Gaps
-- **170 isolated node(s):** `name`, `type`, `version`, `node`, `sync` (+165 more)
+- **169 isolated node(s):** `name`, `type`, `version`, `node`, `sync` (+164 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **66 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -207,7 +207,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `../../components/PeaMeta.astro` connect `SEO & Contact` to `Astro Page Assembly`, `Build Dependencies & Config`?**
   _High betweenness centrality (0.150) - this node is a cross-community bridge._
 - **What connects `name`, `type`, `version` to the rest of the system?**
-  _175 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _174 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Astro Page Assembly` be split into smaller, more focused modules?**
   _Cohesion score 0.07058823529411765 - nodes in this community are weakly interconnected._
 - **Should `Church & Content Entities` be split into smaller, more focused modules?**

@@ -285,7 +285,7 @@
       "source_file": "package.json",
       "source_location": "L21",
       "id": "keila_advent_ee_package_dependencies_astro",
-      "community": 3,
+      "community": 4,
       "norm_label": "astro"
     },
     {
@@ -526,7 +526,7 @@
       "label": "getFreshToken()",
       "file_type": "code",
       "source_file": "scripts/sync-facebook.mjs",
-      "source_location": "L59",
+      "source_location": "L63",
       "id": "scripts_sync_facebook_getfreshtoken",
       "community": 103,
       "norm_label": "getfreshtoken()"
@@ -535,7 +535,7 @@
       "label": "persistTokenToGithub()",
       "file_type": "code",
       "source_file": "scripts/sync-facebook.mjs",
-      "source_location": "L109",
+      "source_location": "L156",
       "id": "scripts_sync_facebook_persisttokentogithub",
       "community": 103,
       "norm_label": "persisttokentogithub()"
@@ -544,7 +544,7 @@
       "label": "fetchPosts()",
       "file_type": "code",
       "source_file": "scripts/sync-facebook.mjs",
-      "source_location": "L134",
+      "source_location": "L181",
       "id": "scripts_sync_facebook_fetchposts",
       "community": 103,
       "norm_label": "fetchposts()"
@@ -553,7 +553,7 @@
       "label": "main()",
       "file_type": "code",
       "source_file": "scripts/sync-facebook.mjs",
-      "source_location": "L158",
+      "source_location": "L205",
       "id": "scripts_sync_facebook_main",
       "community": 103,
       "norm_label": "main()"
@@ -717,7 +717,7 @@
       "source_file": "src/consts.ts",
       "source_location": "L1",
       "id": "src_consts_ts",
-      "community": 3,
+      "community": 5,
       "norm_label": "consts.ts"
     },
     {
@@ -864,7 +864,7 @@
       "source_file": "astro",
       "confidence": "EXTRACTED",
       "id": "astro",
-      "community": 3,
+      "community": 4,
       "norm_label": "astro"
     },
     {
@@ -906,14 +906,13 @@
       "norm_label": "formatdate()"
     },
     {
-      "label": "../FacebookiVoog.astro",
+      "label": "FacebookiVoog.astro",
       "file_type": "code",
       "source_file": "src/components/FacebookiVoog.astro",
       "source_location": "L1",
-      "confidence": "EXTRACTED",
       "id": "src_components_facebookivoog_astro",
       "community": 0,
-      "norm_label": "../facebookivoog.astro"
+      "norm_label": "facebookivoog.astro"
     },
     {
       "label": "../SektsiooniPealkiri.astro",
@@ -932,7 +931,7 @@
       "source_location": "L1",
       "confidence": "EXTRACTED",
       "id": "src_components_peameta_astro",
-      "community": 3,
+      "community": 5,
       "norm_label": "../../components/peameta.astro"
     },
     {
@@ -941,7 +940,7 @@
       "source_file": "src/components/PeaMeta.astro",
       "source_location": "L22",
       "id": "components_peameta_canonicalurl",
-      "community": 3,
+      "community": 5,
       "norm_label": "canonicalurl"
     },
     {
@@ -950,7 +949,7 @@
       "source_file": "src/components/PeaMeta.astro",
       "source_location": "L25",
       "id": "components_peameta_imageurl",
-      "community": 3,
+      "community": 5,
       "norm_label": "imageurl"
     },
     {
@@ -959,7 +958,7 @@
       "source_file": "src/components/PeaMeta.astro",
       "source_location": "L33",
       "id": "components_peameta_phoneitem",
-      "community": 3,
+      "community": 5,
       "norm_label": "phoneitem"
     },
     {
@@ -968,7 +967,7 @@
       "source_file": "src/components/PeaMeta.astro",
       "source_location": "L34",
       "id": "components_peameta_emailitem",
-      "community": 3,
+      "community": 5,
       "norm_label": "emailitem"
     },
     {
@@ -977,7 +976,7 @@
       "source_file": "src/components/PeaMeta.astro",
       "source_location": "L35",
       "id": "components_peameta_streetaddress_addresslocality_keila",
-      "community": 3,
+      "community": 5,
       "norm_label": "[streetaddress, addresslocality = 'keila']"
     },
     {
@@ -986,7 +985,7 @@
       "source_file": "src/components/PeaMeta.astro",
       "source_location": "L39",
       "id": "components_peameta_structureddata",
-      "community": 3,
+      "community": 5,
       "norm_label": "structureddata"
     },
     {
@@ -995,7 +994,7 @@
       "source_file": "src/styles/global.css",
       "confidence": "EXTRACTED",
       "id": "users_eenok_documents_github_keila_advent_ee_src_styles_global_css",
-      "community": 3,
+      "community": 5,
       "norm_label": "../styles/global.css"
     },
     {
@@ -1004,7 +1003,7 @@
       "source_file": "src/styles/suurused.css",
       "confidence": "EXTRACTED",
       "id": "users_eenok_documents_github_keila_advent_ee_src_styles_suurused_css",
-      "community": 3,
+      "community": 5,
       "norm_label": "../styles/suurused.css"
     },
     {
@@ -1013,7 +1012,7 @@
       "source_file": "src/assets/branding/kiriku-pilt.jpg",
       "confidence": "EXTRACTED",
       "id": "users_eenok_documents_github_keila_advent_ee_src_assets_branding_kiriku_pilt_jpg",
-      "community": 3,
+      "community": 5,
       "norm_label": "../assets/branding/kiriku-pilt.jpg"
     },
     {
@@ -1022,7 +1021,7 @@
       "source_file": "src/assets/fonts/atkinson-bold.woff?url",
       "confidence": "EXTRACTED",
       "id": "users_eenok_documents_github_keila_advent_ee_src_assets_fonts_atkinson_bold_woff_url",
-      "community": 3,
+      "community": 5,
       "norm_label": "../assets/fonts/atkinson-bold.woff?url"
     },
     {
@@ -1031,7 +1030,7 @@
       "source_file": "src/assets/fonts/atkinson-regular.woff?url",
       "confidence": "EXTRACTED",
       "id": "users_eenok_documents_github_keila_advent_ee_src_assets_fonts_atkinson_regular_woff_url",
-      "community": 3,
+      "community": 5,
       "norm_label": "../assets/fonts/atkinson-regular.woff?url"
     },
     {
@@ -1040,7 +1039,7 @@
       "source_file": "src/consts",
       "confidence": "EXTRACTED",
       "id": "users_eenok_documents_github_keila_advent_ee_src_consts",
-      "community": 3,
+      "community": 5,
       "norm_label": "../consts"
     },
     {
@@ -1146,7 +1145,7 @@
       "source_location": "L1",
       "confidence": "EXTRACTED",
       "id": "src_components_sections_hingamispaevakoolividin_astro",
-      "community": 5,
+      "community": 3,
       "norm_label": "../components/sections/hingamispaevakoolividin.astro"
     },
     {
@@ -1155,7 +1154,7 @@
       "source_file": "src/components/sections/HingamispaevakooliVidin.astro",
       "source_location": "L7",
       "id": "sections_hingamispaevakoolividin_quarters",
-      "community": 5,
+      "community": 3,
       "norm_label": "quarters"
     },
     {
@@ -1164,7 +1163,7 @@
       "source_file": "src/components/sections/HingamispaevakooliVidin.astro",
       "source_location": "L16",
       "id": "sections_hingamispaevakoolividin_now",
-      "community": 5,
+      "community": 3,
       "norm_label": "now"
     },
     {
@@ -1173,7 +1172,7 @@
       "source_file": "src/components/sections/HingamispaevakooliVidin.astro",
       "source_location": "L18",
       "id": "sections_hingamispaevakoolividin_thissat",
-      "community": 5,
+      "community": 3,
       "norm_label": "thissat"
     },
     {
@@ -1182,7 +1181,7 @@
       "source_file": "src/components/sections/HingamispaevakooliVidin.astro",
       "source_location": "L35",
       "id": "sections_hingamispaevakoolividin_activeindex",
-      "community": 5,
+      "community": 3,
       "norm_label": "activeindex"
     },
     {
@@ -1191,7 +1190,7 @@
       "source_file": "src/components/sections/HingamispaevakooliVidin.astro",
       "source_location": "L47",
       "id": "sections_hingamispaevakoolividin_futurequarters",
-      "community": 5,
+      "community": 3,
       "norm_label": "futurequarters"
     },
     {
@@ -1200,7 +1199,7 @@
       "source_file": "src/components/sections/HingamispaevakooliVidin.astro",
       "source_location": "L58",
       "id": "sections_hingamispaevakoolividin_pastids",
-      "community": 5,
+      "community": 3,
       "norm_label": "pastids"
     },
     {
@@ -1209,7 +1208,7 @@
       "source_file": "src/components/sections/HingamispaevakooliVidin.astro",
       "source_location": "L63",
       "id": "sections_hingamispaevakoolividin_nextcovers",
-      "community": 5,
+      "community": 3,
       "norm_label": "nextcovers"
     },
     {
@@ -1662,7 +1661,7 @@
       "label": "Avaldamine (deploy)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L41",
+      "source_location": "L43",
       "id": "keila_advent_ee_readme_avaldamine_deploy",
       "community": 86,
       "norm_label": "avaldamine (deploy)"
@@ -1671,7 +1670,7 @@
       "label": "Sisu muutmine",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L64",
+      "source_location": "L72",
       "id": "keila_advent_ee_readme_sisu_muutmine",
       "community": 86,
       "norm_label": "sisu muutmine"
@@ -1680,7 +1679,7 @@
       "label": "\u00dcldinfo, p\u00e4is ja jalus \u2014 `src/content/koduleht/uldinfo.md`",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L69",
+      "source_location": "L77",
       "id": "keila_advent_ee_readme_\u00fcldinfo_p\u00e4is_ja_jalus_src_content_koduleht_uldinfo_md",
       "community": 86,
       "norm_label": "uldinfo, pais ja jalus \u2014 `src/content/koduleht/uldinfo.md`"
@@ -1689,7 +1688,7 @@
       "label": "Avalehe sektsioonid",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L73",
+      "source_location": "L81",
       "id": "keila_advent_ee_readme_avalehe_sektsioonid",
       "community": 86,
       "norm_label": "avalehe sektsioonid"
@@ -1698,7 +1697,7 @@
       "label": "Kontakt \u2014 `src/content/koduleht/kontakt.md`",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L87",
+      "source_location": "L95",
       "id": "keila_advent_ee_readme_kontakt_src_content_koduleht_kontakt_md",
       "community": 86,
       "norm_label": "kontakt \u2014 `src/content/koduleht/kontakt.md`"
@@ -1707,7 +1706,7 @@
       "label": "Kogunemiste kuup\u00e4evad",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L91",
+      "source_location": "L99",
       "id": "keila_advent_ee_readme_kogunemiste_kuup\u00e4evad",
       "community": 86,
       "norm_label": "kogunemiste kuupaevad"
@@ -1716,7 +1715,7 @@
       "label": "Jutlused ja raadiosaated",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L97",
+      "source_location": "L105",
       "id": "keila_advent_ee_readme_jutlused_ja_raadiosaated",
       "community": 86,
       "norm_label": "jutlused ja raadiosaated"
@@ -1725,7 +1724,7 @@
       "label": "Suurused ja kujundus",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L103",
+      "source_location": "L111",
       "id": "keila_advent_ee_readme_suurused_ja_kujundus",
       "community": 86,
       "norm_label": "suurused ja kujundus"
@@ -1734,7 +1733,7 @@
       "label": "Pildid ja ikoonid",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L115",
+      "source_location": "L123",
       "id": "keila_advent_ee_readme_pildid_ja_ikoonid",
       "community": 86,
       "norm_label": "pildid ja ikoonid"
@@ -1743,7 +1742,7 @@
       "label": "Google Drive piltide s\u00fcnk",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L128",
+      "source_location": "L136",
       "id": "keila_advent_ee_readme_google_drive_piltide_s\u00fcnk",
       "community": 86,
       "norm_label": "google drive piltide sunk"
@@ -1752,7 +1751,7 @@
       "label": "Seadistus",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L134",
+      "source_location": "L142",
       "id": "keila_advent_ee_readme_seadistus",
       "community": 86,
       "norm_label": "seadistus"
@@ -1761,7 +1760,7 @@
       "label": "K\u00e4sitsi k\u00e4ivitamine",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L144",
+      "source_location": "L152",
       "id": "keila_advent_ee_readme_k\u00e4sitsi_k\u00e4ivitamine",
       "community": 86,
       "norm_label": "kasitsi kaivitamine"
@@ -1770,16 +1769,52 @@
       "label": "Veat\u00f5rkeotsing",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L154",
+      "source_location": "L162",
       "id": "keila_advent_ee_readme_veat\u00f5rkeotsing",
       "community": 86,
       "norm_label": "veatorkeotsing"
     },
     {
+      "label": "Facebooki postituste s\u00fcnk",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L167",
+      "id": "keila_advent_ee_readme_facebooki_postituste_s\u00fcnk",
+      "community": 86,
+      "norm_label": "facebooki postituste sunk"
+    },
+    {
+      "label": "Seadistus",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L176",
+      "id": "keila_advent_ee_readme_seadistus_176",
+      "community": 86,
+      "norm_label": "seadistus"
+    },
+    {
+      "label": "Token, mis ei aegu kunagi",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L190",
+      "id": "keila_advent_ee_readme_token_mis_ei_aegu_kunagi",
+      "community": 86,
+      "norm_label": "token, mis ei aegu kunagi"
+    },
+    {
+      "label": "K\u00e4sitsi k\u00e4ivitamine",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L203",
+      "id": "keila_advent_ee_readme_k\u00e4sitsi_k\u00e4ivitamine_203",
+      "community": 86,
+      "norm_label": "kasitsi kaivitamine"
+    },
+    {
       "label": "Enne pushimist",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L159",
+      "source_location": "L209",
       "id": "keila_advent_ee_readme_enne_pushimist",
       "community": 86,
       "norm_label": "enne pushimist"
@@ -4646,9 +4681,9 @@
       "source_file": "src/components/sections/FacebookiSektsioon.astro",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sections_facebookisektsioon_astro",
-      "target": "src_components_facebookipostitused_astro",
-      "confidence_score": 1.0
+      "target": "src_components_facebookipostitused_astro"
     },
     {
       "relation": "imports_from",
@@ -5047,9 +5082,9 @@
       "source_file": "src/components/sections/FacebookiSektsioon.astro",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sections_facebookisektsioon_astro",
-      "target": "src_data_facebook_posts_json",
-      "confidence_score": 1.0
+      "target": "src_data_facebook_posts_json"
     },
     {
       "relation": "imports_from",
@@ -5658,6 +5693,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
+      "source_location": "L167",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "keila_advent_ee_readme_keila_adventkogudus",
+      "target": "keila_advent_ee_readme_facebooki_postituste_s\u00fcnk"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
       "source_location": "L128",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -5803,6 +5848,36 @@
       "confidence_score": 1.0,
       "source": "keila_advent_ee_readme_google_drive_piltide_s\u00fcnk",
       "target": "keila_advent_ee_readme_veat\u00f5rkeotsing"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L203",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "keila_advent_ee_readme_facebooki_postituste_s\u00fcnk",
+      "target": "keila_advent_ee_readme_k\u00e4sitsi_k\u00e4ivitamine_203"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L176",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "keila_advent_ee_readme_facebooki_postituste_s\u00fcnk",
+      "target": "keila_advent_ee_readme_seadistus_176"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L190",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "keila_advent_ee_readme_facebooki_postituste_s\u00fcnk",
+      "target": "keila_advent_ee_readme_token_mis_ei_aegu_kunagi"
     },
     {
       "relation": "contains",
@@ -6670,5 +6745,5 @@
       "source_file": "src/pages/index.astro"
     }
   ],
-  "built_at_commit": "de61d2867e0cc03982afe27fc25fa3fad66bd9d8"
+  "built_at_commit": "70e095962493fb4e993a071d455d4a68f52785e7"
 }

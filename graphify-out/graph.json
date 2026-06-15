@@ -382,7 +382,7 @@
       "label": "additionalDirectories",
       "file_type": "code",
       "source_file": ".claude/settings.local.json",
-      "source_location": "L79",
+      "source_location": "L83",
       "id": "claude_settings_local_permissions_additionaldirectories",
       "community": 12,
       "norm_label": "additionaldirectories"
@@ -526,7 +526,7 @@
       "label": "getFreshToken()",
       "file_type": "code",
       "source_file": "scripts/sync-facebook.mjs",
-      "source_location": "L59",
+      "source_location": "L63",
       "id": "scripts_sync_facebook_getfreshtoken",
       "community": 103,
       "norm_label": "getfreshtoken()"
@@ -535,7 +535,7 @@
       "label": "persistTokenToGithub()",
       "file_type": "code",
       "source_file": "scripts/sync-facebook.mjs",
-      "source_location": "L109",
+      "source_location": "L156",
       "id": "scripts_sync_facebook_persisttokentogithub",
       "community": 103,
       "norm_label": "persisttokentogithub()"
@@ -544,7 +544,7 @@
       "label": "fetchPosts()",
       "file_type": "code",
       "source_file": "scripts/sync-facebook.mjs",
-      "source_location": "L134",
+      "source_location": "L181",
       "id": "scripts_sync_facebook_fetchposts",
       "community": 103,
       "norm_label": "fetchposts()"
@@ -553,7 +553,7 @@
       "label": "main()",
       "file_type": "code",
       "source_file": "scripts/sync-facebook.mjs",
-      "source_location": "L158",
+      "source_location": "L205",
       "id": "scripts_sync_facebook_main",
       "community": 103,
       "norm_label": "main()"
@@ -906,14 +906,13 @@
       "norm_label": "formatdate()"
     },
     {
-      "label": "../FacebookiVoog.astro",
+      "label": "FacebookiVoog.astro",
       "file_type": "code",
       "source_file": "src/components/FacebookiVoog.astro",
       "source_location": "L1",
-      "confidence": "EXTRACTED",
       "id": "src_components_facebookivoog_astro",
       "community": 0,
-      "norm_label": "../facebookivoog.astro"
+      "norm_label": "facebookivoog.astro"
     },
     {
       "label": "../SektsiooniPealkiri.astro",
@@ -5696,9 +5695,9 @@
       "source_file": "README.md",
       "source_location": "L167",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "keila_advent_ee_readme_keila_adventkogudus",
-      "target": "keila_advent_ee_readme_facebooki_postituste_s\u00fcnk",
-      "confidence_score": 1.0
+      "target": "keila_advent_ee_readme_facebooki_postituste_s\u00fcnk"
     },
     {
       "relation": "contains",
@@ -5856,9 +5855,9 @@
       "source_file": "README.md",
       "source_location": "L203",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "keila_advent_ee_readme_facebooki_postituste_s\u00fcnk",
-      "target": "keila_advent_ee_readme_k\u00e4sitsi_k\u00e4ivitamine_203",
-      "confidence_score": 1.0
+      "target": "keila_advent_ee_readme_k\u00e4sitsi_k\u00e4ivitamine_203"
     },
     {
       "relation": "contains",
@@ -5866,9 +5865,9 @@
       "source_file": "README.md",
       "source_location": "L176",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "keila_advent_ee_readme_facebooki_postituste_s\u00fcnk",
-      "target": "keila_advent_ee_readme_seadistus_176",
-      "confidence_score": 1.0
+      "target": "keila_advent_ee_readme_seadistus_176"
     },
     {
       "relation": "contains",
@@ -5876,9 +5875,9 @@
       "source_file": "README.md",
       "source_location": "L190",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "keila_advent_ee_readme_facebooki_postituste_s\u00fcnk",
-      "target": "keila_advent_ee_readme_token_mis_ei_aegu_kunagi",
-      "confidence_score": 1.0
+      "target": "keila_advent_ee_readme_token_mis_ei_aegu_kunagi"
     },
     {
       "relation": "contains",
@@ -6746,5 +6745,5 @@
       "source_file": "src/pages/index.astro"
     }
   ],
-  "built_at_commit": "de61d2867e0cc03982afe27fc25fa3fad66bd9d8"
+  "built_at_commit": "a202f89f80ba67dd892654ef9a7d07d0b79c715a"
 }

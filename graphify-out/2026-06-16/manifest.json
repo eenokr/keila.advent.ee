@@ -140,8 +140,8 @@
     "semantic_hash": "dbf7ae8a20b83fd457f001254cfd20a9"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/components/sections/FacebookiSektsioon.astro": {
-    "mtime": 1781557316.1202128,
-    "ast_hash": "63c3a71b3b2304e1d8a0ec70caf288b4",
+    "mtime": 1781557935.7031372,
+    "ast_hash": "669e0e5819ede6f5bb5abd601d4c48ed",
     "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/lib/serviceSchedule.ts": {
@@ -155,12 +155,12 @@
     "semantic_hash": "b206424c870c560ad61bb407eca27ac8"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/data/koduka-teated.json": {
-    "mtime": 1781543972.3454833,
+    "mtime": 1781557376.8329403,
     "ast_hash": "528ea564be9c281f3d377500f3b1c617",
     "semantic_hash": "528ea564be9c281f3d377500f3b1c617"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/data/koduka-galerii.json": {
-    "mtime": 1781543971.9501088,
+    "mtime": 1781557376.4809728,
     "ast_hash": "78ad61f09e712831776ce4376fe1033f",
     "semantic_hash": "78ad61f09e712831776ce4376fe1033f"
   },
@@ -175,9 +175,9 @@
     "semantic_hash": "0e067168fd4bd1171cfeb62b4e3df15d"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/README.md": {
-    "mtime": 1781290149.6068988,
-    "ast_hash": "8165749c8dfaca739d4c0a1881c3997e",
-    "semantic_hash": "8165749c8dfaca739d4c0a1881c3997e"
+    "mtime": 1781557368.1434119,
+    "ast_hash": "6457965583ad99f21270f7cd07a9d774",
+    "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/public/robots.txt": {
     "mtime": 1781290149.6364193,
@@ -340,8 +340,8 @@
     "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/scripts/sync-facebook.mjs": {
-    "mtime": 1781557269.584767,
-    "ast_hash": "1ceb5a91c7017c807a08fcc427925872",
+    "mtime": 1781559989.1909254,
+    "ast_hash": "a9c096c9ee7db04fc85199f4a1515250",
     "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/components/FacebookiPostitused.astro": {
