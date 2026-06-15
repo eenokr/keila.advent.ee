@@ -114,7 +114,6 @@ function formatDate(iso: string): string {
 	}
 
 	.facebook-post-image {
-		aspect-ratio: 16 / 9;
 		border-radius: calc(var(--facebook-feed-radius) - 4px);
 		margin-bottom: 10px;
 		overflow: hidden;
@@ -122,8 +121,7 @@ function formatDate(iso: string): string {
 
 	.facebook-post-image img {
 		display: block;
-		height: 100%;
-		object-fit: cover;
+		height: auto;
 		width: 100%;
 	}
 

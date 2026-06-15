@@ -209,7 +209,7 @@ const { services, serviceScheduleItems, serviceScheduleActivities, getIcon } = A
 		width: var(--schedule-lock-size);
 	}
 
-	@media (max-width: 860px) {
+	@media (max-width: 1300px) {
 		.info-grid {
 			grid-template-columns: 1fr;
 		}
@@ -219,7 +219,9 @@ const { services, serviceScheduleItems, serviceScheduleActivities, getIcon } = A
 			gap: 8px;
 			grid-auto-rows: auto;
 		}
+	}
 
+	@media (max-width: 860px) {
 		.service-schedule-card {
 			min-height: 0;
 			padding: 14px 12px;
