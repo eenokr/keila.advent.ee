@@ -186,13 +186,18 @@ const { about, communitySlides } = Astro.props;
 		}
 
 		.about-copy {
-			justify-self: center;
-			max-width: var(--gallery-panel-width);
+			justify-self: stretch;
+			max-width: 100%;
 		}
 
 		.about-carousel-wrap {
 			aspect-ratio: auto;
-			justify-self: center;
+			max-width: 100%;
+			width: 100%;
+		}
+
+		.about-carousel-wrap :global(.gallery-carousel) {
+			margin: 0 auto;
 		}
 
 		.about-carousel-wrap :global(.gallery-viewport) {
