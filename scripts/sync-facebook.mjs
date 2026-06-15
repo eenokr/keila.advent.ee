@@ -54,53 +54,100 @@ async function ensureOutputExists() {
   }
 }
 
-// Kontrollib, kui kaua token veel kehtib. Kui jääb alla nädala (või token
-// ise ei tea oma aegumist), vahetab selle uue 60-päevase tokeni vastu.
+// Tagastab kasutuskõlbliku Page Access Token-i.
+// Kui sisend on User Access Token, teisendab selle automaatselt:
+//   1. pikendab User tokeni (60 päeva)
+//   2. tõmbab sellest Page Access Token-i (ei aegu)
+//   3. salvestab Page tokeni tagasi GitHubi secret-iks
+// Kui sisend on juba Page Access Token, kontrollib kehtivust ja pikendab vajaduse korral.
 async function getFreshToken(token) {
   if (!APP_ID || !APP_SECRET) return token;
 
+  // Vaata mis tüüpi token see on
+  let tokenType = null;
+  let expiresAt = 0;
   try {
     const debugRes = await fetch(
       `${GRAPH_API}/debug_token?input_token=${encodeURIComponent(token)}` +
         `&access_token=${APP_ID}|${APP_SECRET}`
     );
-    if (!debugRes.ok) return token;
-    const debugData = await debugRes.json();
-    const expiresAt = debugData?.data?.expires_at ?? 0;
-
-    if (expiresAt !== 0) {
-      const secondsLeft = expiresAt - Math.floor(Date.now() / 1000);
-      if (secondsLeft > REFRESH_THRESHOLD_S) {
-        return token; // veel piisavalt kehtiv
-      }
-    } else {
-      return token; // expires_at = 0 tähendab "ei aegu ajaliselt"
+    if (debugRes.ok) {
+      const d = await debugRes.json();
+      tokenType = d?.data?.type ?? null;
+      expiresAt = d?.data?.expires_at ?? 0;
     }
   } catch (err) {
     console.warn('Facebook tokeni kontroll ebaõnnestus, jätkan vana tokeniga:', err.message);
     return token;
   }
 
-  console.log('Facebook token aegumas - vahetan uue vastu...');
-  try {
-    const exchangeRes = await fetch(
-      `${GRAPH_API}/oauth/access_token?grant_type=fb_exchange_token` +
-        `&client_id=${APP_ID}&client_secret=${APP_SECRET}&fb_exchange_token=${encodeURIComponent(token)}`
-    );
-    if (!exchangeRes.ok) {
-      console.warn('Facebook tokeni vahetus ebaõnnestus, jätkan vana tokeniga.');
-      return token;
-    }
-    const exchangeData = await exchangeRes.json();
-    const newToken = exchangeData.access_token;
-    if (!newToken) return token;
+  // User Access Token → teisenda Page Access Token-iks
+  if (tokenType === 'USER') {
+    console.log('Facebook User Access Token tuvastatud - teisendан Page Access Token-iks...');
 
-    await persistTokenToGithub(newToken);
-    return newToken;
-  } catch (err) {
-    console.warn('Facebook tokeni vahetus ebaõnnestus, jätkan vana tokeniga:', err.message);
-    return token;
+    // Pikenda esmalt User token (60 päeva)
+    let longLivedUserToken = token;
+    try {
+      const exchangeRes = await fetch(
+        `${GRAPH_API}/oauth/access_token?grant_type=fb_exchange_token` +
+          `&client_id=${APP_ID}&client_secret=${APP_SECRET}&fb_exchange_token=${encodeURIComponent(token)}`
+      );
+      if (exchangeRes.ok) {
+        const d = await exchangeRes.json();
+        if (d.access_token) longLivedUserToken = d.access_token;
+      }
+    } catch {}
+
+    // Tõmba Page Access Token
+    try {
+      const pageRes = await fetch(
+        `${GRAPH_API}/${PAGE_ID}?fields=access_token&access_token=${encodeURIComponent(longLivedUserToken)}`
+      );
+      if (!pageRes.ok) {
+        console.warn('Page Access Token-i tõmbamine ebaõnnestus, jätkan User tokeniga.');
+        return longLivedUserToken;
+      }
+      const pageData = await pageRes.json();
+      const pageToken = pageData.access_token;
+      if (!pageToken) {
+        console.warn('Page Access Token puudus vastuses, jätkan User tokeniga.');
+        return longLivedUserToken;
+      }
+      console.log('Page Access Token saadud - salvestan GitHubi secret-iks.');
+      await persistTokenToGithub(pageToken);
+      return pageToken;
+    } catch (err) {
+      console.warn('Page Access Token-i tõmbamine ebaõnnestus:', err.message);
+      return longLivedUserToken;
+    }
   }
+
+  // Page Access Token — kontrolli aegumist
+  if (expiresAt !== 0) {
+    const secondsLeft = expiresAt - Math.floor(Date.now() / 1000);
+    if (secondsLeft > REFRESH_THRESHOLD_S) {
+      return token; // veel piisavalt kehtiv
+    }
+    // Proovi pikendada
+    console.log('Facebook Page token aegumas - vahetan uue vastu...');
+    try {
+      const exchangeRes = await fetch(
+        `${GRAPH_API}/oauth/access_token?grant_type=fb_exchange_token` +
+          `&client_id=${APP_ID}&client_secret=${APP_SECRET}&fb_exchange_token=${encodeURIComponent(token)}`
+      );
+      if (exchangeRes.ok) {
+        const d = await exchangeRes.json();
+        if (d.access_token) {
+          await persistTokenToGithub(d.access_token);
+          return d.access_token;
+        }
+      }
+    } catch (err) {
+      console.warn('Page tokeni pikendamine ebaõnnestus:', err.message);
+    }
+  }
+
+  return token; // expires_at = 0 → ei aegu kunagi
 }
 
 // Salvestab uue tokeni tagasi GitHubi repo secret'iks "FB_PAGE_TOKEN", et
