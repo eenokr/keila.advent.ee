@@ -1,7 +1,9 @@
 ---
 import SektsiooniPealkiri from '../SektsiooniPealkiri.astro';
 import FacebookiVoog from '../FacebookiVoog.astro';
+import FacebookiPostitused from '../FacebookiPostitused.astro';
 import TegevusNupp from '../TegevusNupp.astro';
+import facebookPosts from '../../data/facebook-posts.json';
 
 interface Button {
 	text: string;
@@ -36,7 +38,11 @@ const { facebook } = Astro.props;
 				))}
 			</div>
 		</div>
-		<FacebookiVoog pageUrl={facebook.pageUrl} />
+		{facebookPosts.posts?.length > 0 ? (
+			<FacebookiPostitused posts={facebookPosts.posts} pageUrl={facebook.pageUrl} />
+		) : (
+			<FacebookiVoog pageUrl={facebook.pageUrl} />
+		)}
 	</div>
 </section>
 
@@ -73,7 +79,8 @@ const { facebook } = Astro.props;
 
 	.social-panel :global(.facebook-card),
 	.social-panel :global(.facebook-feed),
-	.social-panel :global(.facebook-feed-empty) {
+	.social-panel :global(.facebook-feed-empty),
+	.social-panel :global(.facebook-posts) {
 		justify-self: end;
 		width: min(100%, var(--facebook-feed-width));
 	}
@@ -127,7 +134,8 @@ const { facebook } = Astro.props;
 
 		.social-panel :global(.facebook-card),
 		.social-panel :global(.facebook-feed),
-		.social-panel :global(.facebook-feed-empty) {
+		.social-panel :global(.facebook-feed-empty),
+		.social-panel :global(.facebook-posts) {
 			justify-self: center;
 			width: min(100%, var(--facebook-feed-width));
 		}

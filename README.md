@@ -36,14 +36,17 @@ npm run preview  # vaata ehitatud lehte lokaalselt
 ```
 
 `npm run dev` ja `npm run build` käivitavad enne tööd automaatselt Google Drive'i piltide süngi
-(vt allpool). Selleks on vaja `.env` faili `DRIVE_API_KEY`-ga.
+ja Facebooki postituste süngi (vt allpool). Selleks on vaja `.env` faili `DRIVE_API_KEY`-ga ja
+soovi korral `FB_*` muutujatega (kui need puuduvad, jäetakse Facebooki sünk vahele ja kasutatakse
+commititud `src/data/facebook-posts.json` faili).
 
 ## Avaldamine (deploy)
 
 Leht avaldatakse **automaatselt**, kui muudatused pushitakse `main` harusse. Töövoog asub failis
 `.github/workflows/ftp-deploy.yml` (Node.js 22) ja teeb järgmist:
 
-1. tõmbab värsked pildid Drive'ist, kogunemiste kuupäevad Google Sheetsist ja audio advent.ee-st;
+1. tõmbab värsked pildid Drive'ist, kogunemiste kuupäevad Google Sheetsist, audio advent.ee-st ja
+   viimased postitused Facebookist;
 2. ehitab lehe (`dist/`);
 3. laeb FTP kaudu serverisse **ainult muutunud failid**.
 
@@ -57,6 +60,11 @@ Sama töövoog käib ka kord ööpäevas (cron) ja seda saab käsitsi käivitada
 | `FTP_USERNAME` | FTP kasutajanimi |
 | `FTP_PASSWORD` | FTP parool |
 | `DRIVE_API_KEY` | Google Drive API võti piltide süngiks |
+| `FB_PAGE_ID` | Facebooki lehe ID (vaikimisi Keila adventkogudus, vt sync-facebook.mjs) |
+| `FB_PAGE_TOKEN` | Page Access Token (pages_read_engagement, pages_show_list) |
+| `FB_APP_ID` | Meta App ID - tokeni automaatseks pikendamiseks |
+| `FB_APP_SECRET` | Meta App Secret - tokeni automaatseks pikendamiseks |
+| `GH_PAT` | GitHub Personal Access Token, "Secrets: write" õigus sellele repole - võimaldab `sync-facebook.mjs`-il salvestada pikendatud Facebook tokeni automaatselt tagasi `FB_PAGE_TOKEN` secret'iks, et see ei aeguks kunagi |
 
 Serveris kuhu leht laetakse, määrab `server-dir` (vaikimisi `./`). Kui hostingu juurkaust on nt
 `public_html/`, `www/` või `htdocs/`, muuda see väärtus töövoo failis.
@@ -155,6 +163,48 @@ peavad olema jagatud „Anyone with the link → Viewer".
 
 - **403** → Drive kaust pole avalik. Sea jagamine: „Anyone with the link → Viewer".
 - **400** → vale API võti või kausta ID.
+
+## Facebooki postituste sünk
+
+Koduleht ei kasuta enam otse Facebooki embed-iframe'i (mida Safari/Firefox/Brave tihti blokeerivad
+"Prevent cross-site tracking" tõttu). Skript `scripts/sync-facebook.mjs` tõmbab build-ajal Graph
+API kaudu lehe viimased postitused ja kirjutab need faili `src/data/facebook-posts.json`, mida
+komponent `FacebookiPostitused.astro` renderdab staatiliste kaartidena. Kui andmeid pole (nt
+arendaja kohalikus keskkonnas, kus `FB_PAGE_TOKEN` puudub), kuvatakse selle asemel vana
+iframe-variant (`FacebookiVoog.astro`).
+
+### Seadistus
+
+Lisa `.env` faili (lokaalselt, gitignore'i taga):
+
+```
+FB_PAGE_ID=525341971179805
+FB_PAGE_TOKEN=...Page Access Token...
+FB_APP_ID=...Meta App ID...
+FB_APP_SECRET=...Meta App Secret...
+```
+
+GitHub Actionsis vastavad samad väärtused secret'idele `FB_PAGE_ID`, `FB_PAGE_TOKEN`,
+`FB_APP_ID`, `FB_APP_SECRET` (vt tabel ülal).
+
+### Token, mis ei aegu kunagi
+
+Page Access Token kehtib tüüpiliselt ~60 päeva. Iga öise build käigus kontrollib
+`sync-facebook.mjs`, kui kaua token veel kehtib (`/debug_token`). Kui jääb alla 7 päeva, vahetab
+selle automaatselt uue 60-päevase tokeni vastu (`fb_exchange_token`) ja salvestab tulemuse tagasi
+GitHubi `FB_PAGE_TOKEN` secret'iks - seega ei aegu token kunagi, kui build käib regulaarselt (vt
+`ftp-deploy.yml` cron, praegu kord ööpäevas).
+
+Selleks et skript saaks secret'it uuendada, vajab ta `GH_PAT` secret'it - GitHub Personal Access
+Token, millel on sellele repole **"Secrets" → "Read and write"** õigus (Settings → Developer
+settings → Fine-grained tokens). Kui `GH_PAT` puudub, töötab kõik endiselt, aga tokenit tuleb iga
+~60 päeva tagant käsitsi pikendada (Access Token Debugger → "Extend Access Token").
+
+### Käsitsi käivitamine
+
+```bash
+npm run sync:facebook
+```
 
 ## Enne pushimist
 

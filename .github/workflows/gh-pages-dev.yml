@@ -35,6 +35,10 @@ jobs:
         env:
           SITE_URL: https://dev.randlepp.ee
           DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          FB_APP_ID: ${{ secrets.FB_APP_ID }}
+          FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
 
       - uses: actions/upload-pages-artifact@v3
         with:
