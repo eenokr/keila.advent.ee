@@ -1,16 +1,16 @@
 # Graph Report - keila.advent.ee  (2026-06-16)
 
 ## Corpus Check
-- 54 files · ~206,982 words
+- 56 files · ~208,007 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 331 nodes · 301 edges · 103 communities (37 shown, 66 thin omitted)
-- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 29 edges (avg confidence: 0.85)
+- 348 nodes · 323 edges · 103 communities (37 shown, 66 thin omitted)
+- Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 29 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a202f89f`
+- Built from commit: `88b8526e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -24,6 +24,7 @@
 - [[_COMMUNITY_Service Schedule Parser|Service Schedule Parser]]
 - [[_COMMUNITY_UI Components|UI Components]]
 - [[_COMMUNITY_Google Drive Sync|Google Drive Sync]]
+- [[_COMMUNITY_Community 9|Community 9]]
 - [[_COMMUNITY_Audio Scraper|Audio Scraper]]
 - [[_COMMUNITY_TypeScript Config|TypeScript Config]]
 - [[_COMMUNITY_Claude Settings|Claude Settings]]
@@ -94,7 +95,6 @@
 - [[_COMMUNITY_Module Group 80|Module Group 80]]
 - [[_COMMUNITY_Module Group 85|Module Group 85]]
 - [[_COMMUNITY_Community 86|Community 86]]
-- [[_COMMUNITY_Community 87|Community 87]]
 - [[_COMMUNITY_Community 88|Community 88]]
 - [[_COMMUNITY_Community 103|Community 103]]
 
@@ -103,8 +103,8 @@
 2. `Keila Adventkogudus Project README` - 13 edges
 3. `../../components/Pais.astro` - 12 edges
 4. `Keila Adventkogudus` - 11 edges
-5. `getServiceScheduleItems()` - 10 edges
-6. `scripts` - 9 edges
+5. `scripts` - 10 edges
+6. `getServiceScheduleItems()` - 10 edges
 7. `../components/sections/HingamispaevakooliVidin.astro` - 9 edges
 8. `Jutlused ja Raadiosaated (Audio) Section` - 9 edges
 9. `../TegevusNupp.astro` - 6 edges
@@ -145,20 +145,20 @@ Cohesion: 0.11
 Nodes (16): Jalus, PeaMeta, advent.ee audio HTML scraper, Google Sheets CSV service schedule, Sabbath School quarter selection logic, Schema.org JSON-LD Church structured data, adventAudio, serviceSchedule (+8 more)
 
 ### Community 3 - "Content Collections & Routing"
-Cohesion: 0.25
-Nodes (8): activeIndex, futureQuarters, nextCovers, now, pastIds, QUARTERS, thisSat, ../components/sections/HingamispaevakooliVidin.astro
+Cohesion: 0.12
+Nodes (14): activeIndex, futureQuarters, nextCovers, now, pastIds, QUARTERS, thisSat, ../components/sections/HingamispaevakooliVidin.astro (+6 more)
 
 ### Community 4 - "Build Dependencies & Config"
-Cohesion: 0.10
-Nodes (19): dependencies, astro, @astrojs/mdx, @astrojs/sitemap, sharp, engines, node, name (+11 more)
+Cohesion: 0.09
+Nodes (20): dependencies, astro, @astrojs/mdx, @astrojs/sitemap, sharp, engines, node, name (+12 more)
 
 ### Community 5 - "SEO & Contact"
 Cohesion: 0.08
 Nodes (22): iconPaths, today, clamp(), lerp(), update(), canonicalURL, emailItem, imageURL (+14 more)
 
 ### Community 6 - "Service Schedule Parser"
-Cohesion: 0.20
-Nodes (12): DATE_COLUMN_CANDIDATES, findColumn(), findDateColumn(), formatDate(), getServiceScheduleItems(), MONTHS, parseCsv(), parseCsv (+4 more)
+Cohesion: 0.15
+Nodes (15): fetchedAt, items, CachedScheduleItem, DATE_COLUMN_CANDIDATES, findColumn(), findDateColumn(), formatDate(), getServiceScheduleItems() (+7 more)
 
 ### Community 7 - "UI Components"
 Cohesion: 0.18
@@ -167,6 +167,10 @@ Nodes (5): Infinite Loop Carousel with Clone Slides, Astro Content Collections, 
 ### Community 8 - "Google Drive Sync"
 Cohesion: 0.33
 Nodes (9): downloadFile(), FOLDERS, isCacheFresh(), listImages(), main(), readManifest(), syncFolder(), WIDTHS (+1 more)
+
+### Community 9 - "Community 9"
+Cohesion: 0.26
+Nodes (8): DATE_COLUMN_CANDIDATES, ensureOutputExists(), fetchScheduleItems(), findColumn(), findDateColumn(), main(), MONTHS, parseCsv()
 
 ### Community 10 - "Audio Scraper"
 Cohesion: 0.31
@@ -188,16 +192,12 @@ Nodes (3): editor.fontSize, window.density.editorTabHeight, window.zoomLevel
 Cohesion: 0.09
 Nodes (22): Avaldamine (deploy), Avalehe sektsioonid, Enne pushimist, Facebooki postituste sünk, Google Drive piltide sünk, Jutlused ja raadiosaated, Keila Adventkogudus, Kes me oleme (+14 more)
 
-### Community 87 - "Community 87"
-Cohesion: 0.29
-Nodes (6): buttonSchema, collections, contact, koduleht, sermons, site
-
 ### Community 103 - "Community 103"
 Cohesion: 0.60
 Nodes (5): ensureOutputExists(), fetchPosts(), getFreshToken(), main(), persistTokenToGithub()
 
 ## Knowledge Gaps
-- **169 isolated node(s):** `name`, `type`, `version`, `node`, `sync` (+164 more)
+- **175 isolated node(s):** `name`, `type`, `version`, `node`, `sync` (+170 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **66 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -205,16 +205,16 @@ Nodes (5): ensureOutputExists(), fetchPosts(), getFreshToken(), main(), persistT
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `../../components/PeaMeta.astro` connect `SEO & Contact` to `Astro Page Assembly`, `Build Dependencies & Config`?**
-  _High betweenness centrality (0.150) - this node is a cross-community bridge._
+  _High betweenness centrality (0.143) - this node is a cross-community bridge._
 - **What connects `name`, `type`, `version` to the rest of the system?**
-  _174 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _180 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Astro Page Assembly` be split into smaller, more focused modules?**
   _Cohesion score 0.07058823529411765 - nodes in this community are weakly interconnected._
 - **Should `Church & Content Entities` be split into smaller, more focused modules?**
   _Cohesion score 0.12 - nodes in this community are weakly interconnected._
 - **Should `UI Shell & External Data Concepts` be split into smaller, more focused modules?**
   _Cohesion score 0.11255411255411256 - nodes in this community are weakly interconnected._
+- **Should `Content Collections & Routing` be split into smaller, more focused modules?**
+  _Cohesion score 0.12380952380952381 - nodes in this community are weakly interconnected._
 - **Should `Build Dependencies & Config` be split into smaller, more focused modules?**
-  _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
-- **Should `SEO & Contact` be split into smaller, more focused modules?**
-  _Cohesion score 0.08374384236453201 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._

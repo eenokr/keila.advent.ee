@@ -10,8 +10,8 @@
     "semantic_hash": "7d085f1eacd810d1d232158e73664be9"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/package.json": {
-    "mtime": 1781557226.0296466,
-    "ast_hash": "d11f5ef2b4d06848f0ca9ea7c64f099b",
+    "mtime": 1781597505.7509375,
+    "ast_hash": "0a0974f97eba920d121c0fd43ba8ee3e",
     "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/tsconfig.json": {
@@ -105,18 +105,18 @@
     "semantic_hash": "b2d8c39a909631887adb474cfd622879"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/components/sections/KogunemisedSektsioon.astro": {
-    "mtime": 1781561075.818537,
-    "ast_hash": "b3b55d7689c01e19a0a369a06a03cd66",
+    "mtime": 1781595231.4313965,
+    "ast_hash": "9937e77692e6fa24ab2013b29eb91743",
     "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/components/sections/HeroSektsioon.astro": {
-    "mtime": 1781560565.401674,
-    "ast_hash": "bb445f913a299cc712b728118d9beae9",
+    "mtime": 1781597128.339313,
+    "ast_hash": "20777ee5f49f51eead7595eff54d5b26",
     "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/components/sections/MeistSektsioon.astro": {
-    "mtime": 1781565139.2320895,
-    "ast_hash": "88a04c05c2692bc1b845279cc669d228",
+    "mtime": 1781595080.1646984,
+    "ast_hash": "768217bca96a60ba2d3c7ac304006684",
     "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/components/sections/AudioSektsioon.astro": {
@@ -125,29 +125,29 @@
     "semantic_hash": "66e484bb537cb7bbccc0f9c0c02d51b4"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/components/sections/KontaktSektsioon.astro": {
-    "mtime": 1781561081.6238801,
-    "ast_hash": "3ce82d7afb66af6d8f591ad7568b8a2c",
+    "mtime": 1781595231.4388092,
+    "ast_hash": "a9fdeec7387bd44541f92f146f2096c6",
     "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/components/sections/HingamispaevakooliVidin.astro": {
-    "mtime": 1781561086.7428887,
-    "ast_hash": "2255fd9160e7dae591a9351ae3160823",
+    "mtime": 1781597803.6545613,
+    "ast_hash": "6a7f0c3199d45a2f7eafdd398f9fb280",
     "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/components/sections/KursusSektsioon.astro": {
-    "mtime": 1781564014.455928,
-    "ast_hash": "343b732f7a59ffb328cfaab8a8343168",
+    "mtime": 1781595231.4354024,
+    "ast_hash": "884eb82e346dc03bdc33c133fded84d4",
     "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/components/sections/FacebookiSektsioon.astro": {
-    "mtime": 1781564107.9691274,
-    "ast_hash": "b13a25ef291da8fd5db1e4bda4484527",
+    "mtime": 1781595231.4371262,
+    "ast_hash": "15283c6308a599f9c78be49691daea57",
     "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/lib/serviceSchedule.ts": {
-    "mtime": 1781290149.6696362,
-    "ast_hash": "1fd9a79216b662b26369f13a0148e9b8",
-    "semantic_hash": "1fd9a79216b662b26369f13a0148e9b8"
+    "mtime": 1781597472.0679424,
+    "ast_hash": "55fc49bb13cd72106770dcc21c810e01",
+    "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/lib/adventAudio.ts": {
     "mtime": 1781290149.6695263,
@@ -155,19 +155,19 @@
     "semantic_hash": "b206424c870c560ad61bb407eca27ac8"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/data/koduka-teated.json": {
-    "mtime": 1781561104.1748824,
+    "mtime": 1781594911.574376,
     "ast_hash": "528ea564be9c281f3d377500f3b1c617",
     "semantic_hash": "528ea564be9c281f3d377500f3b1c617"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/data/koduka-galerii.json": {
-    "mtime": 1781561103.8295023,
+    "mtime": 1781594911.2009017,
     "ast_hash": "78ad61f09e712831776ce4376fe1033f",
     "semantic_hash": "78ad61f09e712831776ce4376fe1033f"
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/pages/index.astro": {
-    "mtime": 1781290149.6697543,
-    "ast_hash": "5a4d5b810d8b3d6f0ae85d3de9eb4fe4",
-    "semantic_hash": "5a4d5b810d8b3d6f0ae85d3de9eb4fe4"
+    "mtime": 1781597493.8815417,
+    "ast_hash": "a50fc629e60732a99e93c4dc0e6aa8b9",
+    "semantic_hash": ""
   },
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/pages/jutlused/[slug].astro": {
     "mtime": 1781290149.6698592,
@@ -347,6 +347,16 @@
   "/Users/eenok/Documents/GitHub/keila.advent.ee/src/components/FacebookiPostitused.astro": {
     "mtime": 1781561099.105418,
     "ast_hash": "3d458c6f9fde738066101baa959c844d",
+    "semantic_hash": ""
+  },
+  "/Users/eenok/Documents/GitHub/keila.advent.ee/scripts/sync-schedule.mjs": {
+    "mtime": 1781597550.4628637,
+    "ast_hash": "9e001200c71db22b61edd4d0a9233716",
+    "semantic_hash": ""
+  },
+  "/Users/eenok/Documents/GitHub/keila.advent.ee/src/data/service-schedule.json": {
+    "mtime": 1781597811.8286781,
+    "ast_hash": "b05e15daa9f16c4f2d6f4ca22453055a",
     "semantic_hash": ""
   }
 }
