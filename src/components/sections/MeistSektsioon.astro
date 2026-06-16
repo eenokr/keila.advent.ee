@@ -181,7 +181,7 @@ const { about, communitySlides } = Astro.props;
 
 	@media (max-width: 1300px) {
 		.about-grid {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 			gap: var(--section-grid-gap);
 		}
 
@@ -193,6 +193,7 @@ const { about, communitySlides } = Astro.props;
 		.about-carousel-wrap {
 			aspect-ratio: auto;
 			max-width: 100%;
+			min-width: 0;
 			width: 100%;
 		}
 

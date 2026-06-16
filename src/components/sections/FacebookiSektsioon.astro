@@ -125,7 +125,7 @@ const { facebook } = Astro.props;
 
 	@media (max-width: 1300px) {
 		.social-panel {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 
 		.social-panel :global(.facebook-card),
