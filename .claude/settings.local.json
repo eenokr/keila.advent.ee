@@ -74,7 +74,11 @@
       "Bash(grep -E '\\\\.\\(py\\)$|^mobile-|\\\\.DS_Store$|temp_')",
       "Bash(DRIVE_FORCE_SYNC=1 npm run sync)",
       "Bash(awk '{print $NF, $5}')",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "Bash(node scripts/sync-facebook.mjs)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ],
     "additionalDirectories": [
       "/Users/eenok/Desktop"

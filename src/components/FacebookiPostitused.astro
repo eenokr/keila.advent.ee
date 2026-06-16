@@ -1,0 +1,166 @@
+---
+// src/components/FacebookiPostitused.astro
+//
+// Renderdab build-i ajal Graph API-st tõmmatud Facebooki postitused
+// staatiliste kaartidena. Ei vaja browseris ühendust Facebookiga, nii et
+// töötab ka brauserites, kus "Prevent cross-site tracking" on sees
+// (Safari, Firefox, Brave jne) - vt FacebookiVoog.astro iframe-variant,
+// mida see asendab kui andmed on olemas.
+
+interface Post {
+	id: string;
+	message: string;
+	createdTime: string;
+	permalinkUrl: string;
+	image: string | null;
+}
+
+interface Props {
+	posts: Post[];
+	pageUrl?: string;
+	title?: string;
+}
+
+const { posts, pageUrl, title = 'Keila Adventkoguduse Facebooki postitused' } = Astro.props;
+const normalizedPageUrl = pageUrl ? pageUrl.trim().replace(/\/+$/u, '') + '/' : undefined;
+
+const MAX_LENGTH = 240;
+
+function truncate(text: string): { short: string; isTruncated: boolean } {
+	if (text.length <= MAX_LENGTH) return { short: text, isTruncated: false };
+	const cut = text.slice(0, MAX_LENGTH).replace(/\s+\S*$/u, '');
+	return { short: cut + '…', isTruncated: true };
+}
+
+function formatDate(iso: string): string {
+	try {
+		return new Date(iso).toLocaleDateString('et-EE', {
+			day: 'numeric',
+			month: 'long',
+			year: 'numeric',
+		});
+	} catch {
+		return '';
+	}
+}
+---
+
+<div class="facebook-posts" title={title}>
+	<div class="facebook-posts-list">
+		{posts.map((post) => {
+			const { short, isTruncated } = truncate(post.message);
+			return (
+				<a class="facebook-post" href={post.permalinkUrl} target="_blank" rel="noopener noreferrer">
+					{post.image && (
+						<div class="facebook-post-image">
+							<img src={post.image} alt="" loading="lazy" />
+						</div>
+					)}
+					<div class="facebook-post-body">
+						<time class="facebook-post-date" datetime={post.createdTime}>
+							{formatDate(post.createdTime)}
+						</time>
+						{short && <p class="facebook-post-text">{short}</p>}
+						{isTruncated && <span class="facebook-post-more">Loe edasi Facebookis →</span>}
+					</div>
+				</a>
+			);
+		})}
+	</div>
+	{normalizedPageUrl && (
+		<div class="facebook-posts-bottom-bar">
+			<span>Vaata kõiki postitusi: <a href={normalizedPageUrl} target="_blank" rel="noopener noreferrer">ava Facebookis</a>.</span>
+		</div>
+	)}
+</div>
+
+<style>
+	.facebook-posts {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--facebook-feed-radius);
+		box-shadow: var(--shadow-warm);
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		margin-left: auto;
+		margin-right: auto;
+		overflow: hidden;
+		width: min(100%, var(--facebook-feed-width));
+	}
+
+	.facebook-posts-list {
+		display: flex;
+		flex-direction: column;
+		max-height: var(--facebook-feed-height, 700px);
+		overflow-y: auto;
+	}
+
+	.facebook-post {
+		border-bottom: 1px solid var(--color-border);
+		color: inherit;
+		display: block;
+		padding: 14px 16px;
+		text-decoration: none;
+		transition: background-color 0.15s ease;
+	}
+
+	.facebook-post:last-child {
+		border-bottom: none;
+	}
+
+	.facebook-post:hover {
+		background-color: var(--color-surface-warm, rgba(0, 0, 0, 0.02));
+	}
+
+	.facebook-post-image {
+		border-radius: calc(var(--facebook-feed-radius) - 4px);
+		margin-bottom: 10px;
+		overflow: hidden;
+	}
+
+	.facebook-post-image img {
+		display: block;
+		height: auto;
+		width: 100%;
+	}
+
+	.facebook-post-date {
+		color: var(--color-text-muted);
+		font-size: 0.78rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.facebook-post-text {
+		color: var(--color-text-soft);
+		font-size: var(--paragraph-font-size);
+		line-height: var(--paragraph-line-height);
+		margin: 6px 0 0;
+		white-space: pre-line;
+	}
+
+	.facebook-post-more {
+		color: var(--color-accent);
+		display: inline-block;
+		font-weight: 600;
+		margin-top: 8px;
+	}
+
+	.facebook-posts-bottom-bar {
+		align-items: center;
+		background: var(--color-primary);
+		color: rgba(255, 255, 255, 0.9);
+		display: flex;
+		font-size: 0.82rem;
+		gap: 6px;
+		padding: 8px 14px;
+	}
+
+	.facebook-posts-bottom-bar a {
+		color: #fff;
+		font-weight: 700;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+</style>

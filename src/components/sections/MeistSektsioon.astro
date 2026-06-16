@@ -179,21 +179,26 @@ const { about, communitySlides } = Astro.props;
 		margin-top: var(--section-actions-margin-top);
 	}
 
-	@media (max-width: 1024px) {
+	@media (max-width: 1300px) {
 		.about-grid {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 			gap: var(--section-grid-gap);
 		}
 
 		.about-copy {
-			justify-self: center;
+			justify-self: stretch;
 			max-width: 100%;
 		}
 
 		.about-carousel-wrap {
 			aspect-ratio: auto;
-			max-width: calc(100vw - var(--sidebar-width) - (2 * var(--section-padding-x)));
+			max-width: 100%;
+			min-width: 0;
 			width: 100%;
+		}
+
+		.about-carousel-wrap :global(.gallery-carousel) {
+			margin: 0 auto;
 		}
 
 		.about-carousel-wrap :global(.gallery-viewport) {

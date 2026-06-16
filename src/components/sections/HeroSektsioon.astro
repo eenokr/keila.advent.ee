@@ -147,14 +147,19 @@ const { hero, heroSlides } = Astro.props;
 		width: min(100%, var(--gallery-panel-width));
 	}
 
-	@media (max-width: 1024px) {
+	@media (max-width: 1300px) {
 		.hero-content {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 			gap: var(--section-grid-gap);
 		}
 
 		.hero-copy {
-			justify-self: center;
+			justify-self: stretch;
+			max-width: 100%;
+		}
+
+		.hero-intro {
+			max-width: 100%;
 		}
 
 		.hero-carousel-wrap { order: -1; }

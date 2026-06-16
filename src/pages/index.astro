@@ -18,9 +18,6 @@ import KontaktSektsioon from '../components/sections/KontaktSektsioon.astro';
 import { ADVENT_AUDIO_SOURCES, getAdventAudioItems } from '../lib/adventAudio';
 import { getServiceScheduleItems } from '../lib/serviceSchedule';
 
-const SERVICE_SCHEDULE_CSV_URL =
-	'https://docs.google.com/spreadsheets/d/e/2PACX-1vTOmThNzJymlMrI5PiXxN5jcQTAotZvXrbYCZwDWQ8s2fqvbOckV6-XjCFkyUulLYUUl0HOqpyYIxrO/pub?gid=1165865253&single=true&output=csv';
-
 const iconModules = import.meta.glob<string>('../assets/icons/*', {
 	eager: true,
 	import: 'default',
@@ -102,7 +99,7 @@ const heroSlides = (kodukaTeated as DriveImage[]).length > 0
 	? (kodukaTeated as DriveImage[]).map(driveSlide)
 	: [{ image: kirikuPilt, alt: hero.imageAlt ?? 'Keila adventkoguduse hoone' }];
 const [serviceScheduleItems, uheskoosAudioItems, sermonAudioItems] = await Promise.all([
-	getServiceScheduleItems(SERVICE_SCHEDULE_CSV_URL, 4),
+	getServiceScheduleItems(4),
 	getAdventAudioItems(ADVENT_AUDIO_SOURCES.uheskoos, 4),
 	getAdventAudioItems(ADVENT_AUDIO_SOURCES.sermons, 4),
 ]);

@@ -54,12 +54,20 @@ jobs:
           key: drive-images-ftp-${{ github.run_id }}
           restore-keys: drive-images-ftp-
 
-      # Ehita leht. prebuild hook tõmbab värske info Drive'ist, Sheetsist ja advent.ee-st.
+      # Ehita leht. prebuild hook tõmbab värske info Drive'ist, Sheetsist,
+      # advent.ee-st ja Facebooki postitustest.
       # SITE_URL paneb sitemap'i ja kanoonilised lingid keila.advent.ee peale.
+      # GH_TOKEN võimaldab sync-facebook.mjs-il salvestada uuendatud Facebook
+      # tokeni tagasi FB_PAGE_TOKEN secret'iks, kui see hakkab aeguma.
       - name: Build site
         run: npm run build
         env:
           DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          FB_APP_ID: ${{ secrets.FB_APP_ID }}
+          FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
           SITE_URL: https://keila.advent.ee
 
       # Lae dist/ FTP serverisse. Action peab arvet serveri olekust ja laeb üles
