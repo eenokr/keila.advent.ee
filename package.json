@@ -8,8 +8,9 @@
   "scripts": {
     "sync": "node scripts/sync-drive.mjs",
     "sync:facebook": "node scripts/sync-facebook.mjs",
-    "predev": "node scripts/sync-drive.mjs && node scripts/sync-facebook.mjs",
-    "prebuild": "node scripts/sync-drive.mjs && node scripts/sync-facebook.mjs",
+    "sync:schedule": "node scripts/sync-schedule.mjs",
+    "predev": "node scripts/sync-drive.mjs && node scripts/sync-facebook.mjs && node scripts/sync-schedule.mjs",
+    "prebuild": "node scripts/sync-drive.mjs && node scripts/sync-facebook.mjs && node scripts/sync-schedule.mjs",
     "dev": "astro dev --host 0.0.0.0",
     "build": "astro build",
     "preview": "astro preview",
