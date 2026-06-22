@@ -112,4 +112,11 @@ const site = defineCollection({
 	}),
 });
 
-export const collections = { koduleht, sermons, contact, site };
+const laul = defineCollection({
+	loader: glob({ base: './src/content/laul', pattern: '**/*.md' }),
+	schema: z.object({
+		title: z.string(),
+	}),
+});
+
+export const collections = { koduleht, sermons, contact, site, laul };

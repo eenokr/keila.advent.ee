@@ -1,0 +1,75 @@
+---
+import { getCollection, render } from 'astro:content';
+import PeaMeta from '../components/PeaMeta.astro';
+import Jalus from '../components/Jalus.astro';
+import Pais from '../components/Pais.astro';
+
+const laulud = await getCollection('laul');
+const [entry] = laulud;
+const { Content } = await render(entry);
+---
+
+<html lang="et">
+	<head>
+		<PeaMeta title={entry.data.title} description={entry.data.title} />
+	</head>
+	<body>
+		<Pais />
+		<main class="laul-leht">
+			<div class="laul-sisu">
+				<Content />
+			</div>
+		</main>
+		<Jalus />
+	</body>
+</html>
+
+<style>
+	.laul-leht {
+		min-height: 100vh;
+		padding: 2rem 1rem 4rem;
+	}
+
+	.laul-sisu {
+		max-width: 680px;
+		margin: 0 auto;
+	}
+
+	.laul-sisu :global(h1) {
+		font-size: 2rem;
+		margin-bottom: 2rem;
+	}
+
+	.laul-sisu :global(h2) {
+		font-size: 1.4rem;
+		margin-top: 3rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.laul-sisu :global(hr) {
+		border: none;
+		border-top: 1px solid #e5e7eb;
+		margin: 2rem 0;
+	}
+
+	.laul-sisu :global(strong) {
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #6b7280;
+		display: block;
+		margin-top: 1.25rem;
+		margin-bottom: 0.25rem;
+	}
+
+	.laul-sisu :global(p) {
+		line-height: 1.7;
+		margin: 0;
+		white-space: pre-line;
+	}
+
+	.laul-sisu :global(em) {
+		color: #6b7280;
+		font-style: italic;
+	}
+</style>
