@@ -82,38 +82,33 @@ Kiitus Kõigekõrgemale, Kuningate Kuningale
 *(Andres Valkonen / Sõnad Ott Arder)*
 
 **Salm 1:**
-Lootus annab rõõmu olla, usu mind, mu hell ja hea.
-Neile ongi maailm valla, kellele usk on suur.
-Päevi tõuseb, veereb looja, pihlap-puudes vaibuv tuul,
+ Lootus annab rõõmu olla, usu mind, mu hell ja hea. 
+Neile ongi maailm valla, kellele usk on suur. 
+Päevi tõuseb, veereb looja, pihlap-puudes vaibuv tuul, 
 Looja annab hingesooija, uinuv palve suul.
 
 **Refrään:**
-Saada kõiki meid sel kaunil maal,
-lootus hea ja kindel tasakaal.
-Tõuse lendu, lind,
-hetkeks riivab mind tiivavari vaid.
+Saada kõiki meid sel kaunil maal, lootus hea ja kindel tasakaal. 
+Tõuse lendu, lind, hetkeks riivab mind tiivavari vaid.
+Saada kõiki meid sel kaunil maal, lootus hea ja kindel tasakaal. 
+Tõuse lendu, lind, hetkeks riivab mind tiivavari vaid.
+Saada kõiki meid sel kaunil maal, lootus hea ja kindel tasakaal. 
+Looja, hoia meid kaitsva varju all sellel kaunil maal.
 
 **Salm 2:**
-Keegi pole liiga väike, keegi pole liiga suur.
-Kui vaid teada saaks, kus põimub hea ja kurja juur!
-Lootus annab rõõmu olla, usu mind, mu hell ja hea.
+Keegi pole liiga väike, keegi pole liiga suur. 
+Kui vaid teada saaks, kus põimub hea ja kurja juur! 
+Lootus annab rõõmu olla, usu mind, mu hell ja hea. 
 Neile ongi maailm valla, kellele usk on suur.
 
-**Refrään:**
-Saada kõiki meid sel kaunil maal,
-lootus hea ja kindel tasakaal.
-Tõuse lendu, lind,
-hetkeks riivab mind tiivavari vaid.
-
-**Refrään (kõrgemalt):**
-Saada kõiki meid sel kaunil maal,
-lootus hea ja kindel tasakaal.
-Tõuse lendu, lind,
-hetkeks riivab mind tiivavari vaid.
-Loo-ja, hoi-a meid kaits-va var-ju all sel-lel kau-nil maal.
-
-**Lõpp:**
+**Refrään (kõrgemalt):** 
+Saada kõiki meid sel kaunil maal, lootus hea ja kindel tasakaal. 
+Tõuse lendu, lind, hetkeks riivab mind tiivavari vaid.
+Saada kõiki meid sel kaunil maal, lootus hea ja kindel tasakaal. 
+Looja, hoia meid kaitsva varju all sellel kaunil maal.
+Saada kõiki meid sel kaunil maal, lootus hea ja kindel tasakaal. 
 Saada, lootus, meid sel kaunil maal!
+
 
 ---
 
