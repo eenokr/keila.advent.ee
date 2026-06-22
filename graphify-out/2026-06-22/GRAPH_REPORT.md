@@ -1,7 +1,7 @@
 # Graph Report - keila.advent.ee  (2026-06-22)
 
 ## Corpus Check
-- 59 files · ~209,515 words
+- 59 files · ~209,554 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
