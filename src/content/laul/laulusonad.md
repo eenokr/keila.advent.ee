@@ -101,7 +101,7 @@ Kui vaid teada saaks, kus põimub hea ja kurja juur!
 Lootus annab rõõmu olla, usu mind, mu hell ja hea. 
 Neile ongi maailm valla, kellele usk on suur.
 
-**Refrään (kõrgemalt):** 
+**Refrään:** 
 Saada kõiki meid sel kaunil maal, lootus hea ja kindel tasakaal. 
 Tõuse lendu, lind, hetkeks riivab mind tiivavari vaid.
 Saada kõiki meid sel kaunil maal, lootus hea ja kindel tasakaal. 
